@@ -107,7 +107,9 @@ public class MdBinEntity implements java.io.Serializable {
 	/**仓库*/
 	@Excel(name="仓库")
 	private java.lang.String binStore;
-	
+	/**仓库*/
+	@Excel(name="电子标签ID")
+	private java.lang.String lorabqId;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -646,5 +648,15 @@ public class MdBinEntity implements java.io.Serializable {
 	 */
 	public void setBinStore(java.lang.String binStore){
 		this.binStore = binStore;
+	}
+
+
+	@Column(name ="LORA_BQID",nullable=true,length=32)
+	public String getLorabqId() {
+		return lorabqId;
+	}
+
+	public void setLorabqId(String lorabqId) {
+		this.lorabqId = lorabqId;
 	}
 }

@@ -274,6 +274,14 @@
 			          </div>
 			          
 			       </div>
+
+					  <div class="col-xs-3">
+						  <input id="lorabqId" name="lorabqId" type="text" class="form-control"
+								 ignore="ignore" style="text-align:right"   />
+						  <span class="Validform_checktip" style="float:left;height:0px;"></span>
+						  <label class="Validform_label" style="display: none">电子标签ID</label>
+					  </div>
+
 			          <div class="row" id = "sub_tr" style="display: none;">
 				        <div class="col-xs-12 layout-header">
 				          <div class="col-xs-6"></div>
