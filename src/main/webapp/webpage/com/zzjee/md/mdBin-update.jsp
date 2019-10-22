@@ -275,14 +275,20 @@
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">动线</label>
 			          </div>
+
+								<div class="col-xs-3 text-center">
+									<b>电子标签ID</b>
+								</div>
+								<div class="col-xs-3">
+									<input id="lorabqId" name="lorabqId" type="text" class="form-control"
+										   ignore="ignore" style="text-align:right"
+										   value='${mdBinPage.lorabqId}' />
+									<span class="Validform_checktip" style="float:left;height:0px;"></span>
+									<label class="Validform_label" style="display: none">电子标签ID</label>
+								</div>
+
 							</div>
-					  <div class="col-xs-3">
-						  <input id="lorabqId" name="lorabqId" type="text" class="form-control"
-								 ignore="ignore" style="text-align:right"
-								 value='${mdBinPage.lorabqId}' />
-						  <span class="Validform_checktip" style="float:left;height:0px;"></span>
-						  <label class="Validform_label" style="display: none">电子标签ID</label>
-					  </div>
+
 
 
 			          <div class="row" id = "sub_tr" style="display: none;">
