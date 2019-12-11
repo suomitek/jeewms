@@ -69,6 +69,11 @@
 		     	 <input id="gpsid" name="gpsid" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tmsMdCheliangPage.gpsid}'/>
 		      <span class="Validform_checktip"></span>
 		    </div>
+			<div class="form">
+		      <label class="Validform_label">区域:</label>
+		     	 <input id="quyu" name="quyu" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tmsMdCheliangPage.quyu}'/>
+		      <span class="Validform_checktip"></span>
+		    </div>
 	    </fieldset>
   </t:formvalid>
  </body>

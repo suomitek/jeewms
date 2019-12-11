@@ -68,7 +68,8 @@ public class TmsMdCheliangEntity implements java.io.Serializable {
 	/**gps*/
     @Excel(name="gps",width=15)
 	private String gpsid;
-	
+	@Excel(name="区域",width=15)
+	private java.lang.String quyu;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -391,5 +392,23 @@ public class TmsMdCheliangEntity implements java.io.Serializable {
 	 */
 	public void setGpsid(String gpsid){
 		this.gpsid = gpsid;
+	}
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  区域
+	 */
+
+	@Column(name ="QUYU",nullable=true,length=32)
+	public java.lang.String getQuyu(){
+		return this.quyu;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  区域
+	 */
+	public void setQuyu(java.lang.String quyu){
+		this.quyu = quyu;
 	}
 }

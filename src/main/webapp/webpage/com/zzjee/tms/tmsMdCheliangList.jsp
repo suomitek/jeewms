@@ -24,6 +24,8 @@
    <t:dgCol title="备注"  field="beizhu"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="默认司机"  field="username"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="gps"  field="gpsid"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="区域"  field="quyu"  queryMode="single"  width="120"></t:dgCol>
+
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tmsMdCheliangController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tmsMdCheliangController.do?goAdd" funname="add"></t:dgToolBar>

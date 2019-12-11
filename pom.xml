@@ -431,7 +431,7 @@
 		<!-- 辅助依赖包 _end -->
 
 		<!-- 工具包 -->
-		<!-- JSON begin -->
+		 <!--JSON begin -->
 		<!--<dependency>-->
 			<!--<groupId>org.codehaus.jackson</groupId>-->
 			<!--<artifactId>jackson-mapper-asl</artifactId>-->
@@ -816,11 +816,12 @@
 			<version>${guava.version}</version>
 		</dependency>
 
-		<!-- jeecg plugin -->
+		 <!--jeecg plugin-->
 		<dependency>
 			<groupId>org.p3framework</groupId>
 			<artifactId>jeecg-p3-core</artifactId>
 			<version>1.1.2</version>
+
 		</dependency>
 		<!--<dependency>-->
 			<!--<groupId>org.p3framework</groupId>-->
@@ -963,6 +964,11 @@
 			<!--<version>2.5.1</version>-->
 		<!--</dependency>-->
 		<!-- swagger   end -->
+
+
+
+
+
 		<dependency>
 			<groupId>org.jdom</groupId>
 			<artifactId>jdom2</artifactId>
