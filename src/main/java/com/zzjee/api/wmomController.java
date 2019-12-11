@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.zzjee.wave.entity.WaveToDownEntity;
+import com.zzjee.wave.entity.WaveToFjEntity;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.util.ExceptionUtil;
@@ -250,4 +252,101 @@ public class wmomController {
 		return Result.success(list, Long.parseLong(resultList2.get(0).get("count").toString()));
 
 	}
+
+	@RequestMapping(value = "/listwavedown/{username}", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "获取波次下架信息", produces = "application/json", httpMethod = "GET")
+	public ResponseMessage<List<WaveToDownEntity>> listwavedown(@PathVariable("username") String username,
+																@RequestParam int pageNumber, @RequestParam int pageSize,
+																HttpServletRequest request) {
+		CriteriaQuery query = new CriteriaQuery(WaveToDownEntity.class);
+		try {
+
+			if(StringUtil.isNotEmpty(request.getParameter("binId"))){
+				query.like("binId","%"+request.getParameter("binId")+"%");
+			}
+			if(StringUtil.isNotEmpty(request.getParameter("goodsId"))){
+				query.like("goodsId","%"+request.getParameter("goodsId")+"%");
+			}
+			if(StringUtil.isNotEmpty(request.getParameter("waveId"))){
+				query.like("waveId","%"+request.getParameter("waveId")+"%");
+			}
+			if(StringUtil.isNotEmpty(request.getParameter("firstRq"))){
+				query.like("firstRq","%"+request.getParameter("firstRq")+"%");
+			}
+
+		} catch (Exception e) {
+		}
+		query.add();
+		List<WaveToDownEntity> listsize = this.systemService.getListByCriteriaQuery(query, false);
+		query.setCurPage(pageNumber <= 0 ? 1 : pageNumber);
+		query.setPageSize(pageSize < 1 ? 1 : pageSize);
+		query.add();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("binId", "asc");
+		query.setOrder(map);
+		List<WaveToDownEntity> list = this.systemService.getListByCriteriaQuery(query, true);
+		return Result.success(list, (long) listsize.size());
+	}
+
+	@RequestMapping(value = "/listwavefj/{username}", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "获取波次分拣信息", produces = "application/json", httpMethod = "GET")
+	public ResponseMessage<List<WaveToFjEntity>> listwavefj(@PathVariable("username") String username,
+																@RequestParam int pageNumber, @RequestParam int pageSize,
+																HttpServletRequest request) {
+		CriteriaQuery query = new CriteriaQuery(WaveToFjEntity.class);
+		try {
+
+			if(StringUtil.isNotEmpty(request.getParameter("binId"))){
+				query.like("binId","%"+request.getParameter("binId")+"%");
+			}
+			if(StringUtil.isNotEmpty(request.getParameter("goodsId"))){
+				query.like("goodsId","%"+request.getParameter("goodsId")+"%");
+			}
+			if(StringUtil.isNotEmpty(request.getParameter("waveId"))){
+				query.like("waveId","%"+request.getParameter("waveId")+"%");
+			}
+			if(StringUtil.isNotEmpty(request.getParameter("firstRq"))){
+				query.like("firstRq","%"+request.getParameter("firstRq")+"%");
+			}
+
+		} catch (Exception e) {
+		}
+		query.add();
+		List<WaveToFjEntity> listsize = this.systemService.getListByCriteriaQuery(query, false);
+		query.setCurPage(pageNumber <= 0 ? 1 : pageNumber);
+		query.setPageSize(pageSize < 1 ? 1 : pageSize);
+		query.add();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("binId", "asc");
+		query.setOrder(map);
+		List<WaveToFjEntity> list = this.systemService.getListByCriteriaQuery(query, true);
+		return Result.success(list, (long) listsize.size());
+	}
+
+
+
+	@RequestMapping(value = "/listwavedownsave/{username}", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "获取波次下架信息保存", produces = "application/json", httpMethod = "GET")
+	public ResponseMessage<?> listwavedownsave(@PathVariable("username") String username,
+																@RequestParam String ids, @RequestParam String savestr1,
+																HttpServletRequest request) {
+
+		return Result.success("波次下架保存成功");
+	}
+
+	@RequestMapping(value = "/listwavefjsave/{username}", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "获取波次分拣信息保存", produces = "application/json", httpMethod = "GET")
+	public ResponseMessage<?> listwavefjsave(@PathVariable("username") String username,
+																@RequestParam String ids, @RequestParam String savestr1,
+															HttpServletRequest request) {
+
+		return Result.success("波次分拣保存成功");
+
+	}
+
+
 }

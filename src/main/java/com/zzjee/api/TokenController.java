@@ -286,18 +286,22 @@ public class TokenController {
 	@RequestMapping(value = "/getuser/{username}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="根据username获取用户信息",notes="根据username获取用户信息",httpMethod="GET",produces="application/json")
-	public ResponseMessage<?> getuser(@ApiParam(required=true,name="username",value="username")@PathVariable("username") String username) {
-		TSUser task = systemService.findUniqueByProperty(TSUser.class,"userName",username);
-		if (task == null) {
-			FxjOtherLoginEntity fxjOtherLoginEntity = userService.findUniqueByProperty(FxjOtherLoginEntity.class, "otherid", username);
-			if (fxjOtherLoginEntity != null) {
-				task = systemService.findUniqueByProperty(TSUser.class,"userName",fxjOtherLoginEntity.getUsername());
-			}
-		}
-		if (task == null) {
-//			task = systemService.findUniqueByProperty(TSUser.class,"userName",ResourceUtil.getConfigByName("mini.user"));
-			return org.jeecgframework.jwt.util.Result.error("获取用户信息失败");
-		}
+	public ResponseMessage<?> getuser(@ApiParam(required=true,name="username",value="username")@PathVariable("username") String username,
+									  @ApiParam(required=false,name="password",value="password")@RequestParam String password) {
+//		TSUser task = systemService.findUniqueByProperty(TSUser.class,"userName",username);
+//		if (task == null) {
+//			FxjOtherLoginEntity fxjOtherLoginEntity = userService.findUniqueByProperty(FxjOtherLoginEntity.class, "otherid", username);
+//			if (fxjOtherLoginEntity != null) {
+//				task = systemService.findUniqueByProperty(TSUser.class,"userName",fxjOtherLoginEntity.getUsername());
+//			}
+//		}
+//		if (task == null) {
+////			task = systemService.findUniqueByProperty(TSUser.class,"userName",ResourceUtil.getConfigByName("mini.user"));
+//			return org.jeecgframework.jwt.util.Result.error("获取用户信息失败");
+//		}
+
+		TSUser task = userService.checkUserExits(username, password);
+
 		if(!StringUtil.isEmpty(task.getDepartid())){
 			TSDepart tsDepart = systemService.get(TSDepart.class,task.getDepartid());
 			if(tsDepart!=null){
