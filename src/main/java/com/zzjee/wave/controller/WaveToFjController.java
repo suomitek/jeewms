@@ -1,6 +1,6 @@
 package com.zzjee.wave.controller;
-import com.zzjee.wave.entity.WaveToDownEntity;
-import com.zzjee.wave.service.WaveToDownServiceI;
+import com.zzjee.wave.entity.WaveToFjEntity;
+import com.zzjee.wave.service.WaveToFjServiceI;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -67,22 +67,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**   
  * @Title: Controller  
- * @Description: wave_to_down
+ * @Description: wave_to_fj
  * @author onlineGenerator
- * @date 2019-12-11 11:32:25
+ * @date 2019-12-11 11:32:18
  * @version V1.0   
  *
  */
 @Controller
-@RequestMapping("/waveToDownController")
-public class WaveToDownController extends BaseController {
+@RequestMapping("/waveToFjController")
+public class WaveToFjController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(WaveToDownController.class);
+	private static final Logger logger = Logger.getLogger(WaveToFjController.class);
 
 	@Autowired
-	private WaveToDownServiceI waveToDownService;
+	private WaveToFjServiceI waveToFjService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -91,13 +91,13 @@ public class WaveToDownController extends BaseController {
 
 
 	/**
-	 * wave_to_down列表 页面跳转
+	 * wave_to_fj列表 页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/zzjee/wave/waveToDownList");
+		return new ModelAndView("com/zzjee/wave/waveToFjList");
 	}
 
 	/**
@@ -110,38 +110,38 @@ public class WaveToDownController extends BaseController {
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(WaveToDownEntity waveToDown,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(WaveToDownEntity.class, dataGrid);
+	public void datagrid(WaveToFjEntity waveToFj,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(WaveToFjEntity.class, dataGrid);
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, waveToDown, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, waveToFj, request.getParameterMap());
 		try{
 		//自定义追加查询条件
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.waveToDownService.getDataGridReturn(cq, true);
+		this.waveToFjService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
 	
 	/**
-	 * 删除wave_to_down
+	 * 删除wave_to_fj
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
 	@ResponseBody
-	public AjaxJson doDel(WaveToDownEntity waveToDown, HttpServletRequest request) {
+	public AjaxJson doDel(WaveToFjEntity waveToFj, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		waveToDown = systemService.getEntity(WaveToDownEntity.class, waveToDown.getId());
-		message = "wave_to_down删除成功";
+		waveToFj = systemService.getEntity(WaveToFjEntity.class, waveToFj.getId());
+		message = "wave_to_fj删除成功";
 		try{
-			waveToDownService.delete(waveToDown);
+			waveToFjService.delete(waveToFj);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "wave_to_down删除失败";
+			message = "wave_to_fj删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -149,7 +149,7 @@ public class WaveToDownController extends BaseController {
 	}
 	
 	/**
-	 * 批量删除wave_to_down
+	 * 批量删除wave_to_fj
 	 * 
 	 * @return
 	 */
@@ -158,18 +158,18 @@ public class WaveToDownController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "wave_to_down删除成功";
+		message = "wave_to_fj删除成功";
 		try{
 			for(String id:ids.split(",")){
-				WaveToDownEntity waveToDown = systemService.getEntity(WaveToDownEntity.class, 
+				WaveToFjEntity waveToFj = systemService.getEntity(WaveToFjEntity.class, 
 				id
 				);
-				waveToDownService.delete(waveToDown);
+				waveToFjService.delete(waveToFj);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "wave_to_down删除失败";
+			message = "wave_to_fj删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -178,23 +178,23 @@ public class WaveToDownController extends BaseController {
 
 
 	/**
-	 * 添加wave_to_down
+	 * 添加wave_to_fj
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(WaveToDownEntity waveToDown, HttpServletRequest request) {
+	public AjaxJson doAdd(WaveToFjEntity waveToFj, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "wave_to_down添加成功";
+		message = "wave_to_fj添加成功";
 		try{
-			waveToDownService.save(waveToDown);
+			waveToFjService.save(waveToFj);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "wave_to_down添加失败";
+			message = "wave_to_fj添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -202,25 +202,25 @@ public class WaveToDownController extends BaseController {
 	}
 	
 	/**
-	 * 更新wave_to_down
+	 * 更新wave_to_fj
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(WaveToDownEntity waveToDown, HttpServletRequest request) {
+	public AjaxJson doUpdate(WaveToFjEntity waveToFj, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "wave_to_down更新成功";
-		WaveToDownEntity t = waveToDownService.get(WaveToDownEntity.class, waveToDown.getId());
+		message = "wave_to_fj更新成功";
+		WaveToFjEntity t = waveToFjService.get(WaveToFjEntity.class, waveToFj.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(waveToDown, t);
-			waveToDownService.saveOrUpdate(t);
+			MyBeanUtils.copyBeanNotNull2Bean(waveToFj, t);
+			waveToFjService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "wave_to_down更新失败";
+			message = "wave_to_fj更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -229,30 +229,30 @@ public class WaveToDownController extends BaseController {
 	
 
 	/**
-	 * wave_to_down新增页面跳转
+	 * wave_to_fj新增页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(WaveToDownEntity waveToDown, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(waveToDown.getId())) {
-			waveToDown = waveToDownService.getEntity(WaveToDownEntity.class, waveToDown.getId());
-			req.setAttribute("waveToDownPage", waveToDown);
+	public ModelAndView goAdd(WaveToFjEntity waveToFj, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(waveToFj.getId())) {
+			waveToFj = waveToFjService.getEntity(WaveToFjEntity.class, waveToFj.getId());
+			req.setAttribute("waveToFjPage", waveToFj);
 		}
-		return new ModelAndView("com/zzjee/wave/waveToDown-add");
+		return new ModelAndView("com/zzjee/wave/waveToFj-add");
 	}
 	/**
-	 * wave_to_down编辑页面跳转
+	 * wave_to_fj编辑页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(WaveToDownEntity waveToDown, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(waveToDown.getId())) {
-			waveToDown = waveToDownService.getEntity(WaveToDownEntity.class, waveToDown.getId());
-			req.setAttribute("waveToDownPage", waveToDown);
+	public ModelAndView goUpdate(WaveToFjEntity waveToFj, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(waveToFj.getId())) {
+			waveToFj = waveToFjService.getEntity(WaveToFjEntity.class, waveToFj.getId());
+			req.setAttribute("waveToFjPage", waveToFj);
 		}
-		return new ModelAndView("com/zzjee/wave/waveToDown-update");
+		return new ModelAndView("com/zzjee/wave/waveToFj-update");
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class WaveToDownController extends BaseController {
 	 */
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","waveToDownController");
+		req.setAttribute("controller_name","waveToFjController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 	
@@ -273,16 +273,16 @@ public class WaveToDownController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(WaveToDownEntity waveToDown,HttpServletRequest request,HttpServletResponse response
+	public String exportXls(WaveToFjEntity waveToFj,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(WaveToDownEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, waveToDown, request.getParameterMap());
-		List<WaveToDownEntity> waveToDowns = this.waveToDownService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"wave_to_down");
-		modelMap.put(NormalExcelConstants.CLASS,WaveToDownEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("wave_to_down列表", "导出人:"+ResourceUtil.getSessionUserName().getRealName(),
+		CriteriaQuery cq = new CriteriaQuery(WaveToFjEntity.class, dataGrid);
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, waveToFj, request.getParameterMap());
+		List<WaveToFjEntity> waveToFjs = this.waveToFjService.getListByCriteriaQuery(cq,false);
+		modelMap.put(NormalExcelConstants.FILE_NAME,"wave_to_fj");
+		modelMap.put(NormalExcelConstants.CLASS,WaveToFjEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("wave_to_fj列表", "导出人:"+ResourceUtil.getSessionUserName().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,waveToDowns);
+		modelMap.put(NormalExcelConstants.DATA_LIST,waveToFjs);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
@@ -292,11 +292,11 @@ public class WaveToDownController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(WaveToDownEntity waveToDown,HttpServletRequest request,HttpServletResponse response
+	public String exportXlsByT(WaveToFjEntity waveToFj,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"wave_to_down");
-    	modelMap.put(NormalExcelConstants.CLASS,WaveToDownEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("wave_to_down列表", "导出人:"+ResourceUtil.getSessionUserName().getRealName(),
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"wave_to_fj");
+    	modelMap.put(NormalExcelConstants.CLASS,WaveToFjEntity.class);
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("wave_to_fj列表", "导出人:"+ResourceUtil.getSessionUserName().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -317,9 +317,9 @@ public class WaveToDownController extends BaseController {
 			params.setHeadRows(1);
 			params.setNeedSave(true);
 			try {
-				List<WaveToDownEntity> listWaveToDownEntitys = ExcelImportUtil.importExcel(file.getInputStream(),WaveToDownEntity.class,params);
-				for (WaveToDownEntity waveToDown : listWaveToDownEntitys) {
-					waveToDownService.save(waveToDown);
+				List<WaveToFjEntity> listWaveToFjEntitys = ExcelImportUtil.importExcel(file.getInputStream(),WaveToFjEntity.class,params);
+				for (WaveToFjEntity waveToFj : listWaveToFjEntitys) {
+					waveToFjService.save(waveToFj);
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -338,15 +338,15 @@ public class WaveToDownController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<WaveToDownEntity> list() {
-		List<WaveToDownEntity> listWaveToDowns=waveToDownService.getList(WaveToDownEntity.class);
-		return listWaveToDowns;
+	public List<WaveToFjEntity> list() {
+		List<WaveToFjEntity> listWaveToFjs=waveToFjService.getList(WaveToFjEntity.class);
+		return listWaveToFjs;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
-		WaveToDownEntity task = waveToDownService.get(WaveToDownEntity.class, id);
+		WaveToFjEntity task = waveToFjService.get(WaveToFjEntity.class, id);
 		if (task == null) {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
@@ -355,23 +355,23 @@ public class WaveToDownController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> create(@RequestBody WaveToDownEntity waveToDown, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<?> create(@RequestBody WaveToFjEntity waveToFj, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<WaveToDownEntity>> failures = validator.validate(waveToDown);
+		Set<ConstraintViolation<WaveToFjEntity>> failures = validator.validate(waveToFj);
 		if (!failures.isEmpty()) {
 			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
 		}
 
 		//保存
 		try{
-			waveToDownService.save(waveToDown);
+			waveToFjService.save(waveToFj);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
-		String id = waveToDown.getId();
-		URI uri = uriBuilder.path("/rest/waveToDownController/" + id).build().toUri();
+		String id = waveToFj.getId();
+		URI uri = uriBuilder.path("/rest/waveToFjController/" + id).build().toUri();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(uri);
 
@@ -379,16 +379,16 @@ public class WaveToDownController extends BaseController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> update(@RequestBody WaveToDownEntity waveToDown) {
+	public ResponseEntity<?> update(@RequestBody WaveToFjEntity waveToFj) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<WaveToDownEntity>> failures = validator.validate(waveToDown);
+		Set<ConstraintViolation<WaveToFjEntity>> failures = validator.validate(waveToFj);
 		if (!failures.isEmpty()) {
 			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
 		}
 
 		//保存
 		try{
-			waveToDownService.saveOrUpdate(waveToDown);
+			waveToFjService.saveOrUpdate(waveToFj);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -401,6 +401,6 @@ public class WaveToDownController extends BaseController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") String id) {
-		waveToDownService.deleteEntityById(WaveToDownEntity.class, id);
+		waveToFjService.deleteEntityById(WaveToFjEntity.class, id);
 	}
 }

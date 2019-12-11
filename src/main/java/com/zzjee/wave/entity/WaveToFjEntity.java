@@ -20,16 +20,16 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: wave_to_down
+ * @Description: wave_to_fj
  * @author onlineGenerator
- * @date 2019-12-11 11:32:25
+ * @date 2019-12-11 11:32:18
  * @version V1.0   
  *
  */
 @Entity
-@Table(name = "wave_to_down", schema = "")
+@Table(name = "wave_to_fj", schema = "")
 @SuppressWarnings("serial")
-public class WaveToDownEntity implements java.io.Serializable {
+public class WaveToFjEntity implements java.io.Serializable {
 	/**主键*/
 	private String id;
 	/**创建人登录名称*/
@@ -44,18 +44,18 @@ public class WaveToDownEntity implements java.io.Serializable {
 	/**客户名称*/
 	@Excel(name="客户名称")
 	private String cusName;
-	/**waveId*/
-	@Excel(name="waveId")
-	private String waveId;
+	/**到货通知单*/
+	@Excel(name="到货通知单")
+	private String omNoticeId;
+	/**到货通知行项目*/
+	@Excel(name="到货通知行项目")
+	private String iomNoticeItem;
 	/**商品编码*/
 	@Excel(name="商品编码")
 	private String goodsId;
 	/**商品名称*/
 	@Excel(name="商品名称")
 	private String goodsName;
-	/**imCusCode*/
-	@Excel(name="imCusCode")
-	private String imCusCode;
 	/**仓位*/
 	@Excel(name="仓位")
 	private String binId;
@@ -68,12 +68,12 @@ public class WaveToDownEntity implements java.io.Serializable {
 	/**baseGoodscount*/
 	@Excel(name="baseGoodscount")
 	private Double baseGoodscount;
-	/**omBeiZhu*/
-	@Excel(name="omBeiZhu")
-	private String omBeiZhu;
 	/**基本单位*/
 	@Excel(name="基本单位")
 	private String baseUnit;
+	/**waveId*/
+	@Excel(name="waveId")
+	private String waveId;
 	/**firstRq*/
 	@Excel(name="firstRq")
 	private String firstRq;
@@ -181,19 +181,35 @@ public class WaveToDownEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  waveId
+	 *@return: java.lang.String  到货通知单
 	 */
-	@Column(name ="WAVE_ID",nullable=true,length=45)
-	public String getWaveId(){
-		return this.waveId;
+	@Column(name ="OM_NOTICE_ID",nullable=true,length=36)
+	public String getOmNoticeId(){
+		return this.omNoticeId;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  waveId
+	 *@param: java.lang.String  到货通知单
 	 */
-	public void setWaveId(String waveId){
-		this.waveId = waveId;
+	public void setOmNoticeId(String omNoticeId){
+		this.omNoticeId = omNoticeId;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  到货通知行项目
+	 */
+	@Column(name ="IOM_NOTICE_ITEM",nullable=true,length=36)
+	public String getIomNoticeItem(){
+		return this.iomNoticeItem;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  到货通知行项目
+	 */
+	public void setIomNoticeItem(String iomNoticeItem){
+		this.iomNoticeItem = iomNoticeItem;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -226,22 +242,6 @@ public class WaveToDownEntity implements java.io.Serializable {
 	 */
 	public void setGoodsName(String goodsName){
 		this.goodsName = goodsName;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  imCusCode
-	 */
-	@Column(name ="IM_CUS_CODE",nullable=true,length=45)
-	public String getImCusCode(){
-		return this.imCusCode;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  imCusCode
-	 */
-	public void setImCusCode(String imCusCode){
-		this.imCusCode = imCusCode;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -309,22 +309,6 @@ public class WaveToDownEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  omBeiZhu
-	 */
-	@Column(name ="OM_BEI_ZHU",nullable=true,length=42)
-	public String getOmBeiZhu(){
-		return this.omBeiZhu;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  omBeiZhu
-	 */
-	public void setOmBeiZhu(String omBeiZhu){
-		this.omBeiZhu = omBeiZhu;
-	}
-	/**
-	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  基本单位
 	 */
 	@Column(name ="BASE_UNIT",nullable=true,length=45)
@@ -338,6 +322,22 @@ public class WaveToDownEntity implements java.io.Serializable {
 	 */
 	public void setBaseUnit(String baseUnit){
 		this.baseUnit = baseUnit;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  waveId
+	 */
+	@Column(name ="WAVE_ID",nullable=true,length=45)
+	public String getWaveId(){
+		return this.waveId;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  waveId
+	 */
+	public void setWaveId(String waveId){
+		this.waveId = waveId;
 	}
 	/**
 	 *方法: 取得java.lang.String
