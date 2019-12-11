@@ -324,16 +324,12 @@ public class wmomController {
 		List<WaveToFjEntity> list = this.systemService.getListByCriteriaQuery(query, true);
 		return Result.success(list, (long) listsize.size());
 	}
-
-
-
 	@RequestMapping(value = "/listwavedownsave/{username}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "获取波次下架信息保存", produces = "application/json", httpMethod = "GET")
 	public ResponseMessage<?> listwavedownsave(@PathVariable("username") String username,
 																@RequestParam String ids, @RequestParam String savestr1,
 																HttpServletRequest request) {
-
 		return Result.success("波次下架保存成功");
 	}
 
@@ -343,10 +339,6 @@ public class wmomController {
 	public ResponseMessage<?> listwavefjsave(@PathVariable("username") String username,
 																@RequestParam String ids, @RequestParam String savestr1,
 															HttpServletRequest request) {
-
 		return Result.success("波次分拣保存成功");
-
 	}
-
-
 }
