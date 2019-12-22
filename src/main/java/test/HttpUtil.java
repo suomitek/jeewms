@@ -1,6 +1,7 @@
 package test;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzjee.wmutil.dsc.dscUtil;
 import org.jeecgframework.web.cgform.util.SignatureUtil;
 
 import java.io.BufferedReader;
@@ -12,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HttpUtil {
 
@@ -105,16 +108,21 @@ public class HttpUtil {
 	}
 	
 	public static void main(String args[]){
+		dscUtil.updateGoodsFromDsc();
+//		    String res = dscUtil.getGoods("1");
+//		System.out.println(res);
 
 
-
-		String key="26F72780372E84B6CFAED6F7B19139CC47B1912B6CAED753";
-
-		JSONObject data=new JSONObject();
-		data.put("id","nihao");
-		data.put("updateBy","0");
-		String body=data.toJSONString();
-		JSONObject resp=HttpUtil.httpRequest("http://localhost:8080/zzjee/rest/wmToDownGoodsController","POST","wmToDownGoodsstr="+body,"");
-		System.out.println(resp.toJSONString());
+//		String key="26F72780372E84B6CFAED6F7B19139CC47B1912B6CAED753";
+//
+//		JSONObject data=new JSONObject();
+//		data.put("id","nihao");
+//		data.put("updateBy","0");
+//		String body=data.toJSONString();
+//		JSONObject resp=HttpUtil.httpRequest("http://localhost:8080/zzjee/rest/wmToDownGoodsController","POST","wmToDownGoodsstr="+body,"");
+//		System.out.println(resp.toJSONString());
 	}
+
+
+
 }

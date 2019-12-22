@@ -15,6 +15,7 @@ import javax.validation.Validator;
 import com.zzjee.md.entity.MdCusEntity;
 import com.zzjee.wm.entity.WmOmQmIEntity;
 import com.zzjee.wm.page.WmOmNoticeImpnewPage;
+import com.zzjee.wmutil.dsc.dscUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
@@ -271,7 +272,11 @@ public class MdGoodsController extends BaseController {
 				wmIntUtil.getproduct(formDate);
 
 			}
+			if ("DSC".equals(ResourceUtil.getConfigByName("interfacetype"))){
 
+				dscUtil.updateGoodsFromDsc();
+
+			}
 			systemService.addLog(message, Globals.Log_Type_UPDATE,
 					Globals.Log_Leavel_INFO);
 		} catch (Exception e) {

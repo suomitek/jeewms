@@ -91,9 +91,7 @@
        batchdate = $('input[name="batchdate"]').attr("value");
        othercode = $('input[name="othercode"]').attr("value");
 
-       if(batchdate==""){
-           alert("日期不能为空");
-       }else{
+
                                var url = "mdGoodsController.do?doGet&formDate="+batchdate+"&othercode="+othercode;
                        $.ajax({
                            async : true,
@@ -111,7 +109,7 @@
                        });
                 tip("获取成功");
                $('#mdGoodsList').datagrid('reload',{});
-           }
+
    }
  function doprint(id){
      var url = "mdGoodsController.do?doPrintmdgoods&id="+id;
