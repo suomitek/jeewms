@@ -1,18 +1,12 @@
 package com.zzjee.wmutil.dsc;
 
-import com.google.gson.annotations.SerializedName;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
 public class customerListRes {
 
-    /**
-     * result : success
-     * error : 0
-     * msg : 成功获取数据
-     * info : {"list":[{"user_id":"68","aite_id":"","email":"1491748198@qq.com","user_name":"8569326","nick_name":"","password":"e10adc3949ba59abbe56e057f20f883e","question":"","answer":"","sex":"2","birthday":"0000-00-00","user_money":"0.00","frozen_money":"0.00","pay_points":"0","rank_points":"0","address_id":"0","reg_time":"1575584970","last_login":"0","last_time":"0000-00-00 00:00:00","last_ip":"","visit_count":"0","user_rank":"0","is_special":"0","ec_salt":null,"salt":"0","parent_id":"0","flag":"0","alias":"","msn":"","qq":"","office_phone":"","home_phone":"","mobile_phone":"","is_validated":"0","credit_line":"0.00","passwd_question":"","passwd_answer":"","user_picture":"","old_user_picture":"","report_time":"0","drp_parent_id":"0"},{"user_id":"69","aite_id":"","email":"","user_name":"123456789","nick_name":"7362385-375417","password":"be6ee1380e61c346b28c45a1df1c7aeb","question":"","answer":"","sex":"0","birthday":"0000-00-00","user_money":"0.00","frozen_money":"0.00","pay_points":"0","rank_points":"0","address_id":"2","reg_time":"1576708778","last_login":"1576708801","last_time":"0000-00-00 00:00:00","last_ip":"111.121.0.220","visit_count":"2","user_rank":"6","is_special":"0","ec_salt":"8461","salt":"0","parent_id":"0","flag":"0","alias":"","msn":"","qq":"","office_phone":"","home_phone":"","mobile_phone":"13623826364","is_validated":"0","credit_line":"0.00","passwd_question":null,"passwd_answer":null,"user_picture":"","old_user_picture":"","report_time":"0","drp_parent_id":"0"}],"filter":{"page":1,"page_size":15,"record_count":"2","page_count":1},"page_count":1,"record_count":"2"}
-     */
+
 
     @JsonProperty("result")
     private String result;

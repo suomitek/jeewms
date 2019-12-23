@@ -83,7 +83,7 @@ public class dscUtil {
         Map<String, Object> paramMap = getbasepara();
         paramMap.put("method","dsc.order.list.get");
         paramMap.put("page",page);
-        paramMap.put("order_status","1");
+//        paramMap.put("order_status","1");
         String res = HttpUtil.get(baseurl,paramMap);
         return   res;
     }
@@ -123,16 +123,6 @@ public class dscUtil {
     }
 
 
-
-    public  static Map<String, Object> getbasepara(){
-        Map<String, Object> paramMap = new HashMap<>();
-        String baseukey = ResourceUtil.getConfigByName("dsc.key");
-        paramMap.put("app_key",baseukey);
-        paramMap.put("format","json");
-        return paramMap;
-    }
-
-
     public static void saveothercustowm(customerListRes reslist){
         String cusCode = ResourceUtil.getConfigByName("dsc.cuscode");
         SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
@@ -147,6 +137,30 @@ public class dscUtil {
             md.setDianHua(t.getMobilePhone());
             systemService.saveOrUpdate(md);
         }
+    }
+
+    public static void saveordertowm(customerListRes reslist){
+        String cusCode = ResourceUtil.getConfigByName("dsc.cuscode");
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        for( customerListRes.InfoBean.ListBean t:reslist.getInfo().getList()){
+//            MdCusOtherEntity md = systemService.findUniqueByProperty(MdCusOtherEntity.class,"keHuBianMa",t.getUserId());
+//            if(md==null){
+//                md = new MdCusOtherEntity();
+//            }
+//            md.setSuoShuKeHu(cusCode);
+//            md.setKeHuBianMa(t.getUserId());
+//            md.setZhongWenQch(unicodeDecode(t.getUserName()+t.getNickName()));
+//            md.setDianHua(t.getMobilePhone());
+//            systemService.saveOrUpdate(md);
+        }
+    }
+
+    public  static Map<String, Object> getbasepara(){
+        Map<String, Object> paramMap = new HashMap<>();
+        String baseukey = ResourceUtil.getConfigByName("dsc.key");
+        paramMap.put("app_key",baseukey);
+        paramMap.put("format","json");
+        return paramMap;
     }
 
     /**
