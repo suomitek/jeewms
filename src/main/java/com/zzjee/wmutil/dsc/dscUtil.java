@@ -1,6 +1,7 @@
 package com.zzjee.wmutil.dsc;
 
 import com.xiaoleilu.hutool.http.HttpUtil;
+import com.zzjee.md.entity.MdCusOtherEntity;
 import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.wmutil.uasloginres;
 import org.jeecgframework.core.util.ApplicationContextUtil;
@@ -42,11 +43,56 @@ public class dscUtil {
         }
     }
 
+
+    public static void updateCusFromDsc(){
+        String res = getCustomer("1");
+        System.out.println(res);
+        int pagecount = 1;
+        customerListRes reslist =   JSONHelper.fromJsonToObject(res,customerListRes.class);
+        saveothercustowm(reslist);
+        pagecount = reslist.getInfo().getPageCount();
+        for(int i =2;i<=pagecount;i++){
+            String page = Integer.toString(i);
+            res = getGoods(page);
+            reslist =   JSONHelper.fromJsonToObject(res,customerListRes.class);
+            saveothercustowm(reslist);
+        }
+    }
+
+
     public static String getGoods(String page){
         String baseurl = ResourceUtil.getConfigByName("dsc.url");
         Map<String, Object> paramMap = getbasepara();
         paramMap.put("method","dsc.goods.list.get");
         paramMap.put("page",page);
+        String res = HttpUtil.get(baseurl,paramMap);
+        return   res;
+    }
+
+    public static String getCustomer(String page){
+        String baseurl = ResourceUtil.getConfigByName("dsc.url");
+        Map<String, Object> paramMap = getbasepara();
+        paramMap.put("method","dsc.user.list.get");
+        paramMap.put("page",page);
+        String res = HttpUtil.get(baseurl,paramMap);
+        return   res;
+    }
+
+    public static String getOrderList(String page){
+        String baseurl = ResourceUtil.getConfigByName("dsc.url");
+        Map<String, Object> paramMap = getbasepara();
+        paramMap.put("method","dsc.order.list.get");
+        paramMap.put("page",page);
+        paramMap.put("order_status","1");
+        String res = HttpUtil.get(baseurl,paramMap);
+        return   res;
+    }
+
+    public static String getOrder(String orderSn){
+        String baseurl = ResourceUtil.getConfigByName("dsc.url");
+        Map<String, Object> paramMap = getbasepara();
+        paramMap.put("method","dsc.order.info.get");
+        paramMap.put("order_sn",orderSn);
         String res = HttpUtil.get(baseurl,paramMap);
         return   res;
     }
@@ -84,6 +130,23 @@ public class dscUtil {
         paramMap.put("app_key",baseukey);
         paramMap.put("format","json");
         return paramMap;
+    }
+
+
+    public static void saveothercustowm(customerListRes reslist){
+        String cusCode = ResourceUtil.getConfigByName("dsc.cuscode");
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        for( customerListRes.InfoBean.ListBean t:reslist.getInfo().getList()){
+            MdCusOtherEntity md = systemService.findUniqueByProperty(MdCusOtherEntity.class,"keHuBianMa",t.getUserId());
+            if(md==null){
+                md = new MdCusOtherEntity();
+            }
+            md.setSuoShuKeHu(cusCode);
+            md.setKeHuBianMa(t.getUserId());
+            md.setZhongWenQch(unicodeDecode(t.getUserName()+t.getNickName()));
+            md.setDianHua(t.getMobilePhone());
+            systemService.saveOrUpdate(md);
+        }
     }
 
     /**

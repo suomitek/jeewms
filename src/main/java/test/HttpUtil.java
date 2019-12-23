@@ -108,9 +108,9 @@ public class HttpUtil {
 	}
 	
 	public static void main(String args[]){
-		dscUtil.updateGoodsFromDsc();
-//		    String res = dscUtil.getGoods("1");
-//		System.out.println(res);
+//		dscUtil.updateGoodsFromDsc();
+		    String res = dscUtil.getOrder("1");
+		System.out.println(res);
 
 
 //		String key="26F72780372E84B6CFAED6F7B19139CC47B1912B6CAED753";
