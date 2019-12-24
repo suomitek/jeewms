@@ -1,6 +1,6 @@
 package com.zzjee.wmutil.dsc;
 
-import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ public class orderGoodsRes {
      * info : {"list":[{"rec_id":"6","order_id":"9","order_sn":null,"user_id":"0","cart_recid":"","goods_id":"923","goods_name":"YSL/圣罗兰 莹亮纯魅唇膏","goods_sn":"ECS000923","product_id":"0","goods_number":"2","market_price":"320.00","goods_price":"171.00","goods_attr":"","send_number":"0","is_real":"1","extension_code":"","parent_id":"0","is_gift":"0","model_attr":"0","goods_attr_id":"","ru_id":"0","shopping_fee":"0.00","warehouse_id":"1","area_id":"4","is_single":"0","freight":"0","tid":"0","shipping_fee":"0.00","drp_money":"0.00","is_distribution":"0","commission_rate":"0","stages_qishu":"-1"},{"rec_id":"7","order_id":"10","order_sn":null,"user_id":"0","cart_recid":"","goods_id":"922","goods_name":"MAC/魅可 立体绒光修容饼","goods_sn":"ECS000922","product_id":"0","goods_number":"10","market_price":"340.00","goods_price":"173.00","goods_attr":"","send_number":"0","is_real":"1","extension_code":"","parent_id":"0","is_gift":"0","model_attr":"0","goods_attr_id":"","ru_id":"0","shopping_fee":"0.00","warehouse_id":"0","area_id":"0","is_single":"0","freight":"0","tid":"0","shipping_fee":"0.00","drp_money":"0.00","is_distribution":"0","commission_rate":"0","stages_qishu":"-1"},{"rec_id":"8","order_id":"17","order_sn":null,"user_id":"0","cart_recid":"","goods_id":"2345","goods_name":"爱他美3段婴儿奶粉900克","goods_sn":"PGT002345","product_id":"0","goods_number":"1","market_price":"111.60","goods_price":"93.00","goods_attr":"","send_number":"0","is_real":"1","extension_code":"","parent_id":"0","is_gift":"0","model_attr":"0","goods_attr_id":"","ru_id":"0","shopping_fee":"0.00","warehouse_id":"0","area_id":"0","is_single":"0","freight":"0","tid":"0","shipping_fee":"0.00","drp_money":"0.00","is_distribution":"0","commission_rate":"0","stages_qishu":"-1"}],"filter":{"page":1,"page_size":15,"record_count":"3","page_count":1},"page_count":1,"record_count":"3"}
      */
 
-    @SerializedName("result")
+    @JsonProperty("result")
     private String result;
-    @SerializedName("error")
+    @JsonProperty("error")
     private int error;
-    @SerializedName("msg")
+    @JsonProperty("msg")
     private String msg;
-    @SerializedName("info")
+    @JsonProperty("info")
     private InfoBean info;
 
     public String getResult() {
@@ -63,13 +63,13 @@ public class orderGoodsRes {
          * record_count : 3
          */
 
-        @SerializedName("filter")
+        @JsonProperty("filter")
         private FilterBean filter;
-        @SerializedName("page_count")
+        @JsonProperty("page_count")
         private int pageCount;
-        @SerializedName("record_count")
+        @JsonProperty("record_count")
         private String recordCount;
-        @SerializedName("list")
+        @JsonProperty("list")
         private List<ListBean> list;
 
         public FilterBean getFilter() {
@@ -112,13 +112,13 @@ public class orderGoodsRes {
              * page_count : 1
              */
 
-            @SerializedName("page")
+            @JsonProperty("page")
             private int page;
-            @SerializedName("page_size")
+            @JsonProperty("page_size")
             private int pageSize;
-            @SerializedName("record_count")
+            @JsonProperty("record_count")
             private String recordCount;
-            @SerializedName("page_count")
+            @JsonProperty("page_count")
             private int pageCount;
 
             public int getPage() {
@@ -190,69 +190,69 @@ public class orderGoodsRes {
              * stages_qishu : -1
              */
 
-            @SerializedName("rec_id")
+            @JsonProperty("rec_id")
             private String recId;
-            @SerializedName("order_id")
+            @JsonProperty("order_id")
             private String orderId;
-            @SerializedName("order_sn")
+            @JsonProperty("order_sn")
             private Object orderSn;
-            @SerializedName("user_id")
+            @JsonProperty("user_id")
             private String userId;
-            @SerializedName("cart_recid")
+            @JsonProperty("cart_recid")
             private String cartRecid;
-            @SerializedName("goods_id")
+            @JsonProperty("goods_id")
             private String goodsId;
-            @SerializedName("goods_name")
+            @JsonProperty("goods_name")
             private String goodsName;
-            @SerializedName("goods_sn")
+            @JsonProperty("goods_sn")
             private String goodsSn;
-            @SerializedName("product_id")
+            @JsonProperty("product_id")
             private String productId;
-            @SerializedName("goods_number")
+            @JsonProperty("goods_number")
             private String goodsNumber;
-            @SerializedName("market_price")
+            @JsonProperty("market_price")
             private String marketPrice;
-            @SerializedName("goods_price")
+            @JsonProperty("goods_price")
             private String goodsPrice;
-            @SerializedName("goods_attr")
+            @JsonProperty("goods_attr")
             private String goodsAttr;
-            @SerializedName("send_number")
+            @JsonProperty("send_number")
             private String sendNumber;
-            @SerializedName("is_real")
+            @JsonProperty("is_real")
             private String isReal;
-            @SerializedName("extension_code")
+            @JsonProperty("extension_code")
             private String extensionCode;
-            @SerializedName("parent_id")
+            @JsonProperty("parent_id")
             private String parentId;
-            @SerializedName("is_gift")
+            @JsonProperty("is_gift")
             private String isGift;
-            @SerializedName("model_attr")
+            @JsonProperty("model_attr")
             private String modelAttr;
-            @SerializedName("goods_attr_id")
+            @JsonProperty("goods_attr_id")
             private String goodsAttrId;
-            @SerializedName("ru_id")
+            @JsonProperty("ru_id")
             private String ruId;
-            @SerializedName("shopping_fee")
+            @JsonProperty("shopping_fee")
             private String shoppingFee;
-            @SerializedName("warehouse_id")
+            @JsonProperty("warehouse_id")
             private String warehouseId;
-            @SerializedName("area_id")
+            @JsonProperty("area_id")
             private String areaId;
-            @SerializedName("is_single")
+            @JsonProperty("is_single")
             private String isSingle;
-            @SerializedName("freight")
+            @JsonProperty("freight")
             private String freight;
-            @SerializedName("tid")
+            @JsonProperty("tid")
             private String tid;
-            @SerializedName("shipping_fee")
+            @JsonProperty("shipping_fee")
             private String shippingFee;
-            @SerializedName("drp_money")
+            @JsonProperty("drp_money")
             private String drpMoney;
-            @SerializedName("is_distribution")
+            @JsonProperty("is_distribution")
             private String isDistribution;
-            @SerializedName("commission_rate")
+            @JsonProperty("commission_rate")
             private String commissionRate;
-            @SerializedName("stages_qishu")
+            @JsonProperty("stages_qishu")
             private String stagesQishu;
 
             public String getRecId() {

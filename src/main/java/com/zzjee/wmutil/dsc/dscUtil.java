@@ -128,7 +128,7 @@ public class dscUtil {
         String baseurl = ResourceUtil.getConfigByName("dsc.url");
         Map<String, Object> paramMap = getbasepara();
         paramMap.put("method","dsc.order.goods.list.get");
-        paramMap.put("order_sn",orderId);
+        paramMap.put("order_id",orderId);
         String res = HttpUtil.get(baseurl,paramMap);
         return   res;
     }
@@ -197,7 +197,7 @@ public class dscUtil {
     public static void saveOneOrder(orderRes orderhead) {
         String  cusCode = ResourceUtil.getConfigByName("dsc.cuscode");
         String  imcuscode =  orderhead.getInfo().getOrderSn();
-        String   order_id =orderhead.getInfo().getMainOrderId();
+        String   order_id =orderhead.getInfo().getOrderId();
         SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
         WmOmNoticeHServiceI wmOmNoticeHService =ApplicationContextUtil.getContext().getBean(WmOmNoticeHServiceI.class);
         WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);

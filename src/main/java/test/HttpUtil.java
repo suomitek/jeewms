@@ -112,7 +112,7 @@ public class HttpUtil {
 //		    String res = dscUtil.getOrderList("1","","");
 //		System.out.println(res);
 
-		String res = dscUtil.getOrderGoods("2019122315252182980");
+		String res = dscUtil.getOrderGoods("20");
 
 		System.out.println("order="+res);
 
