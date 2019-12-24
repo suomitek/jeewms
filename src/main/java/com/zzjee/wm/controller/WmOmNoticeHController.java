@@ -21,6 +21,7 @@ import javax.validation.Validator;
 import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
 import com.zzjee.wm.page.*;
+import com.zzjee.wmutil.dsc.dscUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -980,6 +981,11 @@ public class WmOmNoticeHController extends BaseController {
 				formDate = "2011-01-01";
 			}
 			yyUtil.getSdvl(formDate);
+
+		}
+		if ("DSC".equals(ResourceUtil.getConfigByName("interfacetype"))){
+
+			dscUtil.updateorderFromDsc();
 
 		}
 		if ("UAS".equals(ResourceUtil.getConfigByName("interfacetype"))) {

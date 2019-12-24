@@ -83,9 +83,7 @@
  function  otherimp() {
      var batchdate;
      batchdate = $('input[name="batchdate"]').attr("value");
-     if(batchdate==""){
-         alert("日期不能为空");
-     }else{
+
          var url = "mdCusOtherController.do?doGet&formDate="+batchdate;
          $.ajax({
              async : false,
@@ -103,7 +101,7 @@
          });
          tip("获取成功");
          $('#mdCusOtherList').datagrid('reload',{});
-     }
+
  }
    
  

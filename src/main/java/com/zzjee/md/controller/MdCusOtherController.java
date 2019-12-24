@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zzjee.wmutil.dsc.dscUtil;
 import com.zzjee.wmutil.wmIntUtil;
+import com.zzjee.wmutil.yyUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -209,10 +211,27 @@ public class MdCusOtherController extends BaseController {
 		message = "读取成功";
 
 		try {
-			if(StringUtil.isEmpty(formDate)){
-				formDate = "2011-01-01";
+
+
+
+
+			if ("UAS".equals(ResourceUtil.getConfigByName("interfacetype"))){
+				if(StringUtil.isEmpty(formDate)){
+					formDate = "2011-01-01";
+				}
+				wmIntUtil.getCus(formDate);
+
 			}
-			wmIntUtil.getCus(formDate);
+			if ("DSC".equals(ResourceUtil.getConfigByName("interfacetype"))){
+
+				dscUtil.updateCusFromDsc();
+
+			}
+
+
+
+
+
 			systemService.addLog(message, Globals.Log_Type_UPDATE,
 					Globals.Log_Leavel_INFO);
 		} catch (Exception e) {

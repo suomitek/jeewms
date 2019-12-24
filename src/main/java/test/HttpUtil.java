@@ -110,7 +110,7 @@ public class HttpUtil {
 	public static void main(String args[]){
 //		dscUtil.updateGoodsFromDsc();
 //		    String res = dscUtil.getOrderList("1");
-		String res = dscUtil.getOrder("2019122311217330866");
+		String res = dscUtil.getOrderGoods(4);
 
 		System.out.println(res);
 
