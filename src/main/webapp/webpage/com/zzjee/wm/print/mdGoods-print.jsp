@@ -98,7 +98,6 @@ function printview(){
 
 </head>
 <body style="overflow-y:auto" scroll="no">
-<a class="easyui-linkbutton" style="margin-top:3px" icon="icon-print" href="javascript:printall()">打印</a>
 
 <div class="printdiv"><t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table"  >
 	<table border=0 cellpadding=0 cellspacing=0 width=1000 style='border-collapse:
@@ -162,4 +161,7 @@ function printview(){
 		</tr>
 	</table>
 </t:formvalid></div>
+
+<a class="easyui-linkbutton" style="margin-top:3px" icon="icon-print" href="javascript:printall()">打印</a>
+
 </body>

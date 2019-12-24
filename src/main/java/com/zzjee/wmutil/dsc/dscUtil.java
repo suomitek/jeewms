@@ -124,11 +124,11 @@ public class dscUtil {
         String res = HttpUtil.get(baseurl,paramMap);
         return   res;
     }
-    public static String getOrderGoods(int orderId){
+    public static String getOrderGoods(String orderId){
         String baseurl = ResourceUtil.getConfigByName("dsc.url");
         Map<String, Object> paramMap = getbasepara();
-        paramMap.put("method","dsc.order.goods.info.get");
-        paramMap.put("order_id",orderId);
+        paramMap.put("method","dsc.order.goods.list.get");
+        paramMap.put("order_sn",orderId);
         String res = HttpUtil.get(baseurl,paramMap);
         return   res;
     }
@@ -197,6 +197,7 @@ public class dscUtil {
     public static void saveOneOrder(orderRes orderhead) {
         String  cusCode = ResourceUtil.getConfigByName("dsc.cuscode");
         String  imcuscode =  orderhead.getInfo().getOrderSn();
+        String   order_id =orderhead.getInfo().getMainOrderId();
         SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
         WmOmNoticeHServiceI wmOmNoticeHService =ApplicationContextUtil.getContext().getBean(WmOmNoticeHServiceI.class);
         WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
@@ -217,6 +218,27 @@ public class dscUtil {
             wmOmNoticeH.setDelvMember(orderhead.getInfo().getConsignee());
             wmOmNoticeH.setDelvMobile(orderhead.getInfo().getMobile());
             wmOmNoticeH.setDelvAddr(orderhead.getInfo().getAddress());
+            String orderGoodsRes = getOrderGoods(order_id);
+            orderGoodsRes orderGoods =   JSONHelper.fromJsonToObject(orderGoodsRes,orderGoodsRes.class);
+            for(com.zzjee.wmutil.dsc.orderGoodsRes.InfoBean.ListBean t:orderGoods.getInfo().getList()){
+                WmOmNoticeIEntity wmi = new WmOmNoticeIEntity();
+                wmi.setGoodsId(t.getGoodsId());
+                MvGoodsEntity mvgoods = systemService.findUniqueByProperty(MvGoodsEntity.class, "goodsCode", wmi.getGoodsId());
+                if (mvgoods != null) {
+                    wmi.setGoodsName(mvgoods.getGoodsName());
+                    wmi.setGoodsUnit(mvgoods.getShlDanWei());
+                }
+//                wmi.setGoodsProData(DateUtils.str2Date(billResult.getData().get(s).getDetail().get(k).getPdProdmadedate(), DateUtils.date_sdf));
+                wmi.setGoodsQua(t.getGoodsNumber());
+//                               wmi.setGoodsPrdData(billResult.getData().get(s).getDetail().get(k).getPdProdmadedate2User());
+                wmi.setOtherId(t.getRecId());
+
+                wmomNoticeIListnew.add(wmi);
+
+
+
+            }
+
 //            for (int k = 0; k <order.getInfo().; k++) {
 //                WmOmNoticeIEntity wmi = new WmOmNoticeIEntity();
 //                wmi.setGoodsId(billResult.getData().get(s).getDetail().get(k).getPdProdcode());
