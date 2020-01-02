@@ -20,6 +20,7 @@ import javax.validation.Validator;
 
 import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
+import com.zzjee.wm.entity.*;
 import com.zzjee.wm.page.*;
 import com.zzjee.wmutil.dsc.dscUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -82,13 +83,6 @@ import com.zzjee.api.ResultDO;
 import com.zzjee.md.entity.MdCusEntity;
 import com.zzjee.md.entity.MdCusOtherEntity;
 import com.zzjee.md.entity.MvGoodsEntity;
-import com.zzjee.wm.entity.WmImNoticeHEntity;
-import com.zzjee.wm.entity.WmInQmIEntity;
-import com.zzjee.wm.entity.WmNoticeConfEntity;
-import com.zzjee.wm.entity.WmOmNoticeHEntity;
-import com.zzjee.wm.entity.WmOmNoticeIEntity;
-import com.zzjee.wm.entity.WmOmQmIEntity;
-import com.zzjee.wm.entity.WmPlatIoEntity;
 import com.zzjee.wm.service.WmOmNoticeHServiceI;
 import com.zzjee.wmutil.resResult;
 import com.zzjee.wmutil.sdresult;
@@ -2438,6 +2432,40 @@ public class WmOmNoticeHController extends BaseController {
 			wmOmNoticeIListnew.add(t);
 	   }
 		wmOmNoticeHService.addMain(wmOmNoticeH, wmOmNoticeIListnew);
+		D0.setOK(true);
+		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
+		return new ResponseEntity(D0, HttpStatus.OK);
+
+	}
+
+
+	@RequestMapping(value = "/apicreatetms")
+	@ResponseBody
+	public ResponseEntity<?> createtms(@RequestBody WmTmsNoticeHPage wmOmNoticeHPage ) {
+		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
+		ResultDO D0 = new  ResultDO();
+		//保存
+		List<WmTmsNoticeIEntity> wmOmNoticeIList =  wmOmNoticeHPage.getWmOmNoticeIList();
+		String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeHPage.getOrderTypeCode());
+		wmOmNoticeHPage.setOmNoticeId(noticeid);
+		WmTmsNoticeHEntity wmOmNoticeH = new WmTmsNoticeHEntity();
+		try{
+			MyBeanUtils.copyBeanNotNull2Bean(wmOmNoticeHPage,wmOmNoticeH);
+		}catch(Exception e){
+			logger.info(e.getMessage());
+		}
+		List<WmTmsNoticeIEntity> wmOmNoticeIListnew = new ArrayList<>();
+		for(WmTmsNoticeIEntity t: wmOmNoticeIList){
+			try{
+				MdGoodsEntity md =systemService.findUniqueByProperty(MdGoodsEntity.class,"shpBianMa",t.getGoodsId());
+				t.setCusCode(md.getSuoShuKeHu());
+			}catch ( Exception e){
+
+			}
+
+			wmOmNoticeIListnew.add(t);
+		}
+		wmOmNoticeHService.addMaintms(wmOmNoticeH, wmOmNoticeIListnew);
 		D0.setOK(true);
 		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
 		return new ResponseEntity(D0, HttpStatus.OK);

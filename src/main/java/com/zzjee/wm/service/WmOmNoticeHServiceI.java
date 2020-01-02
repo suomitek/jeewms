@@ -4,6 +4,9 @@ import com.zzjee.wm.entity.WmOmNoticeHEntity;
 import com.zzjee.wm.entity.WmOmNoticeIEntity;
 
 import java.util.List;
+
+import com.zzjee.wm.entity.WmTmsNoticeHEntity;
+import com.zzjee.wm.entity.WmTmsNoticeIEntity;
 import org.jeecgframework.core.common.service.CommonService;
 import java.io.Serializable;
 
@@ -16,6 +19,8 @@ public interface WmOmNoticeHServiceI extends CommonService{
 	 */
 	public void addMain(WmOmNoticeHEntity wmOmNoticeH,
 	        List<WmOmNoticeIEntity> wmOmNoticeIList) ;
+	public void addMaintms(WmTmsNoticeHEntity wmOmNoticeH,
+						List<WmTmsNoticeIEntity> wmOmNoticeIList) ;
 	/**
 	 * 修改一对多
 	 * 

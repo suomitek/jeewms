@@ -369,13 +369,9 @@ public class WaveToFjController extends BaseController {
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
-		String id = waveToFj.getId();
-		URI uri = uriBuilder.path("/rest/waveToFjController/" + id).build().toUri();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(uri);
 
-		return new ResponseEntity(headers, HttpStatus.CREATED);
+
+		return new ResponseEntity(waveToFj, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -2,6 +2,8 @@ package com.zzjee.wm.service.impl;
 import com.zzjee.md.entity.MdCusEntity;
 import com.zzjee.md.entity.MvGoodsEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
+import com.zzjee.wm.entity.WmTmsNoticeHEntity;
+import com.zzjee.wm.entity.WmTmsNoticeIEntity;
 import com.zzjee.wm.service.WmOmNoticeHServiceI;
 
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
@@ -117,6 +119,59 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 
 			//执行新增操作配置的sql增强
  			this.doAddSql(wmOmNoticeH);
+	}
+	public void addMaintms(WmTmsNoticeHEntity wmOmNoticeH,
+						List<WmTmsNoticeIEntity> wmOmNoticeIList){
+		//保存主信息
+		this.save(wmOmNoticeH);
+		Double jishu = 0.00;
+		Double tiji=0.00;
+		Double zhongl = 0.00;
+		Double chang = 0.00;
+		Double kuan = 0.00;
+		Double gao = 0.00;
+		String huowu = "";
+		/**保存-出货商品明细*/
+		for(WmTmsNoticeIEntity wmOmNoticeI:wmOmNoticeIList){
+			//外键设置
+			try{
+				MvGoodsEntity mvgoods = this.findUniqueByProperty(MvGoodsEntity.class, "goodsCode", wmOmNoticeI.getGoodsId()) ;
+				if(mvgoods!=null){
+					huowu=huowu+mvgoods.getGoodsName();
+					wmOmNoticeI.setGoodsName(mvgoods.getGoodsName());
+					try{
+						wmOmNoticeI.setBaseUnit(mvgoods.getBaseunit());
+						wmOmNoticeI.setGoodsUnit(mvgoods.getShlDanWei());
+						if(!mvgoods.getBaseunit().equals(mvgoods.getShlDanWei())){
+							wmOmNoticeI.setBaseGoodscount(String.valueOf(Double.parseDouble(mvgoods.getChlShl())*Double.parseDouble(wmOmNoticeI.getGoodsQua())));
+						}else{
+							wmOmNoticeI.setBaseGoodscount(wmOmNoticeI.getGoodsQua());
+						}
+						try{
+							tiji= tiji+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getTiJiCm());
+							zhongl= zhongl+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getZhlKg());
+//							chang= chang+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.get());
+//							kuan= kuan+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getZhlKg());
+//							gao= gao+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getZhlKg());
+
+							jishu = jishu + Double.parseDouble(wmOmNoticeI.getBaseGoodscount());
+						}catch (Exception e){
+						}
+					}catch (Exception e){
+
+					}
+				}
+			}catch (Exception e){
+			}
+			wmOmNoticeI.setCusCode(wmOmNoticeH.getCusCode());
+			wmOmNoticeI.setPlanSta("N");
+			wmOmNoticeI.setGoodsQuaok("0");
+			wmOmNoticeI.setOmNoticeId(wmOmNoticeH.getOmNoticeId());
+			wmOmNoticeI.setImCusCode(wmOmNoticeH.getImCusCode());
+			wmOmNoticeI.setOmBeizhu(wmOmNoticeH.getOmBeizhu());
+			this.save(wmOmNoticeI);
+		}
+
 	}
 
 	
