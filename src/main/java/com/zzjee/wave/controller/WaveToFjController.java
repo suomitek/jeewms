@@ -1,4 +1,5 @@
 package com.zzjee.wave.controller;
+import com.zzjee.api.ResultDO;
 import com.zzjee.wave.entity.WaveToFjEntity;
 import com.zzjee.wave.service.WaveToFjServiceI;
 import java.util.ArrayList;
@@ -7,12 +8,14 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zzjee.wm.entity.WmOmQmIEntity;
+import com.zzjee.wm.entity.WmToDownGoodsEntity;
 import org.apache.log4j.Logger;
+import org.jeecgframework.core.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.jeecgframework.core.common.controller.BaseController;
@@ -22,14 +25,12 @@ import org.jeecgframework.core.common.model.common.TreeChildCount;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.service.SystemService;
-import org.jeecgframework.core.util.MyBeanUtils;
 
 import java.io.OutputStream;
-import org.jeecgframework.core.util.BrowserUtils;
+
 import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -38,23 +39,19 @@ import org.jeecgframework.poi.excel.entity.TemplateExportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.vo.TemplateExcelConstants;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.jeecgframework.core.util.ResourceUtil;
+
 import java.io.IOException;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.util.Map;
 import java.util.HashMap;
-import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
@@ -342,7 +339,19 @@ public class WaveToFjController extends BaseController {
 		List<WaveToFjEntity> listWaveToFjs=waveToFjService.getList(WaveToFjEntity.class);
 		return listWaveToFjs;
 	}
-	
+	@RequestMapping(value = "/list/tofj",  method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?> list(@RequestParam(value="username", required=false) String username,
+								  @RequestParam(value="searchstr", required=false)String searchstr,
+								  @RequestParam(value="searchstr2", required=false)String searchstr2) {
+		ResultDO D0 = new  ResultDO();
+		D0.setOK(true);
+
+		List<WaveToFjEntity> listWaveToFjs=waveToFjService.getList(WaveToFjEntity.class);
+
+		D0.setObj(listWaveToFjs);
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
@@ -353,24 +362,25 @@ public class WaveToFjController extends BaseController {
 		return new ResponseEntity(task, HttpStatus.OK);
 	}
 
+
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> create(@RequestBody WaveToFjEntity waveToFj, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<?> create(@RequestParam String waveToFjstr , UriComponentsBuilder uriBuilder) {
+		ResultDO D0 = new  ResultDO();
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<WaveToFjEntity>> failures = validator.validate(waveToFj);
-		if (!failures.isEmpty()) {
-			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
-		}
-
+		WaveToFjEntity waveToFj =  (WaveToFjEntity)JSONHelper.json2Object(waveToFjstr,WaveToFjEntity.class);
 		//保存
 		try{
-			waveToFjService.save(waveToFj);
-		} catch (Exception e) {
+			WmOmQmIEntity wmOmQmI = systemService.getEntity(
+					WmOmQmIEntity.class, waveToFj.getId());
+			if (wmOmQmI != null&&wmOmQmI.getBinSta().equals("H")) {
+				wmOmQmI.setBinSta("Y");
+				systemService.saveOrUpdate(wmOmQmI);
+			}
+			} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-
-
 		return new ResponseEntity(waveToFj, HttpStatus.OK);
 	}
 
