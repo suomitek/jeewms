@@ -435,6 +435,20 @@ public class SmsSendTask {
 								+ "  from wv_stock ws, md_bin mb  where "
 								+ "   ws.ku_wei_bian_ma = mb.ku_wei_bian_ma  and mb.ku_wei_lei_xing = '良品区' and mb.ting_yong <> 'Y' and (ws.kuctype = '库存' or ws.kuctype = '待下架')"
 								;
+						String aldown = "no";
+						try {
+							aldown = ResourceUtil.getConfigByName("wm.alldown");
+						}catch (Exception e){
+
+						}
+
+						if("yes".equals(aldown)){
+							tsql = "select ws.base_unit,ws.zhong_wen_qch, ws.ku_wei_bian_ma,ws.bin_id,ws.shp_ming_cheng,cast(sum(ws.base_goodscount) as signed) as goods_qua, mb.qu_huo_ci_xu, ws.goods_pro_data"
+									+ "  from wv_stock ws, md_bin mb  where "
+									+ "   ws.ku_wei_bian_ma = mb.ku_wei_bian_ma    and mb.ting_yong <> 'Y' and (ws.kuctype = '库存' or ws.kuctype = '待下架')"
+							;
+						}
+
 						if(StringUtil.isNotEmpty(tuopanma)) {
 							tsql = tsql + " and ws.bin_id like '%"+tuopanma + "%' ";
 						}
@@ -476,6 +490,15 @@ public class SmsSendTask {
 									String tsqlz = "select ws.base_unit,ws.zhong_wen_qch, ws.ku_wei_bian_ma,ws.bin_id,ws.shp_ming_cheng,cast(sum(ws.base_goodscount) as signed) as goods_qua, mb.qu_huo_ci_xu, ws.goods_pro_data"
 											+ "  from wv_stock ws, md_bin mb  where "
 											+ "   ws.ku_wei_bian_ma = mb.ku_wei_bian_ma  and mb.ku_wei_lei_xing = '良品区' and mb.ting_yong <> 'Y' and (ws.kuctype = '库存' or ws.kuctype = '待下架')";
+
+
+									if("yes".equals(aldown)){
+										tsqlz = "select ws.base_unit,ws.zhong_wen_qch, ws.ku_wei_bian_ma,ws.bin_id,ws.shp_ming_cheng,cast(sum(ws.base_goodscount) as signed) as goods_qua, mb.qu_huo_ci_xu, ws.goods_pro_data"
+												+ "  from wv_stock ws, md_bin mb  where "
+												+ "   ws.ku_wei_bian_ma = mb.ku_wei_bian_ma    and mb.ting_yong <> 'Y' and (ws.kuctype = '库存' or ws.kuctype = '待下架')";
+
+									}
+
 									if (StringUtil.isNotEmpty(tuopanma)) {
 										tsqlz = tsqlz + "  and  ws.bin_id like '%" + tuopanma + "%' ";
 									}
