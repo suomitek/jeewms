@@ -201,7 +201,6 @@ public class WaveToDownController extends BaseController {
 	/**
 	 * 更新wave_to_down
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -389,6 +388,7 @@ public class WaveToDownController extends BaseController {
                 wmToDownGoods.setOrderType("01");//默认为01
                 systemService.save(wmToDownGoods);
                 wmOmQmI.setBinSta("H");
+				wmOmQmI.setFirstRq(waveToDown.getFirstRq());
                 systemService.saveOrUpdate(wmOmQmI);
             }
 

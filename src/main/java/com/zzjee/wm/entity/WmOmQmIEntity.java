@@ -125,6 +125,11 @@ public class WmOmQmIEntity implements java.io.Serializable {
 	private java.lang.String baoZhiq;
 	private java.lang.String shpGuiGe;
 	private java.lang.String pickNotice;
+	@Excel(name="firstRq")
+	private String firstRq;
+	/**secondRq*/
+	@Excel(name="secondRq")
+	private String secondRq;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -680,7 +685,38 @@ public class WmOmQmIEntity implements java.io.Serializable {
 	public java.lang.String getShpGuiGe(){
 		return this.shpGuiGe;
 	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  firstRq
+	 */
+	@Column(name ="FIRST_RQ",nullable=true,length=45)
+	public String getFirstRq(){
+		return this.firstRq;
+	}
 
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  firstRq
+	 */
+	public void setFirstRq(String firstRq){
+		this.firstRq = firstRq;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  secondRq
+	 */
+	@Column(name ="SECOND_RQ",nullable=true,length=45)
+	public String getSecondRq(){
+		return this.secondRq;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  secondRq
+	 */
+	public void setSecondRq(String secondRq){
+		this.secondRq = secondRq;
+	}
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  商品规格
