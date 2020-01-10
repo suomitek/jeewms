@@ -1,10 +1,16 @@
 package com.zzjee.tms.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.tms.entity.DdPage;
 import com.zzjee.tms.entity.TmsMdDzEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
 import com.zzjee.tms.service.TmsYwDingdanServiceI;
+import com.zzjee.wm.entity.WmOmNoticeHEntity;
+import com.zzjee.wm.entity.WmOmNoticeIEntity;
+import com.zzjee.wm.entity.WmTmsNoticeHEntity;
+import com.zzjee.wm.service.WmOmNoticeHServiceI;
+import com.zzjee.wmutil.wmUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -75,8 +81,9 @@ public class TmsYwDingdanController extends BaseController {
 	private Validator validator;
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
-	
 
+	@Autowired
+	private WmOmNoticeHServiceI wmOmNoticeHService;
 
 	/**
 	 * 运输订单列表 页面跳转
@@ -397,10 +404,77 @@ public class TmsYwDingdanController extends BaseController {
 				tmsYwDingdanService.updateEntitie(tmsYwDingdan);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
-			for(String id1:id.split(",")) {
+			Map<String,String> maphz = new HashMap<>();
+
+			for(String id1:id.split(",")) {//计算总货主和单数
+				TmsYwDingdanEntity tmsYwDingdan1 = systemService.getEntity(TmsYwDingdanEntity.class,
+						id1);
+				WmTmsNoticeHEntity wmsom = systemService.findUniqueByProperty(WmTmsNoticeHEntity.class,"omNoticeId",tmsYwDingdan1.getFadh());
+				if(!maphz.containsKey(wmsom.getCusCode())){
+					maphz.put(wmsom.getCusCode(),wmsom.getOmNoticeId());
+				}else{
+					String ys = maphz.get(wmsom.getCusCode());
+					ys = ys+";"+wmsom.getOmNoticeId();
+					maphz.put(wmsom.getCusCode(),ys);
+				}
+			}
+			Set<String> keySets = maphz.keySet();
+			Iterator<String> ki = keySets.iterator();
+ 			while(ki.hasNext()){
+				String mapkey = ki.next();
+				String mapvv = maphz.get(mapkey);
+				String[]   strva= mapkey.split(";");
+				String sqla = "(" ;
+				for(int a = 0;a<strva.length;a++){
+					if(a != strva.length -1){
+						sqla =  sqla + "'" +strva[a]+"',";
+					}else{
+						sqla =  sqla + "'" +strva[a]+"'";
+					}
+				}
+			sqla =		sqla + ") ";
+			String tsql = "SELECT goods_id,sum(goods_qua) as goodsqua FROM wms.tms_om_notice_i where om_notice_id in " +
+					sqla+
+					"  group by goods_id";
+
+				List<Map<String, Object>> resultz = systemService
+						.findForJdbc(tsql);
+				System.out.print("****************tsqlz" + tsql);
+				WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
+				String noticeid = wmUtil.getNextomNoticeId("");
+				wmOmNoticeH.setOmNoticeId(noticeid);
+				List<WmOmNoticeIEntity> wmOmNoticeIListnew = new ArrayList<>();
+				wmOmNoticeH.setCusCode(mapkey);
+				if (resultz != null && resultz.size() > 0) {
+					for (int i = 0; i < resultz.size(); i++) {
+						WmOmNoticeIEntity t = new  WmOmNoticeIEntity();
+						String  goods_id = "";
+						try {
+							goods_id=  resultz.get(i)
+									.get("goods_id").toString() ;
+						} catch (Exception e) {
+
+						}
+						String bin_qua =  resultz.get(i)
+								.get("goodsqua").toString();
+						t.setGoodsId(goods_id);
+						t.setGoodsQua(bin_qua);
+						wmOmNoticeIListnew.add(t);
+					}
+				}
+
+
+
+
+
+				wmOmNoticeHService.addMain(wmOmNoticeH, wmOmNoticeIListnew);
+
 
 
 			}
+
+
+
 			}catch(Exception e){
 			e.printStackTrace();
 			message = "运输订单派车失败";

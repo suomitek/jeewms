@@ -2446,7 +2446,7 @@ public class WmOmNoticeHController extends BaseController {
 		ResultDO D0 = new  ResultDO();
 		//保存
 		List<WmTmsNoticeIEntity> wmOmNoticeIList =  wmOmNoticeHPage.getWmOmNoticeIList();
-		String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeHPage.getOrderTypeCode());
+		String noticeid = wmUtil.getNextomNoticeIdtms(wmOmNoticeHPage.getOrderTypeCode());
 		wmOmNoticeHPage.setOmNoticeId(noticeid);
 		WmTmsNoticeHEntity wmOmNoticeH = new WmTmsNoticeHEntity();
 		try{

@@ -110,7 +110,44 @@ public class wmUtil {
 		return  noticeid;
 	}
 
+	public static String getNextomNoticeIdtms(String orderType){
+		SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+		Map<String, Object> countMap = systemService
+				.findOneForJdbc("SELECT cast(right(ifnull((om_notice_id),0),4)+1 as SIGNED) as count FROM tms_om_notice_h  t where  TO_DAYS(t.create_date) = TO_DAYS(NOW()) order by create_date desc limit 1");
+		String noticeid = null;
+		int newcount = 1;
 
+		try{
+			newcount=	((Long) countMap.get("count")).intValue();
+		}catch (Exception e){
+		}
+		if (StringUtil.isEmpty(orderType)){
+			orderType = "11";
+		}
+		if(orderType.equals("19")){
+			noticeid = "QTCK"
+					+ DateUtils.date2Str(new Date(), DateUtils.yyyyMMdd)
+					+ "-"
+					+ StringUtil.leftPad(
+					newcount, 4,
+					'0');
+		}else if (orderType.equals("11")){
+			noticeid = "CK"
+					+ DateUtils.date2Str(new Date(), DateUtils.yyyyMMdd)
+					+ "-"
+					+ StringUtil.leftPad(
+					newcount, 4,
+					'0');
+		}else {
+			noticeid = "QT"
+					+ DateUtils.date2Str(new Date(), DateUtils.yyyyMMdd)
+					+ "-"
+					+ StringUtil.leftPad(
+					newcount, 4,
+					'0');
+		}
+		return  noticeid;
+	}
 	public static String getNextomNoticeId(String orderType){
 		SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
 		Map<String, Object> countMap = systemService
