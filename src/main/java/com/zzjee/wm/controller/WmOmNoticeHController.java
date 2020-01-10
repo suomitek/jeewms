@@ -2474,6 +2474,8 @@ public class WmOmNoticeHController extends BaseController {
 		tms.setShrdh(wmOmNoticeH.getDelvAddr());//收货人地址
 		tms.setBy1(wmOmNoticeH.getReMember());//区域
 		tms.setFadh(noticeid);
+		tms.setZhuangtai("已下单");
+		tms.setFahuoren(wmOmNoticeH.getPiClass());//配送点
 		systemService.save(tms);
 		D0.setOK(true);
 		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.

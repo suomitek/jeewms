@@ -192,17 +192,17 @@ public class TmsYwDingdanController extends BaseController {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.eq("zhuangtai","已下单");
-		TSUser user = ResourceUtil.getSessionUser();
-		if(!StringUtil.isEmpty(user.getCurrentDepart().getOrgCode())){
-			cq.like("sysOrgCode",user.getCurrentDepart().getOrgCode()+"%");
-
-		}
-		if(!StringUtil.isEmpty(user.getUserType())){
-			if(user.getUserType().equals("4")){
-				cq.eq("username",user.getUserName());
-			}
-
-		}
+//		TSUser user = ResourceUtil.getSessionUser();
+//		if(!StringUtil.isEmpty(user.getCurrentDepart().getOrgCode())){
+//			cq.like("sysOrgCode",user.getCurrentDepart().getOrgCode()+"%");
+//
+//		}
+//		if(!StringUtil.isEmpty(user.getUserType())){
+//			if(user.getUserType().equals("4")){
+//				cq.eq("username",user.getUserName());
+//			}
+//
+//		}
 		cq.add();
 		this.tmsYwDingdanService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
