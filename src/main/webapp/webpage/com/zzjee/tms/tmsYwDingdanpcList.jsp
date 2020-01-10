@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tmsYwDingdanList" sortName="fadh" checkbox="true" pagination="true" fitColumns="false" fit="false"  title="派车管理"  actionUrl="tmsYwDingdanController.do?datagridpc" idField="id"   queryMode="group">
+  <t:datagrid name="tmsYwDingdanList" sortName="fadh" checkbox="true" pageSize="500" pagination="true" fitColumns="false" fit="false"  title="派车管理"  actionUrl="tmsYwDingdanController.do?datagridpc" idField="id"   queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -82,14 +82,21 @@
          alert("司机和车号不能为空");
      }else {
          var rows = $('#tmsYwDingdanList').datagrid('getSelections');
+
+         var ids = [];
+         for (var i = 0; i < rows.length; i++) {
+             ids.push(rows[i][id]);
+         }
+
+
          if (rows.length > 0) {
-             for (var i = 0; i < rows.length; i++) {
+             // for (var i = 0; i < rows.length; i++) {
                  var url = "tmsYwDingdanController.do?dopc";
                  var formData = new Object();
 
                  formData['siji'] = siji;
                  formData['chehao'] = chehao;
-                 formData['id'] = rows[i].id ;
+                 formData['id'] = ids.join(',');
                  $.ajax({
                      async: false,
                      cache: false,
@@ -105,7 +112,7 @@
                          }
                      }
                  });
-             }
+             // }
              tip("派车成功");
              $('#tmsYwDingdanList').datagrid('reload', {});
          }

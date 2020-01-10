@@ -232,12 +232,12 @@ public class TmsYwDingdanController extends BaseController {
 //			cq.like("sysOrgCode",user.getCurrentDepart().getOrgCode()+"%");
 //
 //		}
-		if(!StringUtil.isEmpty(user.getUserType())){
-			if(user.getUserType().equals("4")){
-				cq.eq("siji",user.getUserName());
-			}
-
-		}
+//		if(!StringUtil.isEmpty(user.getUserType())){
+//			if(user.getUserType().equals("4")){
+//				cq.eq("siji",user.getUserName());
+//			}
+//
+//		}
 //		if(!StringUtil.isEmpty(user.getUserType())){
 //			if(user.getUserType().equals("4")){
 //				cq.eq("username",user.getUserName());
@@ -385,16 +385,23 @@ public class TmsYwDingdanController extends BaseController {
 	public AjaxJson dopc(String id, String siji, String chehao, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		TmsYwDingdanEntity tmsYwDingdan = systemService.getEntity(TmsYwDingdanEntity.class, id);
-		message = "运输订单派车成功";
+ 		message = "运输订单派车成功";
 		try{
-			tmsYwDingdan.setZhuangtai("已派车");
-			tmsYwDingdan.setSiji(siji);
-			tmsYwDingdan.setChehao(chehao);
-//			tmsYwDingdan.setYjsdsj(DateUtils.str2Date(yjsdsj,DateUtils.datetimeFormat));
-			tmsYwDingdanService.updateEntitie(tmsYwDingdan);
-			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-		}catch(Exception e){
+			for(String id1:id.split(",")) {
+				TmsYwDingdanEntity tmsYwDingdan = systemService.getEntity(TmsYwDingdanEntity.class,
+						id1
+				);
+				tmsYwDingdan.setZhuangtai("已派车");
+				tmsYwDingdan.setSiji(siji);
+				tmsYwDingdan.setChehao(chehao);
+				tmsYwDingdanService.updateEntitie(tmsYwDingdan);
+				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
+			}
+			for(String id1:id.split(",")) {
+
+
+			}
+			}catch(Exception e){
 			e.printStackTrace();
 			message = "运输订单派车失败";
 			throw new BusinessException(e.getMessage());
@@ -437,14 +444,14 @@ public class TmsYwDingdanController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		TmsYwDingdanEntity tmsYwDingdan = systemService.getEntity(TmsYwDingdanEntity.class, id);
-		message = "运输订单装车成功";
+		message = "运输订单到WMS成功";
 		try{
 			tmsYwDingdan.setZhuangtai("已装车");
 			tmsYwDingdanService.updateEntitie(tmsYwDingdan);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "运输订单装车失败";
+			message = "运输订单到WMS失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
