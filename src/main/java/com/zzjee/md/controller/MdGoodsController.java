@@ -15,6 +15,7 @@ import javax.validation.Validator;
 import com.zzjee.md.entity.MdCusEntity;
 import com.zzjee.wm.entity.WmOmQmIEntity;
 import com.zzjee.wm.page.WmOmNoticeImpnewPage;
+import com.zzjee.wm.page.WmTmsNoticeHPage;
 import com.zzjee.wmutil.dsc.dscUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -37,12 +38,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -573,6 +569,43 @@ public class MdGoodsController extends BaseController {
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
 
+
+	@RequestMapping(value = "/apicreategoods")
+	@ResponseBody
+	public ResponseEntity<?> creategoods(@RequestBody MdGoodsEntity mdGoodsEntity ) {
+		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
+		ResultDO D0 = new ResultDO();
+		try {
+			MdGoodsEntity t = systemService.findUniqueByProperty(MdGoodsEntity.class,"shpBianMa",mdGoodsEntity.getShpBianMa());
+			if(t!=null){
+				MyBeanUtils.copyBeanNotNull2Bean(mdGoodsEntity,t);
+				mdGoodsService.saveOrUpdate(t);
+			}else{
+				mdGoodsService.save(mdGoodsEntity);
+
+			}
+
+
+			try{
+				MdCusEntity mdcus1 = systemService.findUniqueByProperty(MdCusEntity.class, "keHuBianMa", mdGoodsEntity.getSuoShuKeHu());
+				if(mdcus1==null){
+					mdcus1 = new  MdCusEntity();
+					mdcus1.setKeHuBianMa(mdGoodsEntity.getSuoShuKeHu());
+					mdcus1.setZhongWenQch(mdGoodsEntity.getCusName());
+					systemService.save(mdcus1);
+ 				}
+
+			}catch(Exception e){
+
+			}
+
+			D0.setOK(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			D0.setOK(false);
+		}
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/addgoods", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

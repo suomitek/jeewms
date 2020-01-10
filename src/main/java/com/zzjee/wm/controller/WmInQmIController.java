@@ -269,6 +269,7 @@ public class WmInQmIController extends BaseController {
 			wmToUpGoodsEntity.setCusCode(wmInQmIEntity.getCusCode());
 			wmToUpGoodsEntity.setGoodsName(wmInQmIEntity.getGoodsName());
 			wmToUpGoodsEntity.setActTypeCode("01");
+			wmToUpGoodsEntity.setWmToUpId(wmInQmIEntity.getId());
 //			String sql = "select     md.suo_shu_ke_hu as cuscode from    md_bin md  where    md.ku_wei_bian_ma = '"
 //					+ wmInQmIEntity.getBinId() + "'";
 //			Map<String, Object> binMap = systemService.findOneForJdbc(sql);

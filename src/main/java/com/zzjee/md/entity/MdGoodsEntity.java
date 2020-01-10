@@ -42,6 +42,10 @@ public class MdGoodsEntity implements java.io.Serializable {
 	/**所属客户*/
 	@Excel(name="所属客户")
 	private java.lang.String suoShuKeHu;
+	@Excel(name="客户名称")
+	private java.lang.String cusName;
+	@Excel(name="配送点")
+	private java.lang.String peisongdian;
 	/**商品名称*/
 	@Excel(name="商品名称")
 	private java.lang.String shpMingCheng;
@@ -892,5 +896,24 @@ public class MdGoodsEntity implements java.io.Serializable {
 
 	public void setRwMingCheng(String rwMingCheng) {
 		this.rwMingCheng = rwMingCheng;
+	}
+
+
+	@Column(name ="cus_name",nullable=true,length=32)
+	public String getCusName() {
+		return cusName;
+	}
+
+	public void setCusName(String cusName) {
+		this.cusName = cusName;
+	}
+
+	@Column(name ="peisongdian",nullable=true,length=32)
+	public String getPeisongdian() {
+		return peisongdian;
+	}
+
+	public void setPeisongdian(String peisongdian) {
+		this.peisongdian = peisongdian;
 	}
 }
