@@ -5,7 +5,9 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="waveToDownList" checkbox="true" pagination="true" fitColumns="false" title="波次下架" actionUrl="waveToDownController.do?datagrid" idField="id" fit="true" queryMode="group">
     <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-    <t:dgCol title="创建人登录名称"  field="createBy"    queryMode="group"  width="120"></t:dgCol>
+      <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
+
+      <t:dgCol title="创建人登录名称"  field="createBy"    queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="创建人名称"  field="createName"    queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="货主"  field="cusCode"    queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="客户名称"  field="cusName"  query="true"  queryMode="single"  width="120"></t:dgCol>
@@ -26,8 +28,9 @@
     <%--<t:dgCol title="by3"  field="by3"    queryMode="group"  width="120"></t:dgCol>--%>
     <%--<t:dgCol title="by4"  field="by4"    queryMode="group"  width="120"></t:dgCol>--%>
     <%--<t:dgCol title="by5"  field="by5"    queryMode="group"  width="120"></t:dgCol>--%>
-   <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
-   <%--<t:dgDelOpt title="删除" url="waveToDownController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
+      <t:dgFunOpt title="波次拣货单" funname="doprint(id)"  urlclass="ace_button"   exp="firstRq#ne#已打印"   />
+
+      <%--<t:dgDelOpt title="删除" url="waveToDownController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="waveToDownController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="编辑" icon="icon-edit" url="waveToDownController.do?goUpdate" funname="update"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="waveToDownController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
@@ -42,8 +45,13 @@
  <script type="text/javascript">
  $(document).ready(function(){
  });
- 
-   
+
+ function doprint(id){
+     var url = "waveToDownController.do?doPrintpage&waveid="+id;
+     createdetailwindow(" 波次拣货单", url, 1200, 800);
+
+     // window.open(url);
+ }
  
 //导入
 function ImportXls() {

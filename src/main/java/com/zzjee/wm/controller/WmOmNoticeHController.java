@@ -2459,6 +2459,7 @@ public class WmOmNoticeHController extends BaseController {
 			try{
 				MdGoodsEntity md =systemService.findUniqueByProperty(MdGoodsEntity.class,"shpBianMa",t.getGoodsId());
 				t.setCusCode(md.getSuoShuKeHu());
+				wmOmNoticeH.setCusCode(md.getSuoShuKeHu());
 			}catch ( Exception e){
 
 			}

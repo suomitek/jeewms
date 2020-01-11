@@ -423,7 +423,7 @@ public class TmsYwDingdanController extends BaseController {
  			while(ki.hasNext()){
 				String mapkey = ki.next();
 				String mapvv = maphz.get(mapkey);
-				String[]   strva= mapkey.split(";");
+				String[]   strva= mapvv.split(";");
 				String sqla = "(" ;
 				for(int a = 0;a<strva.length;a++){
 					if(a != strva.length -1){

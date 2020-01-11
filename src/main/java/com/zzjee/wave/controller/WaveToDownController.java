@@ -1,13 +1,20 @@
 package com.zzjee.wave.controller;
 import com.zzjee.api.ResultDO;
+import com.zzjee.md.entity.MdCusEntity;
+import com.zzjee.md.entity.MdCusOtherEntity;
+import com.zzjee.md.entity.MvGoodsEntity;
 import com.zzjee.wave.entity.WaveToDownEntity;
 import com.zzjee.wave.service.WaveToDownServiceI;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zzjee.wm.entity.WmOmNoticeHEntity;
+import com.zzjee.wm.entity.WmOmNoticeIEntity;
 import com.zzjee.wm.entity.WmOmQmIEntity;
 import com.zzjee.wm.entity.WmToDownGoodsEntity;
 import org.apache.log4j.Logger;
@@ -105,7 +112,23 @@ public class WaveToDownController extends BaseController {
 	 * @param dataGrid
 	 * @param user
 	 */
+	@RequestMapping(params = "doPrintpage")
+	public ModelAndView doPrint(String waveid,HttpServletRequest request) {
+		String hql = "from WmOmQmIEntity where waveId = ? ";
+		List<WmOmQmIEntity> wavelist = systemService.findHql(hql,waveid);
+		for(WmOmQmIEntity t: wavelist ){
+			t.setFirstRq("已打印");
+			systemService.updateEntitie(t);
+		}
+		request.setAttribute("kprq",DateUtils.date2Str(DateUtils.date_sdf));
+		request.setAttribute("comname", ResourceUtil.getConfigByName("comname"));
+		request.setAttribute("waveid",waveid);
+		String hqlwave = "from WaveToDownEntity where waveId = ?";
+		List<WaveToDownEntity> wmOmQmIEntityList  = systemService.findHql(hql,waveid);
+		request.setAttribute("wmOmQmIList", wmOmQmIEntityList);
 
+		return new ModelAndView("com/zzjee/wm/print/wavejianhuo-print");
+	}
 	@RequestMapping(params = "datagrid")
 	public void datagrid(WaveToDownEntity waveToDown,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WaveToDownEntity.class, dataGrid);

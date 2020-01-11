@@ -85,7 +85,7 @@
 
          var ids = [];
          for (var i = 0; i < rows.length; i++) {
-             ids.push(rows[i][id]);
+             ids.push(rows[i].id);
          }
 
 
