@@ -104,17 +104,17 @@ public class TmsMdCheliangController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		TSUser user = ResourceUtil.getSessionUser();
-		if(!StringUtil.isEmpty(user.getCurrentDepart().getOrgCode())){
-			cq.like("sysOrgCode",user.getCurrentDepart().getOrgCode()+"%");
-
-		}
-		if(!StringUtil.isEmpty(user.getUserType())){
-			if(user.getUserType().equals("4")){
-				cq.eq("createBy",user.getUserName());
-			}
-
-		}
+//		TSUser user = ResourceUtil.getSessionUser();
+//		if(!StringUtil.isEmpty(user.getCurrentDepart().getOrgCode())){
+//			cq.like("sysOrgCode",user.getCurrentDepart().getOrgCode()+"%");
+//
+//		}
+//		if(!StringUtil.isEmpty(user.getUserType())){
+//			if(user.getUserType().equals("4")){
+//				cq.eq("createBy",user.getUserName());
+//			}
+//
+//		}
 		cq.add();
 		this.tmsMdCheliangService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
