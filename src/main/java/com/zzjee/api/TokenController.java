@@ -89,51 +89,51 @@ public class TokenController {
 			logger.info("获取TOKEN,账号密码错误[{}]" + username);
 //			return new ResponseEntity("用户账号密码错误!", HttpStatus.FORBIDDEN);
 		}else{
-//			Map<String, TSFunction> loginActionlist = new HashMap<String, TSFunction>();
-			StringBuilder hqlsb1 = new StringBuilder("select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ").append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
-			//-------author: zhoujf---start---date:20160923----for:组织机构角色赋权不起作用问题
-			StringBuilder hqlsb2 = new StringBuilder("select distinct c from TSFunction c,TSRoleFunction rf,TSRoleOrg b,TSUserOrg a ")
-					.append("where a.tsDepart.id=b.tsDepart.id and b.tsRole.id=rf.TSRole.id and rf.TSFunction.id=c.id and a.tsUser.id=?");
-			//-------author: zhoujf---end---date:20160923----for:组织机构角色赋权不起作用问题
-			//update-begin-Author:LiShaoQing Date:20171023 for:TASK #2383【功能】权限组集成，用户登录权限过滤--------
-//			StringBuilder hqlsb3 = new StringBuilder("select distinct c from TSFunction c,TSFunctionGroupRelEntity g,TSFunctionGroupUserEntity u")
-//					.append(" where g.tsFunctionGroup.id=u.groupId and c.id=g.tsFunction.id and u.userId=?");
-//			//TODO hql执行效率慢 为耗时最多地方
-			//-------author: zhangliang---start---date:20170725----for:TASK #2116 【性能问题】优化登录逻辑
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		log.info("================================开始时间:"+sdf.format(new Date())+"==============================");
-//			long start = System.currentTimeMillis();
-			List<MenuEntity> listreturn = new ArrayList<MenuEntity>();
-			List<TSFunction> list1 = systemService.findHql(hqlsb1.toString(), user.getId());
-			List<TSFunction> list2 = systemService.findHql(hqlsb2.toString(), user.getId());
-//			List<TSFunction> list3 = systemService.findHql(hqlsb3.toString(), user.getUserName());
-//			long end = System.currentTimeMillis();
-//		log.info("================================结束时间:"+sdf.format(new Date())+"==============================");
-//		log.info("================================耗时:"+(end-start)+"ms==============================");
-			//-------author: zhangliang---end---date:20170725----for:TASK #2116 【性能问题】优化登录逻辑
-			for (TSFunction function : list1) {
-				MenuEntity  fh5 = new MenuEntity();
-				fh5.setMenuImg(function.getTSIcon().getIconPath());
-				fh5.setMenuText(function.getFunctionName());
-				fh5.setMenuSrc(function.getFunctionUrl());
-				listreturn.add(fh5);
-			}
-			for (TSFunction function : list2) {
-				MenuEntity  fh5 = new MenuEntity();
-				fh5.setMenuImg(function.getTSIcon().getIconPath());
-				fh5.setMenuText(function.getFunctionName());
-				fh5.setMenuSrc(function.getFunctionUrl());
-				listreturn.add(fh5);
-			}
-//			for (TSFunction function : list3) {
+////			Map<String, TSFunction> loginActionlist = new HashMap<String, TSFunction>();
+//			StringBuilder hqlsb1 = new StringBuilder("select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ").append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
+//			//-------author: zhoujf---start---date:20160923----for:组织机构角色赋权不起作用问题
+//			StringBuilder hqlsb2 = new StringBuilder("select distinct c from TSFunction c,TSRoleFunction rf,TSRoleOrg b,TSUserOrg a ")
+//					.append("where a.tsDepart.id=b.tsDepart.id and b.tsRole.id=rf.TSRole.id and rf.TSFunction.id=c.id and a.tsUser.id=?");
+//			//-------author: zhoujf---end---date:20160923----for:组织机构角色赋权不起作用问题
+//			//update-begin-Author:LiShaoQing Date:20171023 for:TASK #2383【功能】权限组集成，用户登录权限过滤--------
+////			StringBuilder hqlsb3 = new StringBuilder("select distinct c from TSFunction c,TSFunctionGroupRelEntity g,TSFunctionGroupUserEntity u")
+////					.append(" where g.tsFunctionGroup.id=u.groupId and c.id=g.tsFunction.id and u.userId=?");
+////			//TODO hql执行效率慢 为耗时最多地方
+//			//-------author: zhangliang---start---date:20170725----for:TASK #2116 【性能问题】优化登录逻辑
+////			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+////		log.info("================================开始时间:"+sdf.format(new Date())+"==============================");
+////			long start = System.currentTimeMillis();
+//			List<MenuEntity> listreturn = new ArrayList<MenuEntity>();
+//			List<TSFunction> list1 = systemService.findHql(hqlsb1.toString(), user.getId());
+//			List<TSFunction> list2 = systemService.findHql(hqlsb2.toString(), user.getId());
+////			List<TSFunction> list3 = systemService.findHql(hqlsb3.toString(), user.getUserName());
+////			long end = System.currentTimeMillis();
+////		log.info("================================结束时间:"+sdf.format(new Date())+"==============================");
+////		log.info("================================耗时:"+(end-start)+"ms==============================");
+//			//-------author: zhangliang---end---date:20170725----for:TASK #2116 【性能问题】优化登录逻辑
+//			for (TSFunction function : list1) {
 //				MenuEntity  fh5 = new MenuEntity();
 //				fh5.setMenuImg(function.getTSIcon().getIconPath());
 //				fh5.setMenuText(function.getFunctionName());
 //				fh5.setMenuSrc(function.getFunctionUrl());
 //				listreturn.add(fh5);
 //			}
+//			for (TSFunction function : list2) {
+//				MenuEntity  fh5 = new MenuEntity();
+//				fh5.setMenuImg(function.getTSIcon().getIconPath());
+//				fh5.setMenuText(function.getFunctionName());
+//				fh5.setMenuSrc(function.getFunctionUrl());
+//				listreturn.add(fh5);
+//			}
+////			for (TSFunction function : list3) {
+////				MenuEntity  fh5 = new MenuEntity();
+////				fh5.setMenuImg(function.getTSIcon().getIconPath());
+////				fh5.setMenuText(function.getFunctionName());
+////				fh5.setMenuSrc(function.getFunctionUrl());
+////				listreturn.add(fh5);
+////			}
 
-			D0.setObj(listreturn);
+			D0.setObj(user);
 			D0.setOK(true);
 		}
 		// 生成一个token，保存用户登录状态
