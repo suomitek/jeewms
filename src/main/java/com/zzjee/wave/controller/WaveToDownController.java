@@ -124,7 +124,7 @@ public class WaveToDownController extends BaseController {
 		request.setAttribute("comname", ResourceUtil.getConfigByName("comname"));
 		request.setAttribute("waveid",waveid);
 		String hqlwave = "from WaveToDownEntity where waveId = ?";
-		List<WaveToDownEntity> wmOmQmIEntityList  = systemService.findHql(hql,waveid);
+		List<WaveToDownEntity> wmOmQmIEntityList  = systemService.findHql(hqlwave,waveid);
 		request.setAttribute("wmOmQmIList", wmOmQmIEntityList);
 
 		return new ModelAndView("com/zzjee/wm/print/wavejianhuo-print");

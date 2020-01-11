@@ -165,10 +165,10 @@ function downloadqrcode() {
 			<td colspan=10 height=18 width=585 style='height:13.2pt;width:438pt'></td>
 		</tr>
 		<tr height=40 style='mso-height-source:userset;height:30.0pt'>
-			<td colspan=5 height=40 class=xl67 style='height:30.0pt'><span style="font-size: 18pt">${comname}</span></td>
-			<td colspan=4 class=xl68 width=168 style='width:126pt'>日期：${kprq}</td>
+			<td colspan=4 height=40 class=xl67 style='height:30.0pt'><span style="font-size: 18pt">${comname}</span></td>
+			<td colspan=3 class=xl68 width=168 style='width:126pt'>日期：${kprq}</td>
 			<td  rowspan="2" class=xl69>
-				<img src="rest/wmBaseController/showOrDownqrcodeByurl?qrvalue=${noticeid}" style="width:80px;height:80px;vertical-align:right">
+				<img src="rest/wmBaseController/showOrDownqrcodeByurl?qrvalue=${waveid}" style="width:80px;height:80px;vertical-align:right">
 			</td>
 				<%--<td  rowspan="2" class=xl69>--%>
 
@@ -177,8 +177,8 @@ function downloadqrcode() {
 				<%--</td>--%>
 		</tr>
 		<tr height=40 style='mso-height-source:userset;height:30.0pt'>
-			<td colspan=5 height=40 class=xl67 style='height:30.0pt'><span style="font-size: 18pt">波次拣货单</span></td>
-			<td colspan=4 class=xl68 width=168 style='width:126pt'>单号：${noticeid}</td>
+			<td colspan=3 height=40 class=xl67 style='height:30.0pt'><span style="font-size: 18pt">波次拣货单</span></td>
+			<td colspan=4 class=xl68 width=168 style='width:126pt'>单号：${waveid}</td>
 			<td colspan=1 style='mso-ignore:colspan'></td>
 		</tr>
 		<%--<tr height=40 style='mso-height-source:userset;height:30.0pt'>--%>
