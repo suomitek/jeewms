@@ -28,7 +28,7 @@
     <%--<t:dgCol title="by3"  field="by3"    queryMode="group"  width="120"></t:dgCol>--%>
     <%--<t:dgCol title="by4"  field="by4"    queryMode="group"  width="120"></t:dgCol>--%>
     <%--<t:dgCol title="by5"  field="by5"    queryMode="group"  width="120"></t:dgCol>--%>
-      <t:dgFunOpt title="波次拣货单" funname="doprint(id)"  urlclass="ace_button"   exp="firstRq#ne#已打印"   />
+      <t:dgFunOpt title="波次拣货单" funname="doprint(waveId)"  urlclass="ace_button"   exp="firstRq#ne#已打印"   />
 
       <%--<t:dgDelOpt title="删除" url="waveToDownController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="waveToDownController.do?goAdd" funname="add"></t:dgToolBar>--%>
