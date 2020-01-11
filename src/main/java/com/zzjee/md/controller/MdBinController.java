@@ -128,8 +128,10 @@ public class MdBinController extends BaseController {
 		mdBin = systemService.getEntity(MdBinEntity.class, mdBin.getId());
 		message = "仓位停用成功";
 		try{
-			mdBin.setTingYong("Y");
-			mdBinService.saveOrUpdate(mdBin);
+//			mdBin.setTingYong("Y");
+//			mdBinService.saveOrUpdate(mdBin);
+			mdBinService.delete(mdBin);
+
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -208,8 +210,8 @@ public class MdBinController extends BaseController {
 				MdBinEntity mdBin = systemService.getEntity(MdBinEntity.class, 
 				id
 				);
-				mdBin.setTingYong("Y");
-				mdBinService.saveOrUpdate(mdBin);
+//				mdBin.setTingYong("Y");
+				mdBinService.delete(mdBin);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
