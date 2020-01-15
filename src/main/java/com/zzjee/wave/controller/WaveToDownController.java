@@ -424,24 +424,49 @@ public class WaveToDownController extends BaseController {
 		return new ResponseEntity(waveToDown, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/jsondown", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@RequestBody WaveToDownEntity waveToDown) {
+		ResultDO D0 = new  ResultDO();
+
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<WaveToDownEntity>> failures = validator.validate(waveToDown);
-		if (!failures.isEmpty()) {
-			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
-		}
 
 		//保存
 		try{
-			waveToDownService.saveOrUpdate(waveToDown);
+			String hql = "from WmOmQmIEntity where waveId = ? and  goodsId = ? and proData = ? and tinId = ? and binId =  ? and binSta = ?";
+			List<WmOmQmIEntity> listwavedown = systemService.findHql(hql,waveToDown.getWaveId(),waveToDown.getGoodsId(),waveToDown.getProData(),waveToDown.getTinId(),waveToDown.getBinId(),"N");
+
+			for(WmOmQmIEntity wmOmQmI: listwavedown){
+				WmToDownGoodsEntity wmToDownGoods = new WmToDownGoodsEntity();
+				wmToDownGoods.setBinIdFrom(wmOmQmI.getTinId());//下架托盘
+				wmToDownGoods.setKuWeiBianMa(wmOmQmI.getBinId());//储位
+				wmToDownGoods.setBinIdTo(wmOmQmI.getOmNoticeId());//到托盘
+				wmToDownGoods.setCusCode(wmOmQmI.getCusCode());//货主
+				wmToDownGoods.setGoodsId(wmOmQmI.getGoodsId());//
+				wmToDownGoods.setGoodsProData(wmOmQmI.getProData());//生产日期
+				wmToDownGoods.setOrderId(wmOmQmI.getOmNoticeId());//出货通知单
+				wmToDownGoods.setOrderIdI(wmOmQmI.getId());//出货通知项目
+				wmToDownGoods.setBaseUnit(wmOmQmI.getBaseUnit());//基本单位
+				wmToDownGoods.setBaseGoodscount(wmOmQmI.getBaseGoodscount());//基本单位数量
+				wmToDownGoods.setGoodsUnit(wmOmQmI.getGoodsUnit());//出货单位
+				wmToDownGoods.setGoodsQua(wmOmQmI.getQmOkQuat());//出货数量
+				wmToDownGoods.setGoodsQuaok(wmOmQmI.getQmOkQuat());//出货数量
+				wmToDownGoods.setGoodsName(wmOmQmI.getGoodsName());//商品名称
+				wmToDownGoods.setOmBeizhu(wmOmQmI.getOmBeizhu());//备注
+				wmToDownGoods.setImCusCode(wmOmQmI.getImCusCode());//客户单号
+				wmToDownGoods.setOrderType("01");//默认为01
+				systemService.save(wmToDownGoods);
+				wmOmQmI.setBinSta("H");
+				wmOmQmI.setFirstRq(waveToDown.getFirstRq());
+				systemService.saveOrUpdate(wmOmQmI);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 
-		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+
+		return new ResponseEntity(waveToDown, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

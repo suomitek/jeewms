@@ -384,24 +384,23 @@ public class WaveToFjController extends BaseController {
 		return new ResponseEntity(waveToFj, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/jsonfj", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@RequestBody WaveToFjEntity waveToFj) {
+		ResultDO D0 = new  ResultDO();
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<WaveToFjEntity>> failures = validator.validate(waveToFj);
-		if (!failures.isEmpty()) {
-			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
-		}
-
 		//保存
 		try{
-			waveToFjService.saveOrUpdate(waveToFj);
+			WmOmQmIEntity wmOmQmI = systemService.getEntity(
+					WmOmQmIEntity.class, waveToFj.getId());
+			if (wmOmQmI != null&&wmOmQmI.getBinSta().equals("H")) {
+				wmOmQmI.setBinSta("Y");
+				systemService.saveOrUpdate(wmOmQmI);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-
-		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		return new ResponseEntity(waveToFj, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
