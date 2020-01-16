@@ -39,7 +39,7 @@ android app也已经开源，近期更新会比较频繁 app开源地址  https:
                           FLUSH PRIVILEGES;
 
         步骤 1：还原数据库，2，修改 dbconfig.properties
-        3.1 sql导入方式建议 将sql文件粘贴至 查询执行窗口 执行
+        3.1 sql导入方式建议 登录MYSQL服务器上用source命令还原
     4，IDEA：tomcat7:tun   输入用户名和密码：admin llg123
     5、主要技术
         开发语言：JAVA。
