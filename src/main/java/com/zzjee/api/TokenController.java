@@ -60,6 +60,56 @@ public class TokenController {
     SystemService systemService;
 
 
+	@ApiOperation(value = "获取token")
+	@RequestMapping(value = "/tmslogin", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> tmslogin(@ApiParam(name = "username", value = "用户账号", required = true)@RequestParam String username,@ApiParam(name = "password", value = "用户密码", required = true) @RequestParam String password) {
+		ResultDO D0 = new  ResultDO();
+		logger.info("获取TOKEN[{}]" + username);
+		// 验证
+		if (StringUtils.isEmpty(username)) {
+			D0.setOK(false);
+			D0.setErrorMsg("用户账号不能为空!");
+		}
+		// 验证
+		if (StringUtils.isEmpty(username)) {
+			D0.setOK(false);
+			D0.setErrorMsg("用户密码不能为空!");
+		}
+		Assert.notNull(username, "username can not be empty");
+		Assert.notNull(password, "password can not be empty");
+
+		TSUser user = userService.checkUserExits(username, password);
+		if (user == null) {
+			// 提示用户名或密码错误
+			logger.info("获取TOKEN,户账号密码错误[{}]" + username);
+			D0.setOK(false);
+			D0.setErrorMsg("用户账号密码错误!");
+//			return new ResponseEntity("用户账号密码错误!", HttpStatus.NOT_FOUND);
+		}else{
+			// 生成一个token，保存用户登录状态
+			String token = user.getMobilePhone();
+			try{
+//				List<Map<String, Object>> res = systemService.findForJdbc("select app_version,down_url from t_app_version");
+//				for (Map<String, Object> map : res) {
+					D0.setErrorCode("V2.0");
+					D0.setErrorMsg("http");
+//				}
+			}catch (Exception e){
+
+			}
+
+			D0.setObj(token);
+			D0.setOK(true);
+		}
+
+
+		// 生成一个token，保存用户登录状态
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
+
+
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
