@@ -101,7 +101,7 @@ public class TMdBomHeadController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/scm/md/tMdBomHeadList");
+		return new ModelAndView("com/zzjee/md/tMdBomHeadList");
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class TMdBomHeadController extends BaseController {
 			tMdBomHead = tMdBomHeadService.getEntity(TMdBomHeadEntity.class, tMdBomHead.getId());
 			req.setAttribute("tMdBomHeadPage", tMdBomHead);
 		}
-		return new ModelAndView("com/scm/md/tMdBomHead-add");
+		return new ModelAndView("com/zzjee/md/tMdBomHead-add");
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class TMdBomHeadController extends BaseController {
 			tMdBomHead = tMdBomHeadService.getEntity(TMdBomHeadEntity.class, tMdBomHead.getId());
 			req.setAttribute("tMdBomHeadPage", tMdBomHead);
 		}
-		return new ModelAndView("com/scm/md/tMdBomHead-update");
+		return new ModelAndView("com/zzjee/md/tMdBomHead-update");
 	}
 	
 	
@@ -272,7 +272,7 @@ public class TMdBomHeadController extends BaseController {
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
-		return new ModelAndView("com/scm/md/tMdBomItemList");
+		return new ModelAndView("com/zzjee/md/tMdBomItemList");
 	}
 
     /**

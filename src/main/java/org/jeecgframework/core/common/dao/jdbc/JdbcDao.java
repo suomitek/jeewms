@@ -16,13 +16,13 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
- * 
+ *
  * @author  admin
  *
  */
 @Repository("jdbcDao")
 public class JdbcDao extends SimpleJdbcTemplate{
-	
+
 	/**
 	 * 数据库类型
 	 */
@@ -37,13 +37,13 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public static final String POSTGRE_SQL = "select * from ( {0}) sel_tab00 limit {2} offset {1}";//postgresql
 	public static final String ORACLE_SQL = "select * from (select row_.*,rownum rownum_ from ({0}) row_ where rownum <= {1}) where rownum_>{2}"; //oracle
 	public static final String SQLSERVER_SQL = "select * from ( select row_number() over(order by tempColumn) tempRowNumber, * from (select top {1} tempColumn = 0, {0}) t ) tt where tempRowNumber > {2}"; //sqlserver
-	
-	
+
+
 	@Autowired
 	public JdbcDao(DataSource dataSource) {
 		super(dataSource);
 	}
-	
+
 	/**
 	 * 根据sql语句，返回对象集合
 	 * @param sql语句(参数用冒号加参数名，例如select * from tb where id=:id)
@@ -54,7 +54,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public List find(String sql,Class clazz,Map parameters){
 		return super.find(sql,clazz,parameters);
 	}
-	
+
 	/**
 	 * 根据sql语句，返回对象
 	 * @param sql语句(参数用冒号加参数名，例如select * from tb where id=:id)
@@ -65,7 +65,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public Object findForObject(String sql,Class clazz,Map parameters){
 		return super.findForObject(sql, clazz, parameters);
 	}
-	
+
 	/**
 	 * 根据sql语句，返回数值型返回结果
 	 * @param sql语句(参数用冒号加参数名，例如select count(*) from tb where id=:id)
@@ -75,7 +75,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public long findForLong(String sql,Map parameters){
 		return super.findForLong(sql, parameters);
 	}
-	
+
 	/**
 	 * 根据sql语句，返回Map对象,对于某些项目来说，没有准备Bean对象，则可以使用Map代替Key为字段名,value为值
 	 * @param sql语句(参数用冒号加参数名，例如select count(*) from tb where id=:id)
@@ -85,7 +85,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public Map findForMap(String sql,Map parameters){
 		return super.findForMap(sql, parameters);
 	}
-	
+
 	/**
 	 * 根据sql语句，返回Map对象集合
 	 * @see findForMap
@@ -96,7 +96,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public List<Map<String,Object>> findForListMap(String sql,Map parameters){
 		return super.findForListMap(sql, parameters);
 	}
-	
+
 	/**
 	 * 执行insert，update，delete等操作<br>
 	 * 例如insert into users (name,login_name,password) values(:name,:loginName,:password)<br>
@@ -126,7 +126,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public int[] batchUpdate(final String sql,List<Object[]> batch ){
         return super.batchUpdate(sql,batch);
 	}
-	
+
 	/**
 	 * 使用指定的检索标准检索数据并分页返回数据
 	 */
@@ -135,24 +135,24 @@ public class JdbcDao extends SimpleJdbcTemplate{
 		sql = jeecgCreatePageSql(sql,page,rows);
 		return this.jdbcTemplate.queryForList(sql);
 	}
-	
-	
+
+
 	public List<Map<String, Object>> findForJdbc(String sql, Object... objs) {
 		return this.jdbcTemplate.queryForList(sql,objs);
 	}
 
-	
+
 	/**
 	 * 使用指定的检索标准检索数据并分页返回数据
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
 	public List<T> findObjForJdbc(String sql, int page, int rows,Class<T> clazz) {
 		List<T> rsList = new ArrayList<T>();
 		//封装分页SQL
 		sql = jeecgCreatePageSql(sql,page,rows);
 		List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
-		
+
 		T po = null;
 		for(Map<String,Object> m:mapList){
 			try {
@@ -168,7 +168,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 
 	/**
 	 * 使用指定的检索标准检索数据并分页返回数据-采用预处理方式
-	 * 
+	 *
 	 * @param criteria
 	 * @param firstResult
 	 * @param maxResults
@@ -180,15 +180,15 @@ public class JdbcDao extends SimpleJdbcTemplate{
 		sql = jeecgCreatePageSql(sql,page,rows);
 		return jdbcTemplate.queryForList(sql,objs);
 	}
-	
+
 	public Map<String, Object> findOneForJdbc(String sql, Object... objs) {
-		try{ 
+		try{
 			return this.jdbcTemplate.queryForMap(sql, objs);
-		}catch (EmptyResultDataAccessException e) {   
-		    return null;   
-		}  
+		}catch (EmptyResultDataAccessException e) {
+		    return null;
+		}
 	}
-	
+
 	/**
 	 * 使用指定的检索标准检索数据并分页返回数据For JDBC
 	 */
@@ -199,7 +199,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	}
 	/**
 	 * 使用指定的检索标准检索数据并分页返回数据For JDBC-采用预处理方式
-	 * 
+	 *
 	 */
 	public Long getCountForJdbcParam(String  sql,Object... objs) {
 
