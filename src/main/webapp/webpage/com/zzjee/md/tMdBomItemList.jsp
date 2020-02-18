@@ -52,9 +52,7 @@
 					  <th>
 							物料名称
 					  </th>
-					  <th>
-							工位
-					  </th>
+
 	      </tr>
 	    </thead>
         
@@ -100,10 +98,7 @@
 					  	<input name="tMdBomItemList[0].itemname" maxlength="132" type="text" class="form-control"  style="width:120px;"  ignore="ignore" />
 					  <label class="Validform_label" style="display: none;">物料名称</label>
 					</td>
-				  <td>
-					  	<input name="tMdBomItemList[0].workplace" maxlength="32" type="text" class="form-control"  style="width:120px;"  ignore="ignore" />
-					  <label class="Validform_label" style="display: none;">工位</label>
-					</td>
+
    			</tr>
 	</c:if>
 	<c:if test="${fn:length(tMdBomItemList)  > 0 }">
@@ -148,10 +143,7 @@
 					  	<input name="tMdBomItemList[${stuts.index }].itemname" maxlength="132" type="text" class="form-control"  style="width:120px;"  ignore="ignore"  value="${poVal.itemname }"/>
 					  <label class="Validform_label" style="display: none;">物料名称</label>
 				   </td>
-				   <td align="left">
-					  	<input name="tMdBomItemList[${stuts.index }].workplace" maxlength="32" type="text" class="form-control"  style="width:120px;"  ignore="ignore"  value="${poVal.workplace }"/>
-					  <label class="Validform_label" style="display: none;">工位</label>
-				   </td>
+
    			</tr>
 		</c:forEach>
 	</c:if>	

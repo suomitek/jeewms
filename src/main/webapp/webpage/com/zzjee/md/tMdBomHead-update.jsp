@@ -348,10 +348,7 @@
 								  	<input name="tMdBomItemList[#index#].itemname" maxlength="132" type="text" class="form-control"  style="width:120px;"  ignore="ignore" />
 							  <label class="Validform_label" style="display: none;">物料名称</label>
 						  </td>
-						  <td align="left">
-								  	<input name="tMdBomItemList[#index#].workplace" maxlength="32" type="text" class="form-control"  style="width:120px;"  ignore="ignore" />
-							  <label class="Validform_label" style="display: none;">工位</label>
-						  </td>
+
 					</tr>
 				 </tbody>
 		</table>

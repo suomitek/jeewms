@@ -20,8 +20,8 @@
    <t:dgCol title="物料名称"  field="matname"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="设计数量"  field="qty"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="计量单位"  field="units"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="成本中心代码"  field="prccode"  hidden="true"  queryMode="single"  dictionary="t_md_costcenter,cscode,csname"  width="120"></t:dgCol>
-   <t:dgCol title="成本中心名称"  field="prcname"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <%--<t:dgCol title="成本中心代码"  field="prccode"  hidden="true"  queryMode="single"  dictionary="t_md_costcenter,cscode,csname"  width="120"></t:dgCol>--%>
+   <%--<t:dgCol title="成本中心名称"  field="prcname"  hidden="true"  queryMode="single"  width="120"></t:dgCol>--%>
    <t:dgCol title="生效日期"  field="startdate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="失效日期"  field="enddate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
