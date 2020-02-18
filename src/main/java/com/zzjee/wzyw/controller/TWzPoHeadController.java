@@ -137,6 +137,7 @@ public class TWzPoHeadController extends BaseController {
 		this.tWzPoHeadService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
+
 	@RequestMapping(params = "datagridsp")
 	public void datagridsp(TWzPoHeadEntity tWzPoHead,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TWzPoHeadEntity.class, dataGrid);
