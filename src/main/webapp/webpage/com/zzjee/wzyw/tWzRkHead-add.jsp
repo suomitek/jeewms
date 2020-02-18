@@ -107,11 +107,11 @@
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 				  <td align="left">
 					  		<input name="tWzRkItemList[#index#].matCode" name="tWzRkItemList[#index#].matCode" type="text" style="width: 150px" class="searchbox-inputtext" 		datatype="*" ignore="checked"  onclick="popupClick(this,'mat_code,mat_name,mat_unit,mat_location,mat_price','matCode,matName,matUnit,matLocation,matPrice','wz_material_pop')"/>
-					  <label class="Validform_label" style="display: none;">物资编码</label>
+					  <label class="Validform_label" style="display: none;">物料编码</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tWzRkItemList[#index#].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked" />
-					  <label class="Validform_label" style="display: none;">物资名称</label>
+					  <label class="Validform_label" style="display: none;">物料名称</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tWzRkItemList[#index#].matQty" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked" />
@@ -119,7 +119,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tWzRkItemList[#index#].matUnit" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked" />
-					  <label class="Validform_label" style="display: none;">物资单位</label>
+					  <label class="Validform_label" style="display: none;">物料单位</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tWzRkItemList[#index#].matLocation" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked" />

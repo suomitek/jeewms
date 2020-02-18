@@ -19,7 +19,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: 物资出库
+ * @Description: 物料出库
  * @author onlineGenerator
  * @date 2018-05-20 21:43:29
  * @version V1.0   

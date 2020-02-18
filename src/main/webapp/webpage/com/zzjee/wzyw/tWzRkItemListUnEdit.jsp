@@ -34,16 +34,16 @@
         <td align="center" bgcolor="#EEEEEE" style="width: 25px;">序号</td>
         <td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-            物资编码
+            物料编码
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-            物资名称
+            物料名称
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
             入库数量
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-            物资单位
+            物料单位
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
             仓库
@@ -89,11 +89,11 @@
             <input name="tWzRkItemList[0].by6" type="hidden"/>
             <td align="left">
                 <input  id="tWzRkItemList[0].matCode" name="tWzRkItemList[0].matCode" type="text" style="width: 150px" class="searchbox-inputtext"  value="${poVal.matCode }"  	readonly="readonly"	datatype="*" ignore="checked"/>
-                <label class="Validform_label" style="display: none;">物资编码</label>
+                <label class="Validform_label" style="display: none;">物料编码</label>
             </td>
             <td align="left">
                 <input name="tWzRkItemList[0].matName" maxlength="32" type="text" class="inputxt" readonly="readonly" style="width:120px;" 		datatype="*" ignore="checked" >
-                <label class="Validform_label" style="display: none;">物资名称</label>
+                <label class="Validform_label" style="display: none;">物料名称</label>
             </td>
             <td align="left">
                 <input name="tWzRkItemList[0].matQty" maxlength="32" type="text" class="inputxt"  style="width:120px;" 	readonly="readonly"	datatype="*" ignore="checked" >
@@ -101,7 +101,7 @@
             </td>
             <td align="left">
                 <input name="tWzRkItemList[0].matUnit" maxlength="32" type="text" class="inputxt"  style="width:120px;" 	readonly="readonly"	datatype="*" ignore="checked" >
-                <label class="Validform_label" style="display: none;">物资单位</label>
+                <label class="Validform_label" style="display: none;">物料单位</label>
             </td>
             <td align="left">
                 <input name="tWzRkItemList[0].matLocation" maxlength="32" type="text" class="inputxt"  style="width:120px;" 	readonly="readonly"	datatype="*" ignore="checked" >
@@ -154,11 +154,11 @@
                 <input name="tWzRkItemList[${stuts.index }].by6" type="hidden" value="${poVal.by6 }"/>
                 <td align="left">
                     <input  id="tWzRkItemList[${stuts.index }].matCode" readonly="readonly" name="tWzRkItemList[${stuts.index }].matCode"  type="text" style="width: 150px"  class="inputxt"   		datatype="*" ignore="checked"  onclick="popupClick(this,'mat_code,mat_name,mat_unit,mat_location,mat_price','matCode,matName,matUnit,matLocation,matPrice','wz_material_pop')"    value="${poVal.matCode }" />
-                    <label class="Validform_label" style="display: none;">物资编码</label>
+                    <label class="Validform_label" style="display: none;">物料编码</label>
                 </td>
                 <td align="left">
                     <input name="tWzRkItemList[${stuts.index }].matName"  readonly="readonly" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked"  value="${poVal.matName }"/>
-                    <label class="Validform_label" style="display: none;">物资名称</label>
+                    <label class="Validform_label" style="display: none;">物料名称</label>
                 </td>
                 <td align="left">
                     <input name="tWzRkItemList[${stuts.index }].matQty" readonly="readonly" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked"  value="${poVal.matQty }"/>
@@ -166,7 +166,7 @@
                 </td>
                 <td align="left">
                     <input name="tWzRkItemList[${stuts.index }].matUnit" readonly="readonly" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked"  value="${poVal.matUnit }"/>
-                    <label class="Validform_label" style="display: none;">物资单位</label>
+                    <label class="Validform_label" style="display: none;">物料单位</label>
                 </td>
                 <td align="left">
                     <input name="tWzRkItemList[${stuts.index }].matLocation" readonly="readonly" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked"  value="${poVal.matLocation }"/>

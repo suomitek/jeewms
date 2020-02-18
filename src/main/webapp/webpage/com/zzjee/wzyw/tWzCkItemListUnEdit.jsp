@@ -34,10 +34,10 @@
         <td align="center" bgcolor="#EEEEEE" style="width: 25px;">序号</td>
         <td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-            物资编码
+            物料编码
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-            物资名称
+            物料名称
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
             数量
@@ -88,11 +88,11 @@
             <input name="tWzCkItemList[0].by5" type="hidden"/>
             <td align="left">
                 <input  id="tWzCkItemList[0].matCode" name="tWzCkItemList[0].matCode" type="text" style="width: 150px" class="inputxt"  readonly="readonly"  value="${poVal.matCode }"  		datatype="*" ignore="ignore"/>
-                <label class="Validform_label" style="display: none;">物资编码</label>
+                <label class="Validform_label" style="display: none;">物料编码</label>
             </td>
             <td align="left">
                 <input name="tWzCkItemList[0].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;" 	readonly="readonly"	datatype="*" ignore="ignore" >
-                <label class="Validform_label" style="display: none;">物资名称</label>
+                <label class="Validform_label" style="display: none;">物料名称</label>
             </td>
             <td align="left">
                 <input name="tWzCkItemList[0].matQty" maxlength="32" type="text" class="inputxt"  style="width:120px;" readonly="readonly"	datatype="*" ignore="checked" >
@@ -152,11 +152,11 @@
                 <input name="tWzCkItemList[${stuts.index }].by5" type="hidden" value="${poVal.by5 }"/>
                 <td align="left">
                     <input  id="tWzCkItemList[${stuts.index }].matCode" name="tWzCkItemList[${stuts.index }].matCode"  type="text" style="width: 150px" class="inputxt"  	readonly="readonly"	datatype="*" ignore="ignore"    value="${poVal.matCode }" />
-                    <label class="Validform_label" style="display: none;">物资编码</label>
+                    <label class="Validform_label" style="display: none;">物料编码</label>
                 </td>
                 <td align="left">
                     <input name="tWzCkItemList[${stuts.index }].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;" 	readonly="readonly"	datatype="*" ignore="ignore"  value="${poVal.matName }"/>
-                    <label class="Validform_label" style="display: none;">物资名称</label>
+                    <label class="Validform_label" style="display: none;">物料名称</label>
                 </td>
                 <td align="left">
                     <input name="tWzCkItemList[${stuts.index }].matQty" maxlength="32" type="text" class="inputxt"  style="width:120px;" 	readonly="readonly"	datatype="*" ignore="checked"  value="${poVal.matQty }"/>

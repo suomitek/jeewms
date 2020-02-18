@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>物资采购订单</title>
+  <title>物料采购订单</title>
     <style>
   .ui-button {
   	  display: inline-block;
@@ -99,11 +99,11 @@
 					  				<input name="tWzPoItemList[#index#].matCode" name="tWzPoItemList[#index#].matCode" type="text" style="width: 150px" class="searchbox-inputtext"  ignore="ignore"    onclick="popupClick(this,'mat_code,mat_name,mat_unit,mat_location,mat_price','matCode,matName,matUnit,matLocation,matPrice','wz_material_pop')" value="${poVal.matCode }" />
 					     						
 					       
-					  <label class="Validform_label" style="display: none;">物资编码</label>
+					  <label class="Validform_label" style="display: none;">物料编码</label>
 				  </td>
 				  <td align="left">
 					  		<input name="tWzPoItemList[#index#].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;"  ignore="ignore" />
-					  <label class="Validform_label" style="display: none;">物资名称</label>
+					  <label class="Validform_label" style="display: none;">物料名称</label>
 				  </td>
 				  <td align="left">
 					  		<input name="tWzPoItemList[#index#].matQty" maxlength="32" type="text" class="inputxt"  style="width:120px;"  ignore="ignore" />

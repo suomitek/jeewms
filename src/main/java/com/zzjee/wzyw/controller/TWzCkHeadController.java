@@ -77,13 +77,13 @@ import io.swagger.annotations.ApiParam;
 
 /**   
  * @Title: Controller
- * @Description: 物资出库
+ * @Description: 物料出库
  * @author onlineGenerator
  * @date 2018-05-20 21:43:29
  * @version V1.0   
  *
  */
-@Api(value="TWzCkHead",description="物资出库",tags="tWzCkHeadController")
+@Api(value="TWzCkHead",description="物料出库",tags="tWzCkHeadController")
 @Controller
 @RequestMapping("/tWzCkHeadController")
 public class TWzCkHeadController extends BaseController {
@@ -103,7 +103,7 @@ public class TWzCkHeadController extends BaseController {
 	JdbcDao jdbcDao;
 
 	/**
-	 * 物资出库列表 页面跳转
+	 * 物料出库列表 页面跳转
 	 * 
 	 * @return
 	 */
@@ -174,7 +174,7 @@ public class TWzCkHeadController extends BaseController {
 
 
 	/**
-	 * 删除物资出库
+	 * 删除物料出库
 	 * 
 	 * @return
 	 */
@@ -183,13 +183,13 @@ public class TWzCkHeadController extends BaseController {
 	public AjaxJson doDel(TWzCkHeadEntity tWzCkHead, HttpServletRequest request) {
 		AjaxJson j = new AjaxJson();
 		tWzCkHead = systemService.getEntity(TWzCkHeadEntity.class, tWzCkHead.getId());
-		String message = "物资出库删除成功";
+		String message = "物料出库删除成功";
 		try{
 			tWzCkHeadService.delMain(tWzCkHead);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "物资出库删除失败";
+			message = "物料出库删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -197,7 +197,7 @@ public class TWzCkHeadController extends BaseController {
 	}
 
 	/**
-	 * 批量删除物资出库
+	 * 批量删除物料出库
 	 * 
 	 * @return
 	 */
@@ -205,7 +205,7 @@ public class TWzCkHeadController extends BaseController {
 	@ResponseBody
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		AjaxJson j = new AjaxJson();
-		String message = "物资出库删除成功";
+		String message = "物料出库删除成功";
 		try{
 			for(String id:ids.split(",")){
 				TWzCkHeadEntity tWzCkHead = systemService.getEntity(TWzCkHeadEntity.class,
@@ -216,7 +216,7 @@ public class TWzCkHeadController extends BaseController {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "物资出库删除失败";
+			message = "物料出库删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -225,7 +225,7 @@ public class TWzCkHeadController extends BaseController {
 
 
 	/**
-	 * 添加物资出库
+	 * 添加物料出库
 	 *
 	 * @return
 	 */
@@ -263,7 +263,7 @@ public class TWzCkHeadController extends BaseController {
 
 
 	/**
-	 * 添加物资出库
+	 * 添加物料出库
 	 * 
 	 * @return
 	 */
@@ -298,7 +298,7 @@ public class TWzCkHeadController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "物资出库添加失败";
+			message = "物料出库添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -345,7 +345,7 @@ public class TWzCkHeadController extends BaseController {
 			sheet.setColumnWidth(6, 10 * 256);
 			sheet.setColumnWidth(7, 10 * 256);
 			sheet.setColumnWidth(8, 15 * 256);
-			//{ "序号", "物资编码", "物资名称",  "仓库", "领用人",  "数量", "单位", "单价","金额" }
+			//{ "序号", "物料编码", "物料名称",  "仓库", "领用人",  "数量", "单位", "单价","金额" }
 			// sheet.setColumnWidth(7, 8 * 256);
 			// sheet.setColumnWidth(8, 8 * 256);
 			// 创建第一行
@@ -442,7 +442,7 @@ public class TWzCkHeadController extends BaseController {
 
 			Row rowColumnName = sheet.createRow((short) 4); // 列名
 			rowColumnName.setHeight((short) 500);
-			String[] columnNames = { "序号", "物资编码", "物资名称",  "仓库", "领用人",  "数量", "单位", "单价",
+			String[] columnNames = { "序号", "物料编码", "物料名称",  "仓库", "领用人",  "数量", "单位", "单价",
 					"金额" };
 
 			Double totalAmount = 0d;
@@ -590,7 +590,7 @@ public class TWzCkHeadController extends BaseController {
 
 
 	/**
-	 * 更新物资出库
+	 * 更新物料出库
 	 *
 	 * @return
 	 */
@@ -621,7 +621,7 @@ public class TWzCkHeadController extends BaseController {
 
 
 	/**
-	 * 更新物资出库
+	 * 更新物料出库
 	 * 
 	 * @return
 	 */
@@ -649,7 +649,7 @@ public class TWzCkHeadController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "更新物资出库失败";
+			message = "更新物料出库失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -657,7 +657,7 @@ public class TWzCkHeadController extends BaseController {
 	}
 
 	/**
-	 * 物资出库新增页面跳转
+	 * 物料出库新增页面跳转
 	 * 
 	 * @return
 	 */
@@ -671,7 +671,7 @@ public class TWzCkHeadController extends BaseController {
 	}
 	
 	/**
-	 * 物资出库编辑页面跳转
+	 * 物料出库编辑页面跳转
 	 * 
 	 * @return
 	 */
@@ -765,9 +765,9 @@ public class TWzCkHeadController extends BaseController {
             	}
             }
         }
-        map.put(NormalExcelConstants.FILE_NAME,"物资出库");
+        map.put(NormalExcelConstants.FILE_NAME,"物料出库");
         map.put(NormalExcelConstants.CLASS,TWzCkHeadPage.class);
-        map.put(NormalExcelConstants.PARAMS,new ExportParams("物资出库列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+        map.put(NormalExcelConstants.PARAMS,new ExportParams("物料出库列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
             "导出信息"));
         map.put(NormalExcelConstants.DATA_LIST,pageList);
         return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -818,9 +818,9 @@ public class TWzCkHeadController extends BaseController {
 	*/
 	@RequestMapping(params = "exportXlsByT")
 	public String exportXlsByT(ModelMap map) {
-		map.put(NormalExcelConstants.FILE_NAME,"物资出库");
+		map.put(NormalExcelConstants.FILE_NAME,"物料出库");
 		map.put(NormalExcelConstants.CLASS,TWzCkHeadPage.class);
-		map.put(NormalExcelConstants.PARAMS,new ExportParams("物资出库列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
+		map.put(NormalExcelConstants.PARAMS,new ExportParams("物料出库列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
 		"导出信息"));
 		map.put(NormalExcelConstants.DATA_LIST,new ArrayList());
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -839,7 +839,7 @@ public class TWzCkHeadController extends BaseController {
  	
  	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="物资出库列表信息",produces="application/json",httpMethod="GET")
+	@ApiOperation(value="物料出库列表信息",produces="application/json",httpMethod="GET")
 	public ResponseMessage<List<TWzCkHeadPage>> list() {
 		List<TWzCkHeadEntity> list= tWzCkHeadService.getList(TWzCkHeadEntity.class);
     	List<TWzCkHeadPage> pageList=new ArrayList<TWzCkHeadPage>();
@@ -863,11 +863,11 @@ public class TWzCkHeadController extends BaseController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取物资出库信息",notes="根据ID获取物资出库信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取物料出库信息",notes="根据ID获取物料出库信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
 		TWzCkHeadEntity task = tWzCkHeadService.get(TWzCkHeadEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取物资出库信息为空");
+			return Result.error("根据ID获取物料出库信息为空");
 		}
 		TWzCkHeadPage page = new TWzCkHeadPage();
 		try {
@@ -884,8 +884,8 @@ public class TWzCkHeadController extends BaseController {
  	
  	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建物资出库")
-	public ResponseMessage<?> create(@ApiParam(name="物资出库对象")@RequestBody TWzCkHeadPage tWzCkHeadPage, UriComponentsBuilder uriBuilder) {
+	@ApiOperation(value="创建物料出库")
+	public ResponseMessage<?> create(@ApiParam(name="物料出库对象")@RequestBody TWzCkHeadPage tWzCkHeadPage, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TWzCkHeadPage>> failures = validator.validate(tWzCkHeadPage);
 		if (!failures.isEmpty()) {
@@ -900,7 +900,7 @@ public class TWzCkHeadController extends BaseController {
 			MyBeanUtils.copyBeanNotNull2Bean(tWzCkHeadPage,tWzCkHead);
 		}catch(Exception e){
             logger.info(e.getMessage());
-            return Result.error("保存物资出库失败");
+            return Result.error("保存物料出库失败");
         }
 		tWzCkHeadService.addMain(tWzCkHead, tWzCkItemList);
 
@@ -909,7 +909,7 @@ public class TWzCkHeadController extends BaseController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="更新物资出库",notes="更新物资出库")
+	@ApiOperation(value="更新物料出库",notes="更新物料出库")
 	public ResponseMessage<?> update(@RequestBody TWzCkHeadPage tWzCkHeadPage) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TWzCkHeadPage>> failures = validator.validate(tWzCkHeadPage);
@@ -925,7 +925,7 @@ public class TWzCkHeadController extends BaseController {
 			MyBeanUtils.copyBeanNotNull2Bean(tWzCkHeadPage,tWzCkHead);
 		}catch(Exception e){
             logger.info(e.getMessage());
-            return Result.error("物资出库更新失败");
+            return Result.error("物料出库更新失败");
         }
 		tWzCkHeadService.updateMain(tWzCkHead, tWzCkItemList);
 
@@ -935,7 +935,7 @@ public class TWzCkHeadController extends BaseController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除物资出库")
+	@ApiOperation(value="删除物料出库")
 	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
 		logger.info("delete[{}]" + id);
 		// 验证
@@ -947,7 +947,7 @@ public class TWzCkHeadController extends BaseController {
 			tWzCkHeadService.delMain(tWzCkHead);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("物资出库删除失败");
+			return Result.error("物料出库删除失败");
 		}
 
 		return Result.success();

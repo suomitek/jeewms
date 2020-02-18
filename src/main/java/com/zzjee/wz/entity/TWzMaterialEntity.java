@@ -20,7 +20,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: 物资
+ * @Description: 物料
  * @author onlineGenerator
  * @date 2018-05-20 21:40:03
  * @version V1.0   
@@ -50,11 +50,11 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	private String sysCompanyCode;
 	/**流程状态*/
 	private String bpmStatus;
-	/**物资编码*/
-	@Excel(name="物资编码",width=15)
+	/**物料编码*/
+	@Excel(name="物料编码",width=15)
 	private String matCode;
-	/**物资名称*/
-	@Excel(name="物资名称",width=15)
+	/**物料名称*/
+	@Excel(name="物料名称",width=15)
 	private String matName;
 	/**单位*/
 	@Excel(name="单位",width=15,dictTable ="ba_unit",dicCode ="UNIT_CODE",dicText ="UNIT_ZH_NAME")
@@ -259,7 +259,7 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  物资编码
+	 *@return: java.lang.String  物料编码
 	 */
 
 	@Column(name ="MAT_CODE",nullable=true,length=32)
@@ -269,14 +269,14 @@ public class TWzMaterialEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  物资编码
+	 *@param: java.lang.String  物料编码
 	 */
 	public void setMatCode(String matCode){
 		this.matCode = matCode;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  物资名称
+	 *@return: java.lang.String  物料名称
 	 */
 
 	@Column(name ="MAT_NAME",nullable=true,length=132)
@@ -286,7 +286,7 @@ public class TWzMaterialEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  物资名称
+	 *@param: java.lang.String  物料名称
 	 */
 	public void setMatName(String matName){
 		this.matName = matName;

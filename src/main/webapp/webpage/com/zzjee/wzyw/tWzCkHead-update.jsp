@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>物资出库</title>
+  <title>物料出库</title>
     <style>
   .ui-button {
   	  display: inline-block;
@@ -136,11 +136,11 @@
 				 <input name="tWzCkItemList[#index#].matCode" name="tWzCkItemList[#index#].matCode" type="text" style="width: 150px" class="searchbox-inputtext" 		datatype="*" ignore="ignore"    onclick="popupClick(this,'mat_code,mat_name,mat_unit,mat_location,mat_batch,mat_price','matCode,matName,matUnit,matLocation,matBatch,matPrice','wz_stock_pop')" value="${poVal.matCode }" />
 
 
-				 <label class="Validform_label" style="display: none;">物资编码</label>
+				 <label class="Validform_label" style="display: none;">物料编码</label>
 			 </td>
 			 <td align="left">
 				 <input name="tWzCkItemList[#index#].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="ignore" />
-				 <label class="Validform_label" style="display: none;">物资名称</label>
+				 <label class="Validform_label" style="display: none;">物料名称</label>
 			 </td>
 			 <td align="left">
 				 <input name="tWzCkItemList[#index#].matQty" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked" />
@@ -271,11 +271,11 @@
 				<input name="tWzCkItemList[#index#].matCode" readonly="readonly" name="tWzCkItemList[#index#].matCode" type="text" style="width: 150px" class="searchbox-inputtext" 		datatype="*" ignore="ignore"    onclick="popupClick(this,'mat_code,mat_name,mat_unit,mat_location,mat_batch,mat_price','matCode,matName,matUnit,matLocation,matBatch,matPrice','wz_stock_pop')" value="${poVal.matCode }" />
 
 
-				<label class="Validform_label" style="display: none;">物资编码</label>
+				<label class="Validform_label" style="display: none;">物料编码</label>
 			</td>
 			<td align="left">
 				<input name="tWzCkItemList[#index#].matName" readonly="readonly" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="ignore" />
-				<label class="Validform_label" style="display: none;">物资名称</label>
+				<label class="Validform_label" style="display: none;">物料名称</label>
 			</td>
 			<td align="left">
 				<input name="tWzCkItemList[#index#].matQty" readonly="readonly" maxlength="32" type="text" class="inputxt"  style="width:120px;" 		datatype="*" ignore="checked" />

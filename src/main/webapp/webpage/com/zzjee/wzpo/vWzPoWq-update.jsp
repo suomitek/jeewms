@@ -16,25 +16,25 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								物资编码:
+								物料编码:
 							</label>
 						</td>
 						<td class="value">
 						    <input id="matCode" name="matCode" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${vWzPoWqPage.matCode}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">物资编码</label>
+							<label class="Validform_label" style="display: none;">物料编码</label>
 						</td>
 					</tr>
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								物资名称:
+								物料名称:
 							</label>
 						</td>
 						<td class="value">
 						    <input id="matName" name="matName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${vWzPoWqPage.matName}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">物资名称</label>
+							<label class="Validform_label" style="display: none;">物料名称</label>
 						</td>
 					</tr>
 					<tr>

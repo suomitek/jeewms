@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tWzMaterialList" checkbox="true" pagination="true" fitColumns="true" title="物资" actionUrl="tWzMaterialController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="tWzMaterialList" checkbox="true" pagination="true" fitColumns="true" title="物料" actionUrl="tWzMaterialController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -14,8 +14,8 @@
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="流程状态"  field="bpmStatus"  hidden="true"  queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>
-     <t:dgCol title="物资编码"  field="matCode"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="物资名称"  field="matName"  query="true"  queryMode="single"  width="120"></t:dgCol>
+     <t:dgCol title="物料编码"  field="matCode"  query="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="物料名称"  field="matName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位"  field="matUnit"  queryMode="single"  dictionary="ba_unit,UNIT_CODE,UNIT_ZH_NAME"  width="120"></t:dgCol>
    <t:dgCol title="规格"  field="matGuige"  queryMode="single"  width="80"></t:dgCol>
    <t:dgCol title="等级"  field="matClass"  queryMode="single"  width="80"></t:dgCol>

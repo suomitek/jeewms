@@ -4,10 +4,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 public class TWzCkItemDto {
 
-    /**物资名称*/
+    /**物料名称*/
     @Excel(name="商品编号",width=15)
     private String matCode;
-    /**物资名称*/
+    /**物料名称*/
     @Excel(name="商品名称",width=15)
     private String matName;
     /**仓库*/
@@ -22,7 +22,7 @@ public class TWzCkItemDto {
     /**单价*/
     @Excel(name="单价",width=15)
     private String matPrice;
-    /**物资单位*/
+    /**物料单位*/
     @Excel(name="单位",width=15)
     private String matUnit;
     /**总价*/

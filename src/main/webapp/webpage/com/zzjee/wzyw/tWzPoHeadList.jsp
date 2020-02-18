@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tWzPoHeadList" checkbox="true"  sortOrder="desc" sortName="id"  fitColumns="true" title="物资采购订单" actionUrl="tWzPoHeadController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="tWzPoHeadList" checkbox="true"  sortOrder="desc" sortName="id"  fitColumns="true" title="物料采购订单" actionUrl="tWzPoHeadController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="操作" field="opt" width="160"></t:dgCol>
    <t:dgCol title="主键"  field="id"    queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>

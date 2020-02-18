@@ -51,17 +51,17 @@ public class TWzRkItemEntity implements java.io.Serializable {
 	private String bpmStatus;
 	/**外键*/
 	private String wzrkHid;
-	/**物资编码*/
-    @Excel(name="物资编码",width=15)
+	/**物料编码*/
+    @Excel(name="物料编码",width=15)
 	private String matCode;
-	/**物资名称*/
-    @Excel(name="物资名称",width=15)
+	/**物料名称*/
+    @Excel(name="物料名称",width=15)
 	private String matName;
 	/**入库数量*/
     @Excel(name="入库数量",width=15)
 	private String matQty;
-	/**物资单位*/
-    @Excel(name="物资单位",width=15)
+	/**物料单位*/
+    @Excel(name="物料单位",width=15)
 	private String matUnit;
 	/**仓库*/
     @Excel(name="仓库",width=15)
@@ -292,7 +292,7 @@ public class TWzRkItemEntity implements java.io.Serializable {
 	
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  物资编码
+	 *@return: java.lang.String  物料编码
 	 */
 	
 	@Column(name ="MAT_CODE",nullable=true,length=32)
@@ -302,7 +302,7 @@ public class TWzRkItemEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  物资编码
+	 *@param: java.lang.String  物料编码
 	 */
 	public void setMatCode(String matCode){
 		this.matCode = matCode;
@@ -310,7 +310,7 @@ public class TWzRkItemEntity implements java.io.Serializable {
 	
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  物资名称
+	 *@return: java.lang.String  物料名称
 	 */
 	
 	@Column(name ="MAT_NAME",nullable=true,length=32)
@@ -320,7 +320,7 @@ public class TWzRkItemEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  物资名称
+	 *@param: java.lang.String  物料名称
 	 */
 	public void setMatName(String matName){
 		this.matName = matName;
@@ -346,7 +346,7 @@ public class TWzRkItemEntity implements java.io.Serializable {
 	
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  物资单位
+	 *@return: java.lang.String  物料单位
 	 */
 	
 	@Column(name ="MAT_UNIT",nullable=true,length=32)
@@ -356,7 +356,7 @@ public class TWzRkItemEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  物资单位
+	 *@param: java.lang.String  物料单位
 	 */
 	public void setMatUnit(String matUnit){
 		this.matUnit = matUnit;

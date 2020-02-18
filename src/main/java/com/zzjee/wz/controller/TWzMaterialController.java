@@ -76,13 +76,13 @@ import io.swagger.annotations.ApiParam;
 
 /**   
  * @Title: Controller  
- * @Description: 物资
+ * @Description: 物料
  * @author onlineGenerator
  * @date 2018-05-20 21:40:03
  * @version V1.0   
  *
  */
-@Api(value="TWzMaterial",description="物资",tags="tWzMaterialController")
+@Api(value="TWzMaterial",description="物料",tags="tWzMaterialController")
 @Controller
 @RequestMapping("/tWzMaterialController")
 public class TWzMaterialController extends BaseController {
@@ -101,7 +101,7 @@ public class TWzMaterialController extends BaseController {
 
 
 	/**
-	 * 物资列表 页面跳转
+	 * 物料列表 页面跳转
 	 * 
 	 * @return
 	 */
@@ -135,7 +135,7 @@ public class TWzMaterialController extends BaseController {
 	}
 	
 	/**
-	 * 删除物资
+	 * 删除物料
 	 * 
 	 * @return
 	 */
@@ -145,13 +145,13 @@ public class TWzMaterialController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		tWzMaterial = systemService.getEntity(TWzMaterialEntity.class, tWzMaterial.getId());
-		message = "物资删除成功";
+		message = "物料删除成功";
 		try{
 			tWzMaterialService.delete(tWzMaterial);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "物资删除失败";
+			message = "物料删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -159,7 +159,7 @@ public class TWzMaterialController extends BaseController {
 	}
 	
 	/**
-	 * 批量删除物资
+	 * 批量删除物料
 	 * 
 	 * @return
 	 */
@@ -168,7 +168,7 @@ public class TWzMaterialController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "物资删除成功";
+		message = "物料删除成功";
 		try{
 			for(String id:ids.split(",")){
 				TWzMaterialEntity tWzMaterial = systemService.getEntity(TWzMaterialEntity.class, 
@@ -179,7 +179,7 @@ public class TWzMaterialController extends BaseController {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "物资删除失败";
+			message = "物料删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -188,7 +188,7 @@ public class TWzMaterialController extends BaseController {
 
 
 	/**
-	 * 添加物资
+	 * 添加物料
 	 * 
 	 * @return
 	 */
@@ -197,13 +197,13 @@ public class TWzMaterialController extends BaseController {
 	public AjaxJson doAdd(TWzMaterialEntity tWzMaterial, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "物资添加成功";
+		message = "物料添加成功";
 		try{
 			tWzMaterialService.save(tWzMaterial);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "物资添加失败";
+			message = "物料添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -211,7 +211,7 @@ public class TWzMaterialController extends BaseController {
 	}
 	
 	/**
-	 * 更新物资
+	 * 更新物料
 	 * 
 	 * @return
 	 */
@@ -220,7 +220,7 @@ public class TWzMaterialController extends BaseController {
 	public AjaxJson doUpdate(TWzMaterialEntity tWzMaterial, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "物资更新成功";
+		message = "物料更新成功";
 		TWzMaterialEntity t = tWzMaterialService.get(TWzMaterialEntity.class, tWzMaterial.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tWzMaterial, t);
@@ -228,7 +228,7 @@ public class TWzMaterialController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "物资更新失败";
+			message = "物料更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -237,7 +237,7 @@ public class TWzMaterialController extends BaseController {
 	
 
 	/**
-	 * 物资新增页面跳转
+	 * 物料新增页面跳转
 	 * 
 	 * @return
 	 */
@@ -250,7 +250,7 @@ public class TWzMaterialController extends BaseController {
 		return new ModelAndView("com/zzjee/wz/tWzMaterial-add");
 	}
 	/**
-	 * 物资编辑页面跳转
+	 * 物料编辑页面跳转
 	 * 
 	 * @return
 	 */
@@ -286,9 +286,9 @@ public class TWzMaterialController extends BaseController {
 		CriteriaQuery cq = new CriteriaQuery(TWzMaterialEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzMaterial, request.getParameterMap());
 		List<TWzMaterialEntity> tWzMaterials = this.tWzMaterialService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"物资");
+		modelMap.put(NormalExcelConstants.FILE_NAME,"物料");
 		modelMap.put(NormalExcelConstants.CLASS,TWzMaterialEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物资列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物料列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST,tWzMaterials);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -302,9 +302,9 @@ public class TWzMaterialController extends BaseController {
 	@RequestMapping(params = "exportXlsByT")
 	public String exportXlsByT(TWzMaterialEntity tWzMaterial,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"物资");
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"物料");
     	modelMap.put(NormalExcelConstants.CLASS,TWzMaterialEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物资列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物料列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -353,7 +353,7 @@ public class TWzMaterialController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="物资列表信息",produces="application/json",httpMethod="GET")
+	@ApiOperation(value="物料列表信息",produces="application/json",httpMethod="GET")
 	public ResponseMessage<List<TWzMaterialEntity>> list() {
 		List<TWzMaterialEntity> listTWzMaterials=tWzMaterialService.getList(TWzMaterialEntity.class);
 		return Result.success(listTWzMaterials);
@@ -361,19 +361,19 @@ public class TWzMaterialController extends BaseController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取物资信息",notes="根据ID获取物资信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取物料信息",notes="根据ID获取物料信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
 		TWzMaterialEntity task = tWzMaterialService.get(TWzMaterialEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取物资信息为空");
+			return Result.error("根据ID获取物料信息为空");
 		}
 		return Result.success(task);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建物资")
-	public ResponseMessage<?> create(@ApiParam(name="物资对象")@RequestBody TWzMaterialEntity tWzMaterial, UriComponentsBuilder uriBuilder) {
+	@ApiOperation(value="创建物料")
+	public ResponseMessage<?> create(@ApiParam(name="物料对象")@RequestBody TWzMaterialEntity tWzMaterial, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TWzMaterialEntity>> failures = validator.validate(tWzMaterial);
 		if (!failures.isEmpty()) {
@@ -385,15 +385,15 @@ public class TWzMaterialController extends BaseController {
 			tWzMaterialService.save(tWzMaterial);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("物资信息保存失败");
+			return Result.error("物料信息保存失败");
 		}
 		return Result.success(tWzMaterial);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="更新物资",notes="更新物资")
-	public ResponseMessage<?> update(@ApiParam(name="物资对象")@RequestBody TWzMaterialEntity tWzMaterial) {
+	@ApiOperation(value="更新物料",notes="更新物料")
+	public ResponseMessage<?> update(@ApiParam(name="物料对象")@RequestBody TWzMaterialEntity tWzMaterial) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TWzMaterialEntity>> failures = validator.validate(tWzMaterial);
 		if (!failures.isEmpty()) {
@@ -405,16 +405,16 @@ public class TWzMaterialController extends BaseController {
 			tWzMaterialService.saveOrUpdate(tWzMaterial);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("更新物资信息失败");
+			return Result.error("更新物料信息失败");
 		}
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return Result.success("更新物资信息成功");
+		return Result.success("更新物料信息成功");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除物资")
+	@ApiOperation(value="删除物料")
 	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
 		logger.info("delete[{}]" + id);
 		// 验证
@@ -425,7 +425,7 @@ public class TWzMaterialController extends BaseController {
 			tWzMaterialService.deleteEntityById(TWzMaterialEntity.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("物资删除失败");
+			return Result.error("物料删除失败");
 		}
 
 		return Result.success();

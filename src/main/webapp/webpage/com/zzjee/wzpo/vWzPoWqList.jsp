@@ -5,8 +5,8 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="vWzPoWqList" checkbox="true" pagination="true" fitColumns="true" title="批量采购入库" actionUrl="vWzPoWqController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="物资编码"  field="matCode" query="true" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="物资名称"  field="matName"  query="true" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="物料编码"  field="matCode" query="true" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="物料名称"  field="matName"  query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位"  field="matUnit"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="仓库"  field="matLocation"   extendParams="editor:'text'" queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="批次"  field="matBatch"  extendParams="editor:'text'"  queryMode="group"  width="120"></t:dgCol>

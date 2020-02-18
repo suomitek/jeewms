@@ -21,7 +21,7 @@ import org.jeecgframework.poi.excel.annotation.ExcelCollection;
 
 /**   
  * @Title: Entity
- * @Description: 物资采购订单
+ * @Description: 物料采购订单
  * @author onlineGenerator
  * @date 2018-05-21 13:23:13
  * @version V1.0   

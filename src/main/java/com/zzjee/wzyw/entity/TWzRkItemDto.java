@@ -6,13 +6,13 @@ public class TWzRkItemDto {
 
     /**主键*/
     private Integer id;
-    /**物资名称*/
+    /**物料名称*/
     @Excel(name="编码/商品名称",width=15)
     private String matName;
-    /**物资编码*/
+    /**物料编码*/
     @Excel(name="规格",width=15)
     private String spec;
-    /**物资单位*/
+    /**物料单位*/
     @Excel(name="单位",width=15)
     private String matUnit;
     /**仓库*/

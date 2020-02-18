@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>物资</title>
+  <title>物料</title>
   <t:base type="jquery,easyui,tools,DatePicker"></t:base>
   <script type="text/javascript">
   //编写自定义JS代码
@@ -16,25 +16,25 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							物资编码:
+							物料编码:
 						</label>
 					</td>
 					<td class="value">
 					     	 <input id="matCode" name="matCode" type="text" style="width: 150px" class="inputxt" 		validType="t_wz_material,mat_code,id" datatype="*" ignore="checked" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">物资编码</label>
+							<label class="Validform_label" style="display: none;">物料编码</label>
 						</td>
 				</tr>
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							物资名称:
+							物料名称:
 						</label>
 					</td>
 					<td class="value">
 					     	 <input id="matName" name="matName" type="text" style="width: 150px" class="inputxt" 		datatype="*" ignore="checked" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">物资名称</label>
+							<label class="Validform_label" style="display: none;">物料名称</label>
 						</td>
 				</tr>
 				<tr>
