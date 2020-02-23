@@ -81,7 +81,7 @@ import io.swagger.annotations.ApiParam;
  * @version V1.0   
  *
  */
-@Api(value="TWzLocation",description="仓库",tags="tWzLocationController")
+@Api(value="TWzLocation",description="库存地点",tags="tWzLocationController")
 @Controller
 @RequestMapping("/tWzLocationController")
 public class TWzLocationController extends BaseController {

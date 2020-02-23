@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>仓库</title>
+  <title>库存地点</title>
   <t:base type="jquery,easyui,tools,DatePicker"></t:base>
   <script type="text/javascript">
   //编写自定义JS代码
@@ -16,13 +16,13 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							仓库:
+							库存地点:
 						</label>
 					</td>
 					<td class="value">
 					     	 <input id="matLocation" name="matLocation" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">仓库</label>
+							<label class="Validform_label" style="display: none;">库存地点</label>
 						</td>
 				</tr>
 				
