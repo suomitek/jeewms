@@ -13,7 +13,7 @@
     <t:dgCol title="更新日期"  field="updateDate" formatter="yyyy-MM-dd" hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-    <t:dgCol title="库位名称"  field="kuWeiMingCheng"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
+    <t:dgCol title="库存地点"  field="kuWeiMingCheng"    queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="仓库"  field="binStore" query="true"   queryMode="single" dictionary="ba_store,store_code,store_name"  width="90"></t:dgCol>
     <t:dgCol title="库位编码"  field="kuWeiBianMa"   query="true" queryMode="single"  width="120"></t:dgCol>
     <t:dgCol title="库位条码"  field="kuWeiTiaoMa"   query="true" queryMode="single"  width="120"></t:dgCol>   

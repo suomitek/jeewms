@@ -50,7 +50,24 @@
 			    <!-- tab内容 -->
 			    <div class="con-wrapper" id="con-wrapper1" style="display: block;">
 			      <div class="row form-wrapper">
-			      
+
+
+
+
+
+
+					  <div class="row show-grid">
+						  <div class="col-xs-3 text-center">
+							  <b style="color:red">库存地点</b>
+						  </div>
+						  <div class="col-xs-3">
+							  <t:dictSelect field="kuWeiMingCheng" type="list" extendJson="{class:'form-control',datatype:'*'}"
+											dictTable="t_wz_location" dictField="MAT_LOCATION" dictText="MAT_LOCATION" hasLabel="false"  title="库存地点"></t:dictSelect>
+							  <span class="Validform_checktip" style="float:left;height:0px;"></span>
+							  <label class="Validform_label" style="display: none">库存地点</label>
+						  </div>
+
+					  </div>
 			      					<div class="row show-grid">
 							          <div class="col-xs-3 text-center">
 			          	<b style="color:red">仓&emsp;&emsp;库</b>
