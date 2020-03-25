@@ -370,8 +370,26 @@ public class WaveToDownController extends BaseController {
         ResultDO D0 = new  ResultDO();
         D0.setOK(true);
 
-        List<WaveToDownEntity> listWaveToDowns=waveToDownService.getList(WaveToDownEntity.class);
-        D0.setObj(listWaveToDowns);
+        String hql="from WaveToDownEntity where waveId = ?  ";
+
+        List<WaveToDownEntity> listWaveToDowns =new ArrayList<>();
+        if(StringUtil.isEmpty(searchstr)&&StringUtil.isEmpty(searchstr2)){
+            hql="from WaveToDownEntity    ";
+            listWaveToDowns = waveToDownService.findHql(hql);
+        }
+        if(StringUtil.isNotEmpty(searchstr)&&StringUtil.isEmpty(searchstr2)){
+            hql="from WaveToDownEntity where waveId = ?  ";
+			listWaveToDowns = waveToDownService.findHql(hql,searchstr);
+		}
+        if(StringUtil.isEmpty(searchstr)&&StringUtil.isNotEmpty(searchstr2)){
+            hql="from WaveToDownEntity where binId = ?  ";
+            listWaveToDowns = waveToDownService.findHql(hql,searchstr2);
+        }
+		if(StringUtil.isNotEmpty(searchstr)&&StringUtil.isNotEmpty(searchstr2)){
+            hql="from WaveToDownEntity where waveId = ? and  binId = ?";
+			listWaveToDowns = waveToDownService.findHql(hql,searchstr,searchstr2);
+		}
+         D0.setObj(listWaveToDowns);
         return new ResponseEntity(D0, HttpStatus.OK);
     }
 

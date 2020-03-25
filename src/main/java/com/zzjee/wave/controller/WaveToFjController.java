@@ -1,5 +1,6 @@
 package com.zzjee.wave.controller;
 import com.zzjee.api.ResultDO;
+import com.zzjee.wave.entity.WaveToDownEntity;
 import com.zzjee.wave.entity.WaveToFjEntity;
 import com.zzjee.wave.service.WaveToFjServiceI;
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class WaveToFjController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
+
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -177,7 +178,7 @@ public class WaveToFjController extends BaseController {
 	/**
 	 * 添加wave_to_fj
 	 * 
-	 * @param ids
+
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -201,7 +202,7 @@ public class WaveToFjController extends BaseController {
 	/**
 	 * 更新wave_to_fj
 	 * 
-	 * @param ids
+
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -346,8 +347,26 @@ public class WaveToFjController extends BaseController {
 								  @RequestParam(value="searchstr2", required=false)String searchstr2) {
 		ResultDO D0 = new  ResultDO();
 		D0.setOK(true);
+		String hql="from WaveToDownEntity where waveId = ?  ";
 
-		List<WaveToFjEntity> listWaveToFjs=waveToFjService.getList(WaveToFjEntity.class);
+		List<WaveToFjEntity> listWaveToFjs =new ArrayList<>();
+		if(StringUtil.isEmpty(searchstr)&&StringUtil.isEmpty(searchstr2)){
+			hql="from WaveToFjEntity    ";
+			listWaveToFjs=waveToFjService.findHql(hql);
+		}
+		if(StringUtil.isNotEmpty(searchstr)&&StringUtil.isEmpty(searchstr2)){
+			hql="from WaveToFjEntity where waveId = ?  ";
+			listWaveToFjs=waveToFjService.findHql(hql,searchstr);
+		}
+		if(StringUtil.isEmpty(searchstr)&&StringUtil.isNotEmpty(searchstr2)){
+			hql="from WaveToFjEntity where firstRq = ?  ";
+			listWaveToFjs=waveToFjService.findHql(hql,searchstr2);
+		}
+		if(StringUtil.isNotEmpty(searchstr)&&StringUtil.isNotEmpty(searchstr2)){
+			hql="from WaveToFjEntity where waveId = ? and  firstRq = ?";
+			listWaveToFjs=waveToFjService.findHql(hql,searchstr,searchstr2);
+		}
+//		List<WaveToFjEntity> listWaveToFjs=waveToFjService.getList(WaveToFjEntity.class);
 
 		D0.setObj(listWaveToFjs);
 		return new ResponseEntity(D0, HttpStatus.OK);
