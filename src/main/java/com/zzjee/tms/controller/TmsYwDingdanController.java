@@ -1,6 +1,7 @@
 package com.zzjee.tms.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.zzjee.api.ResultDO;
 import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.tms.entity.DdPage;
 import com.zzjee.tms.entity.TmsMdDzEntity;
@@ -9,6 +10,7 @@ import com.zzjee.tms.service.TmsYwDingdanServiceI;
 import com.zzjee.wm.entity.WmOmNoticeHEntity;
 import com.zzjee.wm.entity.WmOmNoticeIEntity;
 import com.zzjee.wm.entity.WmTmsNoticeHEntity;
+import com.zzjee.wm.entity.WmTmsNoticeIEntity;
 import com.zzjee.wm.service.WmOmNoticeHServiceI;
 import com.zzjee.wmutil.wmUtil;
 import io.swagger.annotations.Api;
@@ -39,6 +41,7 @@ import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -483,6 +486,78 @@ public class TmsYwDingdanController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
+
+
+
+	@RequestMapping(value = "/list/songhuo",  method = RequestMethod.GET)   //总订单
+	@ResponseBody
+	public ResponseEntity<?> list(@RequestParam(value="username", required=false) String username,
+								  @RequestParam(value="searchstr", required=false)String searchstr,
+								  @RequestParam(value="searchstr2", required=false)String searchstr2) {
+		ResultDO D0 = new  ResultDO();
+		D0.setOK(true);
+		String hql="from WmTmsNoticeHEntity   omSta = ";
+		List<WmTmsNoticeHEntity> listWaveToDowns =new ArrayList<>();
+//		if(StringUtil.isNotEmpty(searchstr)){
+//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
+//		}else{
+//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
+//
+//		}
+		listWaveToDowns = wmOmNoticeHService.findHql(hql,"已装车");
+		D0.setObj(listWaveToDowns);
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
+
+    @RequestMapping(value = "/listdetail/songhuo",  method = RequestMethod.GET)   //总订单
+    @ResponseBody
+    public ResponseEntity<?> listdetail(
+                                  @RequestParam(value="omnoticeid", required=false)String omnoticeid) {
+        ResultDO D0 = new  ResultDO();
+        D0.setOK(true);
+        String hql="from WmTmsNoticeIEntity  where omNoticeId = ?";
+        List<WmTmsNoticeIEntity> listWaveToDowns =new ArrayList<>();
+//		if(StringUtil.isNotEmpty(searchstr)){
+//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
+//		}else{
+//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
+//
+//		}
+        listWaveToDowns = wmOmNoticeHService.findHql(hql,omnoticeid);
+        D0.setObj(listWaveToDowns);
+        return new ResponseEntity(D0, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/update/songhuo",  method = RequestMethod.GET)   //总订单
+    @ResponseBody
+    public ResponseEntity<?> updatesonghuo(
+            @RequestParam(value="omnoticeid", required=false)String omnoticeid) {
+        ResultDO D0 = new  ResultDO();
+        D0.setOK(true);
+        String hql="from WmTmsNoticeHEntity  where  omNoticeId = ?";
+        List<WmTmsNoticeHEntity> listWaveToDowns =new ArrayList<>();
+        listWaveToDowns = wmOmNoticeHService.findHql(hql,omnoticeid);
+
+        for(WmTmsNoticeHEntity t: listWaveToDowns){
+            t.setOmSta("已送货");
+            wmOmNoticeHService.updateEntitie(t);
+        }
+//		if(StringUtil.isNotEmpty(searchstr)){
+//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
+//		}else{
+//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
+//
+//		}
+        D0.setObj(listWaveToDowns);
+        return new ResponseEntity(D0, HttpStatus.OK);
+    }
 	/**
 	 *  取消派车
 	 *
@@ -643,7 +718,6 @@ public class TmsYwDingdanController extends BaseController {
 	/**
 	 * 添加运输订单
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -754,7 +828,6 @@ public class TmsYwDingdanController extends BaseController {
 	/**
 	 * 更新运输订单
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")

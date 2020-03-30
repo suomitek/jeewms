@@ -20,6 +20,7 @@ import javax.validation.Validator;
 
 import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
+import com.zzjee.wave.entity.WaveToDownEntity;
 import com.zzjee.wm.entity.*;
 import com.zzjee.wm.page.*;
 import com.zzjee.wmutil.dsc.dscUtil;
@@ -68,12 +69,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -2513,5 +2509,63 @@ public class WmOmNoticeHController extends BaseController {
 	public void delete(@PathVariable("id") String id) {
 		WmOmNoticeHEntity wmOmNoticeH = wmOmNoticeHService.get(WmOmNoticeHEntity.class, id);
 		wmOmNoticeHService.delMain(wmOmNoticeH);
+	}
+
+
+
+	@RequestMapping(value = "/list/hehuo",  method = RequestMethod.GET)   //总订单
+	@ResponseBody
+	public ResponseEntity<?> list(@RequestParam(value="username", required=false) String username,
+								  @RequestParam(value="searchstr", required=false)String searchstr,
+								  @RequestParam(value="searchstr2", required=false)String searchstr2) {
+		ResultDO D0 = new  ResultDO();
+		D0.setOK(true);
+
+		String hql="from WmOmNoticeHEntity  ";
+
+		List<WmOmNoticeHEntity> listWaveToDowns =new ArrayList<>();
+//		if(StringUtil.isNotEmpty(searchstr)){
+//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
+//		}else{
+//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
+//
+//		}
+		listWaveToDowns = wmOmNoticeHService.findHql(hql);
+		D0.setObj(listWaveToDowns);
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/listdetail/hehuo",  method = RequestMethod.GET)//
+	@ResponseBody
+	public ResponseEntity<?> listdetail(
+								  @RequestParam(value="omNoticeId", required=false)String omnoticeid) {
+		ResultDO D0 = new  ResultDO();
+		D0.setOK(true);
+		String hql="from WmImNoticeIEntity where omNoticeId = ? ";
+		List<WmOmNoticeIEntity> listWaveToDowns =new ArrayList<>();
+//			hql="from WmImNoticeIEntity where  noticeiSta <> ? and  omNoticeId = ?";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,"已核货",searchstr);
+			hql="from WmOmNoticeIEntity where omSta = ? and  omNoticeId = ?";
+			listWaveToDowns = wmOmNoticeHService.findHql(hql,"Y", omnoticeid);
+		D0.setObj(listWaveToDowns);
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/update/hehuo",  method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?> doupdate(
+			@RequestParam(value="id", required=false)String id) {
+		ResultDO D0 = new  ResultDO();
+		D0.setOK(true);
+		String hql="from WmImNoticeIEntity where id = ? ";
+		List<WmOmNoticeIEntity> listWaveToDowns =new ArrayList<>();
+		hql="from WmOmNoticeIEntity where   id = ?";
+		listWaveToDowns = wmOmNoticeHService.findHql(hql,id);
+		for(WmOmNoticeIEntity t: listWaveToDowns){
+			t.setOmSta("YH");
+			wmOmNoticeHService.updateEntitie(t);
+		}
+		D0.setObj(listWaveToDowns);
+		return new ResponseEntity(D0, HttpStatus.OK);
 	}
 }
