@@ -496,7 +496,8 @@ public class TmsYwDingdanController extends BaseController {
 								  @RequestParam(value="searchstr2", required=false)String searchstr2) {
 		ResultDO D0 = new  ResultDO();
 		D0.setOK(true);
-		String hql="from WmTmsNoticeHEntity   omSta = ";
+		String hql="from WmTmsNoticeHEntity  ";
+//		String hql="from WmTmsNoticeHEntity where  omSta = ";
 		List<WmTmsNoticeHEntity> listWaveToDowns =new ArrayList<>();
 //		if(StringUtil.isNotEmpty(searchstr)){
 //			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
@@ -506,7 +507,8 @@ public class TmsYwDingdanController extends BaseController {
 //			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
 //
 //		}
-		listWaveToDowns = wmOmNoticeHService.findHql(hql,"已装车");
+		listWaveToDowns = wmOmNoticeHService.findHql(hql);
+//		listWaveToDowns = wmOmNoticeHService.findHql(hql,"已装车");
 		D0.setObj(listWaveToDowns);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
