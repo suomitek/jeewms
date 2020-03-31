@@ -2542,12 +2542,14 @@ public class WmOmNoticeHController extends BaseController {
 								  @RequestParam(value="omNoticeId", required=false)String omnoticeid) {
 		ResultDO D0 = new  ResultDO();
 		D0.setOK(true);
-		String hql="from WmImNoticeIEntity where omNoticeId = ? ";
+		String hql="from WmOmNoticeIEntity where omNoticeId = ? ";
 		List<WmOmNoticeIEntity> listWaveToDowns =new ArrayList<>();
 //			hql="from WmImNoticeIEntity where  noticeiSta <> ? and  omNoticeId = ?";
 //			listWaveToDowns = wmOmNoticeHService.findHql(hql,"已核货",searchstr);
-			hql="from WmOmNoticeIEntity where omSta = ? and  omNoticeId = ?";
-			listWaveToDowns = wmOmNoticeHService.findHql(hql,"Y", omnoticeid);
+			hql="from WmOmNoticeIEntity ";
+//			hql="from WmOmNoticeIEntity where omSta = ? and  omNoticeId = ?";
+			listWaveToDowns = wmOmNoticeHService.findHql(hql);
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql,"Y", omnoticeid);
 		D0.setObj(listWaveToDowns);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
