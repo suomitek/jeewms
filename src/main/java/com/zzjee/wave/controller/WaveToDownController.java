@@ -426,7 +426,7 @@ public class WaveToDownController extends BaseController {
                 wmToDownGoods.setGoodsName(wmOmQmI.getGoodsName());//商品名称
                 wmToDownGoods.setOmBeizhu(wmOmQmI.getOmBeizhu());//备注
                 wmToDownGoods.setImCusCode(wmOmQmI.getImCusCode());//客户单号
-                wmToDownGoods.setOrderType("01");//默认为01
+                wmToDownGoods.setOrderType("99");//默认为01
                 systemService.save(wmToDownGoods);
                 wmOmQmI.setBinSta("H");
 				wmOmQmI.setFirstRq(waveToDown.getFirstRq());
@@ -471,7 +471,7 @@ public class WaveToDownController extends BaseController {
 				wmToDownGoods.setGoodsName(wmOmQmI.getGoodsName());//商品名称
 				wmToDownGoods.setOmBeizhu(wmOmQmI.getOmBeizhu());//备注
 				wmToDownGoods.setImCusCode(wmOmQmI.getImCusCode());//客户单号
-				wmToDownGoods.setOrderType("01");//默认为01
+				wmToDownGoods.setOrderType("99");//默认为01
 				systemService.save(wmToDownGoods);
 				wmOmQmI.setBinSta("H");
 				wmOmQmI.setFirstRq(waveToDown.getFirstRq());

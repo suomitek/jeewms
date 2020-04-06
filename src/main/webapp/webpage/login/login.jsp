@@ -114,7 +114,7 @@
                 </form>
               </div>
             </div>
-            <div class="center"><h4 class="blue" id="id-company-text">&copy; 本系统未在任何平台出售源码，版权归厦门市灵鹿谷科技有限公司所有，如果需要服务请联系13850081872</h4></div>
+            <%--<div class="center"><h4 class="blue" id="id-company-text">&copy; 本系统未在任何平台出售源码，版权归厦门市灵鹿谷科技有限公司所有，如果需要服务请联系13850081872</h4></div>--%>
             <div class="navbar-fixed-top align-right">
               <br />
               &nbsp;
