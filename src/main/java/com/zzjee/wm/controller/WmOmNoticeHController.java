@@ -160,6 +160,7 @@ public class WmOmNoticeHController extends BaseController {
 
 
 	@RequestMapping(params = "saveOmnotice")
+    @ResponseBody
 	public AjaxJson saveOmnotice(wmomnoticeipage page){
 		String message = null;
 		List<WmOmNoticeIEntity> demos=page.getWmomnoticeirows();
