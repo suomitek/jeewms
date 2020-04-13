@@ -115,6 +115,7 @@ public class TmsMdCheliangController extends BaseController {
 //			}
 //
 //		}
+		cq.eq("zhuangtai","Y");
 		cq.add();
 		this.tmsMdCheliangService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
@@ -188,6 +189,7 @@ public class TmsMdCheliangController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		message = "车辆管理添加成功";
 		try{
+			tmsMdCheliang.setZhuangtai("Y");
 			tmsMdCheliangService.save(tmsMdCheliang);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
