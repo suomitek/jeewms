@@ -19,6 +19,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import com.zzjee.md.entity.MdGoodsEntity;
+import com.zzjee.tms.entity.TmsMdCheliangEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
 import com.zzjee.wave.entity.WaveToDownEntity;
 import com.zzjee.wm.entity.*;
@@ -2470,6 +2471,19 @@ public class WmOmNoticeHController extends BaseController {
 		tms.setShouhuoren(wmOmNoticeH.getDelvMember());//收货人
 		tms.setShrdh(wmOmNoticeH.getDelvAddr());//收货人地址
 		tms.setBy1(wmOmNoticeH.getReMember());//区域
+		String siji = "";
+		String chel = "";
+		try{
+			String qu = wmOmNoticeH.getReMember();
+			List<TmsMdCheliangEntity>  listcl = systemService.findByProperty(TmsMdCheliangEntity.class,"quyu",qu);
+			siji = listcl.get(0).getUsername();
+			chel = listcl.get(0).getChepaihao();
+		}catch (Exception e){
+
+		}
+
+		tms.setChehao(chel);
+		tms.setSiji(siji);
 		tms.setFadh(noticeid);
 		tms.setZhuangtai("已下单");
 		tms.setFahuoren(wmOmNoticeH.getPiClass());//配送点
