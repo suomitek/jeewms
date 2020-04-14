@@ -133,13 +133,13 @@ public class WaveToFjController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		waveToFj = systemService.getEntity(WaveToFjEntity.class, waveToFj.getId());
-		message = "wave_to_fj删除成功";
+		message = "wave_to_fj";
 		try{
 			waveToFjService.delete(waveToFj);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "wave_to_fj删除失败";
+			message = "wave_to_fj";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -156,7 +156,7 @@ public class WaveToFjController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "wave_to_fj删除成功";
+		message = "wave_to_fj";
 		try{
 			for(String id:ids.split(",")){
 				WaveToFjEntity waveToFj = systemService.getEntity(WaveToFjEntity.class, 
@@ -167,7 +167,7 @@ public class WaveToFjController extends BaseController {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "wave_to_fj删除失败";
+			message = "wave_to_fj";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
