@@ -259,18 +259,18 @@
 			          
 			        
 			          <div class="col-xs-1 text-center">
-			          	<b>运输公司：</b>
+			          	<b>运输人：</b>
 			          </div>
 			          <div class="col-xs-2">
 
-						  <t:dictSelect field="reMember" type="list" extendJson="{class:'form-control',style:'width:150px'}"
-										typeGroupCode="tms_kd"  defaultVal="${wmOmNoticeHPage.reMember}" hasLabel="false"  title="运输公司"></t:dictSelect>
+						  <%--<t:dictSelect field="reMember" type="list" extendJson="{class:'form-control',style:'width:150px'}"--%>
+										<%--typeGroupCode="tms_kd"  defaultVal="${wmOmNoticeHPage.reMember}" hasLabel="false"  title="运输公司"></t:dictSelect>--%>
 
 
-								<%--<input id="reMember" name="reMember" type="text" class="form-control"--%>
-									 <%--/>--%>
+								<input id="reMember" name="reMember" type="text" class="form-control"
+									 />
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
-						<label class="Validform_label" style="display: none">运输公司</label>
+						<label class="Validform_label" style="display: none">运输人</label>
 			          </div>
 
 			        
@@ -286,7 +286,7 @@
 			          
 			        
 			          <div class="col-xs-1 text-center">
-			          	<b>发货运单号：</b>
+			          	<b>发货运单号或车号：</b>
 			          </div>
 			          <div class="col-xs-2">
 
@@ -295,7 +295,7 @@
 						  <input id="reCarno" name="reCarno" type="text" class="form-control"
 									/>
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
-						<label class="Validform_label" style="display: none">发货运单号</label>
+						<label class="Validform_label" style="display: none">发货运单号或车号</label>
 			          </div>
 							</div>
 			          
