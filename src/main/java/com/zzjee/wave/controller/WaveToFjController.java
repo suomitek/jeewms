@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zzjee.wm.entity.WmOmNoticeHEntity;
 import com.zzjee.wm.entity.WmOmQmIEntity;
 import com.zzjee.wm.entity.WmToDownGoodsEntity;
 import org.apache.log4j.Logger;
@@ -63,12 +64,12 @@ import java.net.URI;
 import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: wave_to_fj
  * @author onlineGenerator
  * @date 2019-12-11 11:32:18
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -85,12 +86,12 @@ public class WaveToFjController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * wave_to_fj列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -100,7 +101,7 @@ public class WaveToFjController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -121,10 +122,10 @@ public class WaveToFjController extends BaseController {
 		this.waveToFjService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除wave_to_fj
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -145,10 +146,10 @@ public class WaveToFjController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除wave_to_fj
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -159,7 +160,7 @@ public class WaveToFjController extends BaseController {
 		message = "wave_to_fj";
 		try{
 			for(String id:ids.split(",")){
-				WaveToFjEntity waveToFj = systemService.getEntity(WaveToFjEntity.class, 
+				WaveToFjEntity waveToFj = systemService.getEntity(WaveToFjEntity.class,
 				id
 				);
 				waveToFjService.delete(waveToFj);
@@ -177,7 +178,7 @@ public class WaveToFjController extends BaseController {
 
 	/**
 	 * 添加wave_to_fj
-	 * 
+	 *
 
 	 * @return
 	 */
@@ -198,10 +199,10 @@ public class WaveToFjController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新wave_to_fj
-	 * 
+	 *
 
 	 * @return
 	 */
@@ -224,11 +225,11 @@ public class WaveToFjController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * wave_to_fj新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -241,7 +242,7 @@ public class WaveToFjController extends BaseController {
 	}
 	/**
 	 * wave_to_fj编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -252,10 +253,10 @@ public class WaveToFjController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wave/waveToFj-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -263,10 +264,10 @@ public class WaveToFjController extends BaseController {
 		req.setAttribute("controller_name","waveToFjController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -285,7 +286,7 @@ public class WaveToFjController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -299,13 +300,13 @@ public class WaveToFjController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -333,7 +334,7 @@ public class WaveToFjController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<WaveToFjEntity> list() {
@@ -350,6 +351,8 @@ public class WaveToFjController extends BaseController {
 		String hql="from WaveToDownEntity where waveId = ?  ";
 
 		List<WaveToFjEntity> listWaveToFjs =new ArrayList<>();
+		List<WaveToFjEntity> listWaveToFjsnew =new ArrayList<>();
+
 		if(StringUtil.isEmpty(searchstr)&&StringUtil.isEmpty(searchstr2)){
 			hql="from WaveToFjEntity    ";
 			listWaveToFjs=waveToFjService.findHql(hql);
@@ -367,6 +370,19 @@ public class WaveToFjController extends BaseController {
 			listWaveToFjs=waveToFjService.findHql(hql,searchstr,searchstr2);
 		}
 //		List<WaveToFjEntity> listWaveToFjs=waveToFjService.getList(WaveToFjEntity.class);
+		for(WaveToFjEntity t:listWaveToFjs){
+			try{
+                String siji = "";
+                String chehao = "";
+				WmOmNoticeHEntity wmom = systemService.findUniqueByProperty(WmOmNoticeHEntity.class,"omNoticeId",t.getOmNoticeId());
+				  siji = wmom.getReMember();
+				  chehao = wmom.getReCarno();
+				t.setBy1(siji);//司机
+				t.setBy2(chehao);//车号
+			}catch (Exception e){
+			}
+			listWaveToFjsnew.add(t);
+		}
 
 		D0.setObj(listWaveToFjs);
 		return new ResponseEntity(D0, HttpStatus.OK);

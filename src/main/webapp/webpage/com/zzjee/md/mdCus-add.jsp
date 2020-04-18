@@ -77,7 +77,7 @@
 			          </div>
 			          <div class="col-xs-3">
 <t:dictSelect field="keHuShuXing" type="list" extendJson="{class:'form-control',datatype:'*'}"
-					 defaultVal="20"			dictTable="ba_keHuShuXing" dictField="kehushuxing_code" dictText="kehushuxing_name" hasLabel="false"  title="客户属性"></t:dictSelect>     
+								dictTable="ba_keHuShuXing" dictField="kehushuxing_code" dictText="kehushuxing_name" hasLabel="false"  title="客户属性"></t:dictSelect>
 	
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">客户属性</label>
@@ -88,7 +88,7 @@
 			          </div>
 			          <div class="col-xs-3">
 <t:dictSelect field="keHuZhuangTai" type="list" extendJson="{class:'form-control',datatype:'*'}"
-					 defaultVal="20"			dictTable="ba_kehuzhuangtai" dictField="kehuzhuangtai_code" dictText="kehuzhuangtai_name" hasLabel="false"  title="有无意向书"></t:dictSelect>     
+							dictTable="ba_kehuzhuangtai" dictField="kehuzhuangtai_code" dictText="kehuzhuangtai_name" hasLabel="false"  title="有无意向书"></t:dictSelect>
 	
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">出库计费方式</label>

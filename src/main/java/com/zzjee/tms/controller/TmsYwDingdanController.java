@@ -60,11 +60,11 @@ import java.util.*;
 import static com.xiaoleilu.hutool.date.DateUtil.now;
 
 /**
- * @Title: Controller  
+ * @Title: Controller
  * @Description: 运输订单
  * @author onlineGenerator
  * @date 2018-01-29 21:57:25
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Api(value="TmsYwDingdan",description="运输订单",tags="tmsYwDingdanController")
@@ -90,7 +90,7 @@ public class TmsYwDingdanController extends BaseController {
 
 	/**
 	 * 运输订单列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -144,7 +144,7 @@ public class TmsYwDingdanController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -366,7 +366,7 @@ public class TmsYwDingdanController extends BaseController {
 
 	/**
 	 * 删除运输订单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -424,6 +424,9 @@ public class TmsYwDingdanController extends BaseController {
 			Set<String> keySets = maphz.keySet();
 			Iterator<String> ki = keySets.iterator();
  			while(ki.hasNext()){
+				WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
+				wmOmNoticeH.setReCarno(chehao);//车号
+				wmOmNoticeH.setReMember(siji);//司机
 				String mapkey = ki.next();
 				String mapvv = maphz.get(mapkey);
 				String[]   strva= mapvv.split(";");
@@ -443,7 +446,6 @@ public class TmsYwDingdanController extends BaseController {
 				List<Map<String, Object>> resultz = systemService
 						.findForJdbc(tsql);
 				System.out.print("****************tsqlz" + tsql);
-				WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
 				String noticeid = wmUtil.getNextomNoticeId("");
 				wmOmNoticeH.setOmNoticeId(noticeid);
 				List<WmOmNoticeIEntity> wmOmNoticeIListnew = new ArrayList<>();
@@ -465,19 +467,8 @@ public class TmsYwDingdanController extends BaseController {
 						wmOmNoticeIListnew.add(t);
 					}
 				}
-
-
-
-
-
 				wmOmNoticeHService.addMain(wmOmNoticeH, wmOmNoticeIListnew);
-
-
-
 			}
-
-
-
 			}catch(Exception e){
 			e.printStackTrace();
 			message = "运输订单派车失败";
@@ -689,7 +680,7 @@ public class TmsYwDingdanController extends BaseController {
 
 	/**
 	 * 批量删除运输订单
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -719,7 +710,7 @@ public class TmsYwDingdanController extends BaseController {
 
 	/**
 	 * 添加运输订单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -826,10 +817,10 @@ public class TmsYwDingdanController extends BaseController {
 		j.setObj(tmsYwDingdan);
 		return j;
 	}
-	
+
 	/**
 	 * 更新运输订单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -851,11 +842,11 @@ public class TmsYwDingdanController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 运输订单新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -880,7 +871,7 @@ public class TmsYwDingdanController extends BaseController {
 	}
 	/**
 	 * 运输订单编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -915,7 +906,7 @@ public class TmsYwDingdanController extends BaseController {
 	}
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -923,10 +914,10 @@ public class TmsYwDingdanController extends BaseController {
 		req.setAttribute("controller_name","tmsYwDingdanController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -945,7 +936,7 @@ public class TmsYwDingdanController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -959,13 +950,13 @@ public class TmsYwDingdanController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -993,10 +984,10 @@ public class TmsYwDingdanController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	/**
 	 * 获取文件附件信息
-	 * 
+	 *
 	 * @param id tmsYwDingdan主键id
 	 */
 	@RequestMapping(params = "getFiles")
@@ -1027,7 +1018,7 @@ public class TmsYwDingdanController extends BaseController {
 		List<TmsYwDingdanEntity> listTmsYwDingdans=tmsYwDingdanService.getList(TmsYwDingdanEntity.class);
 		return Result.success(listTmsYwDingdans);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="根据ID获取运输订单信息",notes="根据ID获取运输订单信息",httpMethod="GET",produces="application/json")
