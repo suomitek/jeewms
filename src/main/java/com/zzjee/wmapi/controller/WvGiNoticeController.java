@@ -402,10 +402,8 @@ public class WvGiNoticeController extends BaseController {
 				chehao = wmom.getReCarno();
 				if(StringUtil.isNotEmpty(t.getOmBeiZhu())){
 					t.setOmBeiZhu(t.getOmBeiZhu()+siji+chehao);
-
 				}else{
 					t.setOmBeiZhu(siji+chehao);
-
 				}
 			}catch (Exception e){
 			}
