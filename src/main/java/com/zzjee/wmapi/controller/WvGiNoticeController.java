@@ -389,7 +389,6 @@ public class WvGiNoticeController extends BaseController {
 					continue;
 				}
 			}
-
 			i++;
 			if(i>100){
 				break;
