@@ -364,6 +364,29 @@ public class TmsYwDingdanController extends BaseController {
 		return j;
 	}
 
+	@RequestMapping(params = "doPrintpage")
+	public ModelAndView doPrint(String ids,HttpServletRequest request) {
+		List<WmTmsNoticeIEntity>  arrayoutlist = new ArrayList<>();
+		for(String id1:ids.split(",")) {
+			TmsYwDingdanEntity tmsYwDingdan = systemService.getEntity(TmsYwDingdanEntity.class,
+					id1
+			);
+
+				try{
+					String omnoticeid = tmsYwDingdan.getFadh();
+					List<WmTmsNoticeIEntity> listtemp = systemService.findByProperty(WmTmsNoticeIEntity.class,"omNoticeId",omnoticeid);
+                   for(WmTmsNoticeIEntity t: listtemp){
+					   arrayoutlist.add(t);
+				   }
+				}catch (Exception e){
+
+			}
+
+ 		}
+		request.setAttribute("arrayoutlist",arrayoutlist);
+		return new ModelAndView("com/zzjee/tms/chukumingxi");
+
+	}
 	/**
 	 * 删除运输订单
 	 *
@@ -390,6 +413,8 @@ public class TmsYwDingdanController extends BaseController {
 	}
 
 
+
+
 	@RequestMapping(params = "dopc")
 	@ResponseBody
 	public AjaxJson dopc(String id, String siji, String chehao, HttpServletRequest request) {
@@ -401,6 +426,7 @@ public class TmsYwDingdanController extends BaseController {
 				TmsYwDingdanEntity tmsYwDingdan = systemService.getEntity(TmsYwDingdanEntity.class,
 						id1
 				);
+
 				tmsYwDingdan.setZhuangtai("已派车");
 				tmsYwDingdan.setSiji(siji);
 				tmsYwDingdan.setChehao(chehao);

@@ -49,6 +49,7 @@
    <%--<t:dgToolBar title="下单" icon="icon-add" url="tmsYwDingdanController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="编辑" icon="icon-edit" url="tmsYwDingdanController.do?goUpdate" funname="update"></t:dgToolBar>--%>
    <t:dgToolBar title="批量派车"  funname="pcALLSelect"></t:dgToolBar>
+   <t:dgToolBar title="订单明细"  funname="doprint"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="tmsYwDingdanController.do?goUpdate" width="1200" height="550" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
@@ -63,10 +64,25 @@
 
   </div>
  </div>
- <script src = "webpage/com/zzjee/tms/tmsYwDingdanList.js"></script>		
+ <script src = "webpage/com/zzjee/tms/tmsYwDingdanList.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
  });
+
+
+ function doprint(){
+  var rows = $('#tmsYwDingdanList').datagrid('getSelections');
+
+  var ids = [];
+  for (var i = 0; i < rows.length; i++) {
+   ids.push(rows[i].id);
+  }
+  var url = "tmsYwDingdanController.do?doPrintpage&ids="+ids.join(',');;
+  createdetailwindow(" 订单明细", url, 1200, 1000);
+
+  // window.open(url);
+ }
+
  function pcALLSelect() {
      var count=$("#username option").length;
      var siji;
@@ -118,8 +134,8 @@
          }
      }
  }
-   
- 
+
+
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'tmsYwDingdanController.do?upload', "tmsYwDingdanList");
