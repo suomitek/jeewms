@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import com.zzjee.wm.entity.WmOmNoticeHEntity;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -94,7 +95,6 @@ public class WvGiNoticeController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -389,11 +389,24 @@ public class WvGiNoticeController extends BaseController {
 					continue;
 				}
 			}
-
 			i++;
 			if(i>100){
 				break;
 			}
+			try{
+				String siji = "";
+				String chehao = "";
+				WmOmNoticeHEntity wmom = systemService.findUniqueByProperty(WmOmNoticeHEntity.class,"omNoticeId",t.getOmNoticeId());
+				siji = wmom.getReMember();
+				chehao = wmom.getReCarno();
+				if(StringUtil.isNotEmpty(t.getOmBeiZhu())){
+					t.setOmBeiZhu(t.getOmBeiZhu()+siji+chehao);
+				}else{
+					t.setOmBeiZhu(siji+chehao);
+				}
+			}catch (Exception e){
+			}
+
 			result.add(t);
 		}
 
