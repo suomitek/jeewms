@@ -140,65 +140,67 @@ function downloadqrcode() {
 <a class="easyui-linkbutton" style="margin-top:3px" icon="icon-print" href="javascript:printall()">打印</a>
 
 <div class="printdiv"><t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table"  >
-	<input id="content" type="hidden" value="${wmOmNoticeHPage.omNoticeId}">
-	<input id="showlisturl" type="hidden" value="${showlisturl}">
+<%--	<input id="content" type="hidden" value="${wmOmNoticeHPage.omNoticeId}">--%>
+<%--	<input id="showlisturl" type="hidden" value="${showlisturl}">--%>
 	<table border=0 cellpadding=0 cellspacing=0 width=780 style='border-collapse:
  collapse;table-layout:fixed;width:438pt;margin-left: 30px;margin-top: -30px'>
-		<col width=102 style='mso-width-source:userset;mso-width-alt:3612;width:76pt'>
+		<col width=102 style='mso-width-source:userset;mso-width-alt:3612;width:120pt'>
 
 		<%--<col width=84 style='mso-width-source:userset;mso-width-alt:2986;width:63pt'>--%>
-		<col width=253 style='mso-width-source:userset;mso-width-alt:4010;width:200pt'>
+		<col width=253 style='mso-width-source:userset;mso-width-alt:4010;width:120pt'>
 		<col width=45 style='mso-width-source:userset;mso-width-alt:1592;width:34pt'>
 		<col width=94  style='mso-width-source:userset;mso-width-alt:2986; width:80pt'>
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:50pt'>
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:50pt'>
+		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:80pt'>
 
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:50pt'>
+		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:120pt'>
 
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:50pt'>
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:70pt'>
-
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:70pt'>
-
-		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:50pt'>
+		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:80pt'>
+		<col width=67 style='mso-width-source:userset;mso-width-alt:2389;width:150pt'>
 
 
 
+		<tr height=18 style='height:13.2pt'>
+			<td colspan=8 height=18 width=585 style='height:13.2pt;width:438pt'></td>
+		</tr>
+		<tr height=18 style='height:13.2pt'>
+			<td colspan=8 height=40 class=xl67 style='height:30.0pt'><span style="font-size: 18pt">出库明细</span></td>		</tr>
 		<tr height=33 style='mso-height-source:userset;height:25.05pt'>
 			<td class=xl65 style='border:1.0pt solid black;text-align: center'>单号</td>
 			<%--<td class=xl65 style='border:1.0pt solid black;text-align: center'>商品编码</td>--%>
 			<td height=33 class=xl65 style='height:25.05pt;border:1.0pt solid black;text-align: center'>商品</td>
 
 			<td class=xl65 style='border:1.0pt solid black;text-align: center'>单位</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>生产日期</td>
+<%--			<td class=xl65 style='border:1.0pt solid black;text-align: center'>生产日期</td>--%>
 			<td class=xl65 style='border:1.0pt solid black;text-align: center'>数量</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>重量</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>体积</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>规格</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>拣货</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>托盘/保质期</td>
-			<td class=xl65 style='border:1.0pt solid black;text-align: center'>二维码</td>
+
+			<td class=xl65 style='border:1.0pt solid black;text-align: center'>收货人</td>
+			<td class=xl65 style='border:1.0pt solid black;text-align: center'>收货人电话</td>
+			<td class=xl65 style='border:1.0pt solid black;text-align: center'>车号</td>
+			<td class=xl65 style='border:1.0pt solid black;text-align: center'>收货人地址</td>
+<%--			<td class=xl65 style='border:1.0pt solid black;text-align: center'>托盘/保质期</td>--%>
+<%--			<td class=xl65 style='border:1.0pt solid black;text-align: center'>二维码</td>--%>
 
 			<td  ></td>
 		</tr>
 
-		<c:if test="${fn:length(wmOmQmIList)  > 0 }">
-		<c:forEach items="${wmOmQmIList}" var="poVal" varStatus="stuts">
+		<c:if test="${fn:length(arrayoutlist)  > 0 }">
+		<c:forEach items="${arrayoutlist}" var="poVal" varStatus="stuts">
 
 			<tr height=33 style='mso-height-source:userset;height:50px'>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.binId }　</td>
+				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.omNoticeId }　</td>
 				<%--<td height=33 class=xl65 style='height:25.05pt;border:1.0pt solid black;text-align: center'>${poVal.goodsId }</td>--%>
 				<td class=xl65 style='border:1.0pt solid black;text-align: center;word-break:break-all;'><span style='word-break:break-all;width: auto;font-size: 14pt'>${poVal.goodsName }</span></td>
+				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.goodsUnit }</td>
+<%--				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.goodsProData }</td>--%>
+				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.goodsQua }</td>
+
 				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.baseUnit }</td>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.proData }</td>
 				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.baseGoodscount }</td>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.tinZhl }</td>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.tinTj }</td>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.shpGuiGe }</td>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.pickNotice }</td>
-				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.tinId }/${poVal.baoZhiq }</td>
-				<td class=xl65 align="center" valign="middle" style='border:1.0pt solid black'><img src="rest/wmBaseController/showOrDownqrcodeByurl?qrvalue=${poVal.goodsId }" alt="${poVal.goodsId }" style="width:40px;height:40px;vertical-align:middle;">　</td>
-				<td  ></td>
+				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.planSta }</td>
+				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.binId }</td>
+<%--				<td class=xl65 style='border:1.0pt solid black;text-align: center'>${poVal.tinId }/${poVal.baoZhiq }</td>--%>
+<%--				<td class=xl65 align="center" valign="middle" style='border:1.0pt solid black'><img src="rest/wmBaseController/showOrDownqrcodeByurl?qrvalue=${poVal.goodsId }" alt="${poVal.goodsId }" style="width:40px;height:40px;vertical-align:middle;">　</td>--%>
+<%--				<td  ></td>--%>
 			</tr>
 
 		</c:forEach>
@@ -212,7 +214,6 @@ function downloadqrcode() {
 					style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </span>叉车：<span
 					style='mso-spacerun:yes'></span></td>
-			<td></td>
 		</tr>
 
 	</table>

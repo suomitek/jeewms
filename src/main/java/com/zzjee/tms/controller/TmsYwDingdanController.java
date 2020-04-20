@@ -376,6 +376,14 @@ public class TmsYwDingdanController extends BaseController {
 					String omnoticeid = tmsYwDingdan.getFadh();
 					List<WmTmsNoticeIEntity> listtemp = systemService.findByProperty(WmTmsNoticeIEntity.class,"omNoticeId",omnoticeid);
                    for(WmTmsNoticeIEntity t: listtemp){
+//                   	<td class=xl65 style='border:1.0pt solid black;text-align: center'>收货人</td>
+//			<td class=xl65 style='border:1.0pt solid black;text-align: center'>收货人电话</td>
+//			<td class=xl65 style='border:1.0pt solid black;text-align: center'>车号</td>
+//			<td class=xl65 style='border:1.0pt solid black;text-align: center'>收货人地址</td>
+                   	t.setBaseUnit(tmsYwDingdan.getShouhuoren());
+                   	t.setBaseGoodscount(tmsYwDingdan.getShrsj());
+                   	t.setPlanSta(tmsYwDingdan.getChehao());
+                   	t.setBinId(tmsYwDingdan.getShrdh());
 					   arrayoutlist.add(t);
 				   }
 				}catch (Exception e){

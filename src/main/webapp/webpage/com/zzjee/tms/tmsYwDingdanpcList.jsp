@@ -78,7 +78,7 @@
    ids.push(rows[i].id);
   }
   var url = "tmsYwDingdanController.do?doPrintpage&ids="+ids.join(',');;
-  createdetailwindow(" 订单明细", url, 1200, 1000);
+  createdetailwindow(" 订单明细", url, 1400, 1000);
 
   // window.open(url);
  }

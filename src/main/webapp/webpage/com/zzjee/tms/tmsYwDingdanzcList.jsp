@@ -44,21 +44,34 @@
    <t:dgCol title="单号"  field="fadh"  query="true"  queryMode="single"  width="190"></t:dgCol>
    <t:dgCol title="下单人"  field="username"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
-   <t:dgDelOpt title="取消装车" url="tmsYwDingdanController.do?doDelzc&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
+<%--   <t:dgDelOpt title="取消装车" url="tmsYwDingdanController.do?doDelzc&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="下单" icon="icon-add" url="tmsYwDingdanController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="编辑" icon="icon-edit" url="tmsYwDingdanController.do?goUpdate" funname="update"></t:dgToolBar>--%>
-   <t:dgToolBar title="装车"  icon="icon-put"   funname="zcALLSelect"></t:dgToolBar>
-   <t:dgToolBar title="查看" icon="icon-search" url="tmsYwDingdanController.do?goUpdate" width="1200" height="550" funname="detail"></t:dgToolBar>
+   <t:dgToolBar title="订单明细"  funname="doprint"></t:dgToolBar>
+<%--   <t:dgToolBar title="查看" icon="icon-search" url="tmsYwDingdanController.do?goUpdate" width="1200" height="550" funname="detail"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+<%--   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
  </div>
- <script src = "webpage/com/zzjee/tms/tmsYwDingdanList.js"></script>		
+ <script src = "webpage/com/zzjee/tms/tmsYwDingdanList.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
  });
+
+ function doprint(){
+  var rows = $('#tmsYwDingdanList').datagrid('getSelections');
+
+  var ids = [];
+  for (var i = 0; i < rows.length; i++) {
+   ids.push(rows[i].id);
+  }
+  var url = "tmsYwDingdanController.do?doPrintpage&ids="+ids.join(',');;
+  createdetailwindow(" 订单明细", url, 1400, 1000);
+
+  // window.open(url);
+ }
  function zcALLSelect() {
          var rows = $('#tmsYwDingdanList').datagrid('getSelections');
          if(rows.length > 0){
@@ -88,8 +101,8 @@
              $('#tmsYwDingdanList').datagrid('reload',{});
          }
  }
-   
- 
+
+
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'tmsYwDingdanController.do?upload', "tmsYwDingdanList");
