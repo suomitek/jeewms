@@ -84,7 +84,7 @@ public class MdGoodsController extends BaseController {
 	private WmOmNoticeHServiceI wmOmNoticeHService;
 	/**
 	 * 商品信息列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -98,7 +98,7 @@ public class MdGoodsController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -127,7 +127,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 删除商品信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -163,7 +163,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 批量删除商品信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doBatchDel")
@@ -191,7 +191,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 添加商品信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -203,7 +203,7 @@ public class MdGoodsController extends BaseController {
 		try {
 			MdGoodsEntity mdGoods1 = systemService.findUniqueByProperty(
 					MdGoodsEntity.class, "shpBianMa", mdGoods.getShpBianMa());
-	
+
 			if(mdGoods1 ==null ){
 				if(StringUtil.isEmpty(mdGoods.getChlKongZhi()) ){
 					mdGoods.setChlKongZhi("N");
@@ -211,7 +211,7 @@ public class MdGoodsController extends BaseController {
 				if("N".equals(mdGoods.getChlKongZhi() )){
 					mdGoods.setChlShl("1");
 					mdGoods.setJshDanWei(mdGoods.getShlDanWei());
-					
+
 				}
 
 				try {
@@ -220,7 +220,7 @@ public class MdGoodsController extends BaseController {
 							int bzhiq = Integer.parseInt(mdGoods.getBzhiQi());
 							mdGoods.setZhlKgm(Integer.toString(bzhiq));
 						}
-						
+
 					}
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -286,7 +286,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 更新商品信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -313,7 +313,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 商品信息新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -328,7 +328,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 商品信息编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -343,7 +343,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -354,7 +354,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -380,7 +380,7 @@ public class MdGoodsController extends BaseController {
 
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -429,7 +429,7 @@ public class MdGoodsController extends BaseController {
 									int bzhiq = Integer.parseInt(mdGoods.getBzhiQi());
 									mdGoods.setZhlKgm(Integer.toString(bzhiq));
 								}
-								
+
 							}
 							if(StringUtil.isEmpty(mdGoods.getChlKongZhi()) ){
 								mdGoods.setChlKongZhi("N");
@@ -454,7 +454,7 @@ public class MdGoodsController extends BaseController {
 									int bzhiq = Integer.parseInt(mdGoods.getBzhiQi());
 									mdGoods.setZhlKgm(Integer.toString(bzhiq));
 								}
-								
+
 							}
 						} catch (Exception e) {
 							// TODO: handle exception
@@ -495,13 +495,13 @@ public class MdGoodsController extends BaseController {
 		String hql = " from MdGoodsEntity where 1 = 1    ";
 		D0.setOK(true);
 		if(!StringUtil.isEmpty(searchstr)) {
-			hql=hql+"  and  (shpBianMa like '%" + searchstr + "%'";
-            hql=hql+"  or   shpTiaoMa like '%" + searchstr + "%')";
+			hql=hql+"  and  (shpBianMa = '" + searchstr + "'";
+            hql=hql+"  or   shpTiaoMa = '" + searchstr + "')";
 
         }
 		if(!StringUtil.isEmpty(searchstr2)) {
-			hql=hql+"  and (shpTiaoMa like '%" + searchstr2 + "%'";
-            hql=hql+"  or shpBianMa like '%" + searchstr2 + "%')";
+			hql=hql+"  and (shpTiaoMa = '" + searchstr2 + "'";
+            hql=hql+"  or shpBianMa = '" + searchstr2 + "')";
 
         }
 

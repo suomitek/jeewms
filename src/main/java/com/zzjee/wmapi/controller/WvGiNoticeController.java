@@ -54,12 +54,12 @@ import com.zzjee.wmapi.entity.WvGiNoticeEntity;
 import com.zzjee.wmapi.service.WvGiNoticeServiceI;
 import com.zzjee.wmutil.wmUtil;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: wv_gi_notice
  * @author erzhongxmu
  * @date 2018-05-30 20:20:38
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -76,12 +76,12 @@ public class WvGiNoticeController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * wv_gi_notice列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -91,7 +91,7 @@ public class WvGiNoticeController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -111,10 +111,10 @@ public class WvGiNoticeController extends BaseController {
 		this.wvGiNoticeService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除wv_gi_notice
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -135,10 +135,10 @@ public class WvGiNoticeController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除wv_gi_notice
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -149,7 +149,7 @@ public class WvGiNoticeController extends BaseController {
 		message = "wv_gi_notice删除成功";
 		try{
 			for(String id:ids.split(",")){
-				WvGiNoticeEntity wvGiNotice = systemService.getEntity(WvGiNoticeEntity.class, 
+				WvGiNoticeEntity wvGiNotice = systemService.getEntity(WvGiNoticeEntity.class,
 				id
 				);
 				wvGiNoticeService.delete(wvGiNotice);
@@ -167,7 +167,7 @@ public class WvGiNoticeController extends BaseController {
 
 	/**
 	 * 添加wv_gi_notice
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -187,10 +187,10 @@ public class WvGiNoticeController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新wv_gi_notice
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -212,11 +212,11 @@ public class WvGiNoticeController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * wv_gi_notice新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -229,7 +229,7 @@ public class WvGiNoticeController extends BaseController {
 	}
 	/**
 	 * wv_gi_notice编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -240,10 +240,10 @@ public class WvGiNoticeController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wmapi/wvGiNotice-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -251,10 +251,10 @@ public class WvGiNoticeController extends BaseController {
 		req.setAttribute("controller_name","wvGiNoticeController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -273,7 +273,7 @@ public class WvGiNoticeController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -287,13 +287,13 @@ public class WvGiNoticeController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -321,7 +321,7 @@ public class WvGiNoticeController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?>  list() {
@@ -346,7 +346,7 @@ public class WvGiNoticeController extends BaseController {
 		String hql = " from WvGiNoticeEntity where 1 = 1 ";
 		D0.setOK(true);
 		if(!StringUtil.isEmpty(searchstr)) {
-			hql=hql+"  and omNoticeId like '%" + searchstr + "%'";
+			hql=hql+"  and omNoticeId = '" + searchstr + "'";
 		}
 		if(!StringUtil.isEmpty(searchstr2)) {
 			try{
@@ -357,10 +357,10 @@ public class WvGiNoticeController extends BaseController {
 			}catch (Exception e){
 
 			}
-			hql=hql+"  and goodsId like '%" + searchstr2 + "%'";
+			hql=hql+"  and goodsId = '" + searchstr2 + "'";
 		}
 		if(!StringUtil.isEmpty(searchstr3)) {
-			hql=hql+"  and binId like '%" + searchstr3 + "%'";
+			hql=hql+"  and binId = '" + searchstr3 + "'";
 		}
 
 
@@ -369,7 +369,7 @@ public class WvGiNoticeController extends BaseController {
 			  hql = " from WvGiNoticeEntity where 1 = 1 ";
 
 			if(!StringUtil.isEmpty(searchstr)) {
-				hql=hql+"  and omNoticeId like '%" + searchstr + "%'";
+				hql=hql+"  and omNoticeId = '" + searchstr + "'";
 			}
 			  listWvGiNotices=wvGiNoticeService.findHql(hql);
 

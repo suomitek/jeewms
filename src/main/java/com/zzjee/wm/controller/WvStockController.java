@@ -106,7 +106,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 生成盘点单列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -123,7 +123,7 @@ public class WvStockController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -164,8 +164,8 @@ public class WvStockController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("id", "desc");  
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("id", "desc");
 		cq.setOrder(map1);
 		cq.eq("kuctype", "库存");
 		// cq.ge("goodsQua", 1);
@@ -209,9 +209,9 @@ public class WvStockController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("id", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("id", "desc");
+		cq.setOrder(map1);
 		cq.eq("kuctype", "库存");
 		// cq.ge("goodsQua", 1);
 		cq.add();
@@ -221,7 +221,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 删除生成盘点单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -246,7 +246,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 批量删除生成盘点单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doBatchDel")
@@ -274,7 +274,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 添加生成盘点单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -393,7 +393,7 @@ public class WvStockController extends BaseController {
 		return j;
 	}
 
-	
+
 	@RequestMapping(params = "doBatchSttkczy")
 	@ResponseBody
 	public AjaxJson doBatchSttkczy(String ids, HttpServletRequest request) {
@@ -497,8 +497,8 @@ public class WvStockController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
+
+
 	@RequestMapping(params = "doBatchStttpzy")
 	@ResponseBody
 	public AjaxJson doBatchStttpzy(String ids, HttpServletRequest request) {
@@ -612,15 +612,15 @@ public class WvStockController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/**
 	 * 更新生成盘点单
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -647,7 +647,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 生成盘点单新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -662,7 +662,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 生成盘点单编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -677,7 +677,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -688,7 +688,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -752,10 +752,10 @@ public class WvStockController extends BaseController {
 			}else{
 				wvStocksold.add(wvStockEntity);
 			}
-			
-			
+
+
 		}
-	
+
 		modelMap.put(NormalExcelConstants.FILE_NAME, "生成盘点单");
 		modelMap.put(NormalExcelConstants.CLASS, WvStockEntity.class);
 		modelMap.put(NormalExcelConstants.PARAMS, new ExportParams("生成盘点单列表",
@@ -767,7 +767,7 @@ public class WvStockController extends BaseController {
 
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -831,7 +831,7 @@ public class WvStockController extends BaseController {
 		String hql = " from WvStockEntity where 1 = 1   ";
 		D0.setOK(true);
 		if(!StringUtil.isEmpty(searchstr)) {
-			hql=hql+"  and kuWeiBianMa like '%" + searchstr + "%'";
+			hql=hql+"  and kuWeiBianMa = '" + searchstr + "'";
 		}
 		if(!StringUtil.isEmpty(searchstr2)) {
 			try{
@@ -842,7 +842,7 @@ public class WvStockController extends BaseController {
 			}catch (Exception e){
 
 			}
-			hql=hql+"  and goodsId like '%" + searchstr2 + "%'";
+			hql=hql+"  and goodsId = '" + searchstr2 + "'";
 		}
 
 		List<WvStockEntity> listWvStocks = wvStockService.findHql(hql);

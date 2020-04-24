@@ -53,12 +53,12 @@ import com.zzjee.wmapi.entity.WvNoticeEntity;
 import com.zzjee.wmapi.service.WvNoticeServiceI;
 import com.zzjee.wmutil.wmUtil;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: wv_notice
  * @author erzhongxmu
  * @date 2018-05-30 20:21:05
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -75,12 +75,12 @@ public class WvNoticeController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * wv_notice列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -90,7 +90,7 @@ public class WvNoticeController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -111,10 +111,10 @@ public class WvNoticeController extends BaseController {
 		this.wvNoticeService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除wv_notice
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -135,10 +135,10 @@ public class WvNoticeController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除wv_notice
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -149,7 +149,7 @@ public class WvNoticeController extends BaseController {
 		message = "wv_notice删除成功";
 		try{
 			for(String id:ids.split(",")){
-				WvNoticeEntity wvNotice = systemService.getEntity(WvNoticeEntity.class, 
+				WvNoticeEntity wvNotice = systemService.getEntity(WvNoticeEntity.class,
 				id
 				);
 				wvNoticeService.delete(wvNotice);
@@ -167,7 +167,7 @@ public class WvNoticeController extends BaseController {
 
 	/**
 	 * 添加wv_notice
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -188,10 +188,10 @@ public class WvNoticeController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新wv_notice
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -214,11 +214,11 @@ public class WvNoticeController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * wv_notice新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -231,7 +231,7 @@ public class WvNoticeController extends BaseController {
 	}
 	/**
 	 * wv_notice编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -242,10 +242,10 @@ public class WvNoticeController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wmapi/wvNotice-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -253,10 +253,10 @@ public class WvNoticeController extends BaseController {
 		req.setAttribute("controller_name","wvNoticeController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -275,7 +275,7 @@ public class WvNoticeController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -289,13 +289,13 @@ public class WvNoticeController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -323,7 +323,7 @@ public class WvNoticeController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?>  list( @RequestParam(value="username", required=false) String username, @RequestParam(value="searchstr", required=false)String searchstr, @RequestParam(value="searchstr2", required=false)String searchstr2) {
@@ -334,7 +334,7 @@ public class WvNoticeController extends BaseController {
 		String hql = " from WvNoticeEntity where 1 = 1 ";
 		D0.setOK(true);
 		if(!StringUtil.isEmpty(searchstr)) {
-			hql=hql+"  and noticeId like '%" + searchstr + "%'";
+			hql=hql+"  and noticeId = '" + searchstr + "'";
 		}
 		if(!StringUtil.isEmpty(searchstr2)) {
 			try{
@@ -345,7 +345,7 @@ public class WvNoticeController extends BaseController {
 			}catch (Exception e){
 
 			}
-			hql=hql+"  and goodsCode like '%" + searchstr2 + "%'";
+			hql=hql+"  and goodsCode = '" + searchstr2 + "'";
 		}
 
 		List<WvNoticeEntity> listWvNotices=wvNoticeService.findHql(hql);
@@ -365,7 +365,7 @@ public class WvNoticeController extends BaseController {
 		D0.setObj(result);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {

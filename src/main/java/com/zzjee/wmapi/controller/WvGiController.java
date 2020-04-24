@@ -64,12 +64,12 @@ import java.net.URI;
 import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: wv_gi
  * @author erzhongxmu
  * @date 2018-05-30 20:21:50
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -86,12 +86,12 @@ public class WvGiController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * wv_gi列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -101,7 +101,7 @@ public class WvGiController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -122,10 +122,10 @@ public class WvGiController extends BaseController {
 		this.wvGiService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除wv_gi
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -146,10 +146,10 @@ public class WvGiController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除wv_gi
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -160,7 +160,7 @@ public class WvGiController extends BaseController {
 		message = "wv_gi删除成功";
 		try{
 			for(String id:ids.split(",")){
-				WvGiEntity wvGi = systemService.getEntity(WvGiEntity.class, 
+				WvGiEntity wvGi = systemService.getEntity(WvGiEntity.class,
 				id
 				);
 				wvGiService.delete(wvGi);
@@ -178,7 +178,7 @@ public class WvGiController extends BaseController {
 
 	/**
 	 * 添加wv_gi
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -199,10 +199,10 @@ public class WvGiController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新wv_gi
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -225,11 +225,11 @@ public class WvGiController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * wv_gi新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -242,7 +242,7 @@ public class WvGiController extends BaseController {
 	}
 	/**
 	 * wv_gi编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -253,10 +253,10 @@ public class WvGiController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wmapi/wvGi-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -264,10 +264,10 @@ public class WvGiController extends BaseController {
 		req.setAttribute("controller_name","wvGiController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -286,7 +286,7 @@ public class WvGiController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -300,13 +300,13 @@ public class WvGiController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -334,7 +334,7 @@ public class WvGiController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?>  list( @RequestParam(value="username", required=false) String username, @RequestParam(value="searchstr", required=false)String searchstr, @RequestParam(value="searchstr2", required=false)String searchstr2) {
@@ -345,7 +345,7 @@ public class WvGiController extends BaseController {
 		String hql = " from WvGiEntity where downSta is null ";
 		D0.setOK(true);
 		if(!StringUtil.isEmpty(searchstr)) {
-			hql=hql+"  and orderId like '%" + searchstr + "%'";
+			hql=hql+"  and orderId = '" + searchstr + "'";
 		}
 		if(!StringUtil.isEmpty(searchstr2)) {
 			try{
@@ -357,7 +357,7 @@ public class WvGiController extends BaseController {
 
 			}
 
-			hql=hql+"  and goodsId like '%" + searchstr2 + "%'";
+			hql=hql+"  and goodsId = '" + searchstr2 + "'";
 		}
 
 		List<WvGiEntity> listWvGis=wvGiService.findHql(hql);
@@ -379,7 +379,7 @@ public class WvGiController extends BaseController {
 		return new ResponseEntity(D0, HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {

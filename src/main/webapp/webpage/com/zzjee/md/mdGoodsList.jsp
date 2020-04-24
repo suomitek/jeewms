@@ -24,7 +24,7 @@
     <t:dgCol title="商品简称"  field="shpJianCheng"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
     <t:dgCol title="商品编码"  field="shpBianMa"   query="true" queryMode="single"  width="90"></t:dgCol>
     <t:dgCol title="客户商品编码"  field="shpBianMakh"   query="true" queryMode="single"  width="90"></t:dgCol>
-    
+
     <t:dgCol title="商品型号"  field="shpXingHao"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="商品规格"  field="shpGuiGe"   queryMode="group"  width="80"></t:dgCol>
     <t:dgCol title="商品颜色"  field="shpYanSe"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -35,11 +35,11 @@
     <t:dgCol title="码盘层高"  field="mpCengGao"  style="text-align:right"   queryMode="group"  width="60"></t:dgCol>
     <t:dgCol title="计费商品类"  field="jfShpLei"    queryMode="group" dictionary="ba_goods_class,goods_class_code,goods_class_name"  width="70"></t:dgCol>
     <t:dgCol title="商品品牌"  field="shpPinPai"  hidden="true"  queryMode="group" dictionary="ba_goods_brand,goods_brand_code,goods_brand_name"  width="120"></t:dgCol>
-    <t:dgCol title="商品条码"  field="shpTiaoMa"    queryMode="group"  width="120"></t:dgCol>
+    <t:dgCol title="商品条码"  field="shpTiaoMa"  query="true"  queryMode="single"  width="120"></t:dgCol>
     <t:dgCol title="品牌图片"  field="ppTuPian"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="保质期"  field="bzhiQi"  style="text-align:right"  queryMode="group"  width="40"></t:dgCol>
     <t:dgCol title="允收天数"  field="zhlKgm"   style="text-align:right"  queryMode="group"  width="50"></t:dgCol>
-    
+
     <t:dgCol title="单位"  field="shlDanWei"    queryMode="group" dictionary="ba_unit,unit_code,unit_zh_name"  width="40"></t:dgCol>
     <t:dgCol title="拆零单位"  field="jshDanWei"    queryMode="group" dictionary="ba_unit,unit_code,unit_zh_name"  width="70"></t:dgCol>
     <t:dgCol title="体积"  field="tiJiCm" style="text-align:right"   queryMode="group"  width="50"></t:dgCol>
@@ -80,12 +80,12 @@
       </div>
   </div>
  </div>
- <script src = "webpage/com/zzjee/md/mdGoodsList.js"></script>		
+ <script src = "webpage/com/zzjee/md/mdGoodsList.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
      // $('#mdGoodsList').datagrid('reload',{});
  });
- 
+
    function  otherimp() {
        var batchdate;
        batchdate = $('input[name="batchdate"]').attr("value");
