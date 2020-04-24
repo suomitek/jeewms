@@ -403,7 +403,7 @@ public class wmUtil {
 	}
 
 
-    
+
     public static boolean checkstcoka(String binid,String tinid,String goodsid,String prodate,String basecount) {
         boolean flag = false;
 		try {
@@ -477,8 +477,18 @@ public class wmUtil {
         if("yes".equals(ResourceUtil.getConfigByName("sptmon"))){
             try{
                 SystemService systemService = ApplicationContextUtil.getContext().getBean(SystemService.class);
-                MdGoodsEntity t = systemService.findByProperty(MdGoodsEntity.class,"shpTiaoMa",tiaoma).get(0);
-                return t.getShpBianMa();
+
+                String ttr= "";
+
+                List<MdGoodsEntity> t = systemService.findByProperty(MdGoodsEntity.class,"shpTiaoMa",tiaoma) ;
+                for(MdGoodsEntity tt :t){
+                	if(StringUtil.isNotEmpty(ttr)){
+						ttr = ttr+","+tt.getShpBianMa();
+					}else{
+						ttr =  tt.getShpBianMa();
+					}
+				}
+                return ttr;
             }catch (Exception e){
                 return  null;
             }

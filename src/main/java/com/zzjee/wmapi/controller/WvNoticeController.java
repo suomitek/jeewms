@@ -345,7 +345,24 @@ public class WvNoticeController extends BaseController {
 			}catch (Exception e){
 
 			}
-			hql=hql+"  and goodsCode = '" + searchstr2 + "'";
+ 			String[] ss = searchstr2.split(",");
+			if (ss.length == 1) {
+				hql = hql + "  and goodsCode = '" + searchstr2 + "'";
+
+			} else {
+				String insearch = "";
+				for (String s : ss) {
+					if (StringUtil.isNotEmpty(insearch)) {
+						insearch = insearch + " or  goodsCode = '" + s + "'";
+					} else {
+						insearch = "goodsCode = '" + s + "'";
+					}
+					hql = hql + "  and  (" + insearch + ")";
+
+				}
+
+			}
+//			hql=hql+"  and goodsCode  in (:alist)";
 		}
 
 		List<WvNoticeEntity> listWvNotices=wvNoticeService.findHql(hql);

@@ -357,7 +357,24 @@ public class WvGiController extends BaseController {
 
 			}
 
-			hql=hql+"  and goodsId = '" + searchstr2 + "'";
+//			hql=hql+"  and goodsId = '" + searchstr2 + "'";
+			String[] ss = searchstr2.split(",");
+			if (ss.length == 1) {
+				hql = hql + "  and goodsId = '" + searchstr2 + "'";
+
+			} else {
+				String insearch = "";
+				for (String s : ss) {
+					if (StringUtil.isNotEmpty(insearch)) {
+						insearch = insearch + " or  goodsId = '" + s + "'";
+					} else {
+						insearch = "goodsId = '" + s + "'";
+					}
+					hql = hql + "  and  (" + insearch + ")";
+
+				}
+
+			}
 		}
 
 		List<WvGiEntity> listWvGis=wvGiService.findHql(hql);
