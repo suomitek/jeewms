@@ -700,7 +700,7 @@ public class WmToDownGoodsController extends BaseController {
 		}
 		return new ResponseEntity(task, HttpStatus.OK);
 	}
-
+	//下架
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> create(@RequestParam String wmToDownGoodsstr,
@@ -747,8 +747,8 @@ public class WmToDownGoodsController extends BaseController {
 				wmToDownGoods.setOmBeizhu(wmOmQmIEntity.getOmBeizhu());
 
 				try{
-					List<WmToDownGoodsEntity> wmToDownGoods1 = systemService.findByProperty(WmToDownGoodsEntity.class,"orderIdI",wmToDownGoods.getOrderIdI());
-					if (wmToDownGoods1!=null&&wmToDownGoods1.size()>0){
+					List<WmToDownGoodsEntity> wmToDownGoodslist1 = systemService.findByProperty(WmToDownGoodsEntity.class,"orderIdI",wmToDownGoods.getOrderIdI());
+					if (wmToDownGoodslist1!=null&&wmToDownGoodslist1.size()>0){
 						D0.setOK(false);
 						D0.setErrorMsg("重复保存");
 
@@ -776,7 +776,7 @@ public class WmToDownGoodsController extends BaseController {
 
 //		return new ResponseEntity(headers, HttpStatus.CREATED);
 	}
-
+	//装车复核
 	@RequestMapping(value = "/change", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> update(@RequestParam String wmToDownGoodsstr,
