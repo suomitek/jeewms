@@ -2477,7 +2477,8 @@ public class WmOmNoticeHController extends BaseController {
 		String chel = "";
 		try{
 			String qu = wmOmNoticeH.getReMember();
-			List<TmsMdCheliangEntity>  listcl = systemService.findByProperty(TmsMdCheliangEntity.class,"quyu",qu);
+			String hqlsearchquyu = "from TmsMdCheliangEntity where quyu like '%"+qu+"%'";
+			List<TmsMdCheliangEntity>  listcl = systemService.findHql(hqlsearchquyu);
 			siji = listcl.get(0).getUsername();
 			chel = listcl.get(0).getChepaihao();
 		}catch (Exception e){
