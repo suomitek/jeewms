@@ -90,7 +90,7 @@ public class WmInQmIController extends BaseController {
 
 	/**
 	 * 批量收货列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -103,7 +103,7 @@ public class WmInQmIController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -121,9 +121,9 @@ public class WmInQmIController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("imNoticeId", "desc");  
-		cq.setOrder(map1);  
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("imNoticeId", "desc");
+		cq.setOrder(map1);
 		if (wmInQmI.getBinSta() == null) {
 			cq.eq("binSta", "N");
 		}
@@ -163,9 +163,9 @@ public class WmInQmIController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("imNoticeId", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("imNoticeId", "desc");
+		cq.setOrder(map1);
 		if (wmInQmI.getBinSta() == null) {
 			cq.eq("binSta", "N");
 		}
@@ -194,7 +194,7 @@ public class WmInQmIController extends BaseController {
 	}
 	/**
 	 * 删除批量收货
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -307,15 +307,22 @@ public class WmInQmIController extends BaseController {
 
 
 			wmInQmIEntity.setBinSta("Y");
-			systemService.save(wmToUpGoodsEntity);
 			systemService.saveOrUpdate(wmInQmIEntity);
+            //重复增加二次判断
+			List<WmToUpGoodsEntity> listall = systemService.findByProperty(WmToUpGoodsEntity.class,"orderIdI",wmToUpGoodsEntity.getOrderIdI());
+			if(listall!=null&&listall.size()>0){
+				return true;
+			}
+			//重复增加二次判断
+
+			systemService.save(wmToUpGoodsEntity);
 		}
 		return true;
 	}
 
 	/**
 	 * 批量删除批量收货
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doBatchDel")
@@ -412,7 +419,7 @@ public class WmInQmIController extends BaseController {
 
 	/**
 	 * 添加批量收货
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -671,7 +678,7 @@ public class WmInQmIController extends BaseController {
 
 	/**
 	 * 更新批量收货
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -710,7 +717,7 @@ public class WmInQmIController extends BaseController {
 
 	/**
 	 * 批量收货新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -723,7 +730,7 @@ public class WmInQmIController extends BaseController {
 		return new ModelAndView("com/zzjee/wm/wmInQmI-add");
 	}
 
-	
+
 	@RequestMapping(params = "goAddBatch")
 	public ModelAndView goAddBatch(WmInQmIEntity wmInQmI, HttpServletRequest req) {
 		WmImNoticeIEntity WmImNoticeI = systemService.getEntity(WmImNoticeIEntity.class,
@@ -764,10 +771,10 @@ public class WmInQmIController extends BaseController {
 
 		return new ModelAndView("com/zzjee/wm/wmInQmI-add");
 	}
-	
+
 	/**
 	 * 批量收货编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -782,7 +789,7 @@ public class WmInQmIController extends BaseController {
 
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -793,7 +800,7 @@ public class WmInQmIController extends BaseController {
 
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -834,7 +841,7 @@ for (WmInQmIEntity wmInQmIEntity : wmInQmIso) {
 
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */

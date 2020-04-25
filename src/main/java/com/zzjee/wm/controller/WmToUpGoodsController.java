@@ -59,12 +59,12 @@ import com.zzjee.wm.entity.WmToUpGoodsEntity;
 import com.zzjee.wm.page.wmtoupgoodspage;
 import com.zzjee.wm.service.WmToUpGoodsServiceI;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 上架列表
  * @author erzhongxmu
  * @date 2017-09-11 15:08:46
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -81,12 +81,12 @@ public class WmToUpGoodsController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * 上架列表列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -96,7 +96,7 @@ public class WmToUpGoodsController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -112,9 +112,9 @@ public class WmToUpGoodsController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.add();
 		this.wmToUpGoodsService.getDataGridReturn(cq, true);
 
@@ -139,10 +139,10 @@ public class WmToUpGoodsController extends BaseController {
 
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除上架列表
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -163,10 +163,10 @@ public class WmToUpGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除上架列表
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -177,7 +177,7 @@ public class WmToUpGoodsController extends BaseController {
 		message = "上架列表删除成功";
 		try{
 			for(String id:ids.split(",")){
-				WmToUpGoodsEntity wmToUpGoods = systemService.getEntity(WmToUpGoodsEntity.class, 
+				WmToUpGoodsEntity wmToUpGoods = systemService.getEntity(WmToUpGoodsEntity.class,
 				id
 				);
 				wmToUpGoodsService.delete(wmToUpGoods);
@@ -192,7 +192,7 @@ public class WmToUpGoodsController extends BaseController {
 		return j;
 	}
 
-	 
+
 		@RequestMapping(params = "doGettextzy",method ={RequestMethod.GET, RequestMethod.POST})
 		@ResponseBody
 		public AjaxJson doGettextzy(HttpServletRequest request) {
@@ -205,11 +205,11 @@ public class WmToUpGoodsController extends BaseController {
 			j.setObj(mvgoods);
 			return j;
 		}
-	 
+
 
 	/**
 	 * 添加上架列表
-	 * 
+	 *
  	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -252,10 +252,10 @@ public class WmToUpGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新上架列表
-	 * 
+	 *
  	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -312,7 +312,7 @@ public class WmToUpGoodsController extends BaseController {
 
 	/**
 	 * 上架列表新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -325,7 +325,7 @@ public class WmToUpGoodsController extends BaseController {
 	}
 	/**
 	 * 上架列表编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -336,10 +336,10 @@ public class WmToUpGoodsController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wm/wmToUpGoods-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -347,10 +347,10 @@ public class WmToUpGoodsController extends BaseController {
 		req.setAttribute("controller_name","wmToUpGoodsController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -369,7 +369,7 @@ public class WmToUpGoodsController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -383,13 +383,13 @@ public class WmToUpGoodsController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -417,7 +417,7 @@ public class WmToUpGoodsController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?>  list(@RequestParam String username, @RequestParam String searchstr) {
@@ -430,7 +430,7 @@ public class WmToUpGoodsController extends BaseController {
 		return new ResponseEntity(D0, HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
@@ -467,19 +467,33 @@ public class WmToUpGoodsController extends BaseController {
 		//保存
 		try{
 			D0.setOK(true);
-			WmInQmIEntity wmInQmIEntity = systemService.get(WmInQmIEntity.class,wmToUpGoods.getWmToUpId());
+			WmInQmIEntity wmInQmIEntity = systemService.get(WmInQmIEntity.class,wmToUpGoods.getOrderIdI());
 			if(wmInQmIEntity!=null){
+				if("Y".equals(wmInQmIEntity.getBinSta())){
+					D0.setOK(false);
+					D0.setErrorMsg("已经上架，不能重复上架");
+					return new ResponseEntity(D0, HttpStatus.OK);
+				}
 				wmInQmIEntity.setBinSta("Y");
 				systemService.updateEntitie(wmInQmIEntity);
+			}else{
+				D0.setOK(false);
+				D0.setErrorMsg("验收任务已经删除，不能上架");
+
+				return new ResponseEntity(D0, HttpStatus.OK);
 			}
-			if(StringUtil.isNotEmpty(wmToUpGoods.getWmToUpId())){
-				List<WmToUpGoodsEntity> wmToUpGoodsEntity = systemService.findByProperty(WmToUpGoodsEntity.class,"wmToUpId",wmToUpGoods.getWmToUpId());
+			if(StringUtil.isNotEmpty(wmToUpGoods.getOrderIdI())){
+				List<WmToUpGoodsEntity> wmToUpGoodsEntity = systemService.findByProperty(WmToUpGoodsEntity.class,"orderIdI",wmToUpGoods.getOrderIdI());
 				if(wmToUpGoodsEntity!=null&&wmToUpGoodsEntity.size()>0){
 					D0.setOK(false);
                     D0.setErrorMsg("已经上架，不能重复上架");
-
                     return new ResponseEntity(D0, HttpStatus.OK);
 				}
+			}else{
+				D0.setOK(false);
+				D0.setErrorMsg("验收记录为空，不能上架");
+
+				return new ResponseEntity(D0, HttpStatus.OK);
 			}
 
 			wmToUpGoods.setGoodsName(wmInQmIEntity.getGoodsName());
