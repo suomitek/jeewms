@@ -31,19 +31,19 @@
    <t:dgCol title="备注"  field="imBeizhu"    queryMode="single"  width="120"></t:dgCol>
 
    <t:dgCol title="单据状态"  field="imSta"   query="true" queryMode="single"  width="50"></t:dgCol>
-   <t:dgConfOpt title="删除" url="wmImNoticeHController.do?doDel&id={id}"  urlclass="ace_button" message="确定要删除此收货通知" urlfont="fa-trash-o" exp="imSta#eq#计划中"/>
+   <t:dgConfOpt title="删除" operationCode="imnodel" url="wmImNoticeHController.do?doDel&id={id}"  urlclass="ace_button" message="确定要删除此收货通知" urlfont="fa-trash-o" exp="imSta#eq#计划中"/>
    <%--<t:dgFunOpt title="预约通知" funname="print(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>--%>
    <t:dgFunOpt title="通知单" funname="doprint(id)"  urlclass="ace_button"   exp="imSta#ne#已删除"   />
 
    <t:dgFunOpt title="验收单" funname="printysd(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
    <t:dgFunOpt title="货品ID" funname="printhpid(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
-   <t:dgFunOpt title="完成" funname="closeor(id)"  urlclass="ace_button"     exp="imSta#ne#已完成"/>
+   <t:dgFunOpt title="完成"  funname="closeor(id)"  urlclass="ace_button"     exp="imSta#ne#已完成"/>
    <t:dgFunOpt title="审核" funname="appor(id)"  urlclass="ace_button"     exp="imSta#eq#初始化"/>
    <t:dgFunOpt title="回写" funname="dopost(id)"  urlclass="ace_button"     exp="imSta#eq#已完成"/>
 <%--       <t:dgToolBar title="test" icon="icon-add" funname="addorder()" width="100%" height="100%"></t:dgToolBar> --%>
-   
+
    <t:dgToolBar title="录入" icon="icon-add" url="wmImNoticeHController.do?goAdd&orderTypeCode=01" funname="add" width="100%" height="100%"></t:dgToolBar>
-   <t:dgToolBar title="编辑" icon="icon-edit" url="wmImNoticeHController.do?goUpdate" funname="update" width="100%" height="100%"></t:dgToolBar>
+   <t:dgToolBar title="编辑" icon="icon-edit" operationCode="imnoedit" url="wmImNoticeHController.do?goUpdate" funname="update" width="100%" height="100%"></t:dgToolBar>
 <%--    <t:dgToolBar title="批量删除"  icon="icon-remove" url="wmImNoticeHController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar> --%>
    <t:dgToolBar title="查看" icon="icon-search" url="wmImNoticeHController.do?goUpdate" funname="detail" width="100%" height="100%"></t:dgToolBar>
     <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
@@ -61,7 +61,7 @@
 
   </div>
  </div>
- <script src = "webpage/com/zzjee/wm/wmImNoticeHList.js"></script>		
+ <script src = "webpage/com/zzjee/wm/wmImNoticeHList.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
 	 $("#wmImNoticeHListtb").find("input[name='imData_begin1']").attr("class","Wdate").click(function(){WdatePicker({dateFmt:'yyyy-MM-dd hh:mm:ss'});});
@@ -110,18 +110,18 @@ function ImportXls() {
 
 function print(id){
 	var url = "wmImNoticeHController.do?doPrint&id="+id;
-	
+
 	window.open(url);
 }
 function printysd(id){
 	var url = "wmImNoticeHController.do?doPrintysd&id="+id;
-	
+
 	window.open(url);
 }
 
 function printhpid(id){
 	var url = "wmImNoticeHController.do?doPrinthpid&id="+id;
-	
+
 	window.open(url);
 }
  function dopost(id){
@@ -145,7 +145,7 @@ function printhpid(id){
  }
 function closeor(id){
 	var url = "wmImNoticeHController.do?close&id="+id;
-	
+
 	$.ajax({
 		async : true,
 		cache : false,
@@ -158,14 +158,14 @@ function closeor(id){
 			if (d.success) {
 				tip("成功");
 		        $('#wmImNoticeHList').datagrid('reload',{});
-			}		
+			}
 		}
 	});
 }
 
 function appor(id){
 	var url = "wmImNoticeHController.do?appor&id="+id;
-	
+
 	$.ajax({
 		async : true,
 		cache : false,
@@ -178,7 +178,7 @@ function appor(id){
 			if (d.success) {
 				tip("成功");
 		        $('#wmImNoticeHList').datagrid('reload',{});
-			}		
+			}
 		}
 	});
 }
