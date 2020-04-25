@@ -1,5 +1,6 @@
 package org.jeecgframework.core.common.dao.jdbc;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +21,12 @@ import org.springframework.util.Assert;
  */
 @SuppressWarnings("unchecked")
 public class SimpleJdbcTemplate {
-	
+
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	protected JdbcTemplate  jdbcTemplate;
 	protected NamedParameterJdbcTemplate  namedJdbcTemplate;
-	
+
 	protected SimpleJdbcInsert simpleJdbcInsert;
 	public SimpleJdbcTemplate(DataSource dataSource){
 		jdbcTemplate=new JdbcTemplate(dataSource);
@@ -54,7 +55,7 @@ public class SimpleJdbcTemplate {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 根据sql语句，返回对象
 	 * @param sql语句(参数用冒号加参数名，例如select * from tb where id=:id)
@@ -78,7 +79,7 @@ public class SimpleJdbcTemplate {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 根据sql语句，返回数值型返回结果
 	 * @param sql语句(参数用冒号加参数名，例如select count(*) from tb where id=:id)
@@ -89,17 +90,21 @@ public class SimpleJdbcTemplate {
 		try{
 			Assert.hasText(sql,"sql语句不正确!");
 
-			if(parameters!=null){
-				return namedJdbcTemplate.queryForObject(sql, parameters,long.class);
+			if(parameters!=null&&parameters.size()>0){
+				Object res = namedJdbcTemplate.queryForObject(sql, parameters,BigInteger.class);
+				BigInteger a = new BigInteger(res.toString());
+				return a.longValue();
 			}else{
-				return jdbcTemplate.queryForObject(sql,long.class);
+				Object res =   jdbcTemplate.queryForObject(sql,BigInteger.class);
+				BigInteger a = new BigInteger(res.toString());
+				return a.longValue();
 			}
 
 		}catch (Exception e) {
 			return (long)0;
 		}
 	}
-	
+
 	/**
 	 * 根据sql语句，返回Map对象,对于某些项目来说，没有准备Bean对象，则可以使用Map代替Key为字段名,value为值
 	 * @param sql语句(参数用冒号加参数名，例如select count(*) from tb where id=:id)
@@ -118,7 +123,7 @@ public class SimpleJdbcTemplate {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 根据sql语句，返回Map对象集合
 	 * @see findForMap
@@ -138,7 +143,7 @@ public class SimpleJdbcTemplate {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 执行insert，update，delete等操作<br>
 	 * 例如insert into users (name,login_name,password) values(:name,:loginName,:password)<br>
@@ -170,7 +175,7 @@ public class SimpleJdbcTemplate {
 			return jdbcTemplate.update(sql);
 		}
 	}
-	
+
 	/*public long executeForObjectReturnPk(final String sql,Object bean){
 		Assert.hasText(sql,"sql语句不正确!");
 		if(bean!=null){
@@ -179,7 +184,7 @@ public class SimpleJdbcTemplate {
 			return jdbcTemplate.update(sql);
 		}
 	}*/
-	
+
 	/*
 	 * 批量处理操作
 	 * 例如：update t_actor set first_name = :firstName, last_name = :lastName where id = :id

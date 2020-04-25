@@ -343,10 +343,10 @@
 			<artifactId>ojdbc14</artifactId>
 			<version>${ojdbc14.version}</version>
 		</dependency>
-		<!-- jtds for mssql/db2 <dependency> <groupId>net.sourceforge.jtds</groupId> 
-			<artifactId>jtds</artifactId> <version>${jtds.version}</version> <scope>runtime</scope> 
+		<!-- jtds for mssql/db2 <dependency> <groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId> <version>${jtds.version}</version> <scope>runtime</scope>
 			</dependency> -->
-		<!-- h2 <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> 
+		<!-- h2 <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId>
 			<version>${h2.version}</version> <scope>test</scope> </dependency> -->
 		<!-- postgresql -->
 		<dependency>
