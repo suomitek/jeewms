@@ -1,6 +1,7 @@
 
-初始化会删除全部数据，并且没有备份，请注意使用
-
+-- 初始化会删除全部数据，并且没有备份，请注意使用
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+flush privileges;
 set sql_safe_updates=0;
 delete from  md_bin;
 delete from  md_cus;
