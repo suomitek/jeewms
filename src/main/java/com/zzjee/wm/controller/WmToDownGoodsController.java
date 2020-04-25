@@ -88,7 +88,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 下架商品明细列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -98,7 +98,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -118,9 +118,9 @@ public class WmToDownGoodsController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.add();
 		this.wmToDownGoodsService.getDataGridReturn(cq, true);
 		List<WmToDownGoodsEntity> resultold = dataGrid.getResults();
@@ -145,7 +145,7 @@ public class WmToDownGoodsController extends BaseController {
 
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	@RequestMapping(params = "datagridwave")
 	public void wavedatagridzzfh(WmToDownGoodsEntity wmToDownGoods,
 			HttpServletRequest request, HttpServletResponse response,
@@ -160,9 +160,9 @@ public class WmToDownGoodsController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.isNull("downSta");
 		cq.add();
 		this.wmToDownGoodsService.getDataGridReturn(cq, true);
@@ -172,12 +172,12 @@ public class WmToDownGoodsController extends BaseController {
 			wmToDownGoodsEntity.setGoodsQua(wmToDownGoodsEntity.getGoodsQuaok());
 			wmToDownGoodsEntity.setGoodsQuaok("");
 			resultnew.add(wmToDownGoodsEntity);
-			
+
 		}
 		dataGrid.setResults(resultnew);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	@RequestMapping(params = "datagridzzfh")
 	public void datagridzzfh(WmToDownGoodsEntity wmToDownGoods,
 			HttpServletRequest request, HttpServletResponse response,
@@ -192,9 +192,9 @@ public class WmToDownGoodsController extends BaseController {
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.isNull("downSta");
 		cq.add();
 		this.wmToDownGoodsService.getDataGridReturn(cq, true);
@@ -204,14 +204,14 @@ public class WmToDownGoodsController extends BaseController {
 			wmToDownGoodsEntity.setGoodsQua(wmToDownGoodsEntity.getGoodsQuaok());
 			wmToDownGoodsEntity.setGoodsQuaok("");
 			resultnew.add(wmToDownGoodsEntity);
-			
+
 		}
 		dataGrid.setResults(resultnew);
 		TagUtil.datagrid(response, dataGrid);
 	}
 	/**
 	 * 删除下架商品明细
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -238,7 +238,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 批量删除下架商品明细
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doBatchDel")
@@ -363,8 +363,8 @@ public class WmToDownGoodsController extends BaseController {
 		}
 		return j;
 	}
-	
-	
+
+
 	@RequestMapping(params = "doGetcusname",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public AjaxJson doGetcusname(HttpServletRequest request) {
@@ -377,8 +377,8 @@ public class WmToDownGoodsController extends BaseController {
 		j.setObj(mvcus);
 		return j;
 	}
-	
-	
+
+
 	@RequestMapping(params = "doGettextzy",method ={RequestMethod.GET, RequestMethod.POST})
 		@ResponseBody
 		public AjaxJson doGettextzy(HttpServletRequest request) {
@@ -395,9 +395,9 @@ public class WmToDownGoodsController extends BaseController {
                                     +"  group by ws.ku_wei_bian_ma,ws.bin_id,ws.shp_ming_cheng,mb.qu_huo_ci_xu, ws.goods_pro_data order by ws.goods_pro_data , ws.goods_qua, mb.qu_huo_ci_xu";
 						 Object objs = null;
 						List<Map<String, Object>> result =  systemService.findForJdbc(sql, request.getParameter("goodsid"));
-					
+
 						if(result!=null){
-						
+
 						}else{
 							j.setSuccess(false);
 							j.setMsg("商品没有库存");
@@ -406,8 +406,8 @@ public class WmToDownGoodsController extends BaseController {
 			j.setObj(mvgoods);
 			return j;
 		}
-	
-	
+
+
 	@RequestMapping(params = "doGettext",method ={RequestMethod.GET, RequestMethod.POST})
 		@ResponseBody
 		public AjaxJson doGettext(HttpServletRequest request) {
@@ -424,7 +424,7 @@ public class WmToDownGoodsController extends BaseController {
 						.findHql(hql0, wmOmNoticeHEntity.getOmNoticeId(),oConvertUtils.getString(request.getParameter("goodsid")));//获取行项目
 				for (WmOmNoticeIEntity wmOmNoticeIEntity : wmOmNoticeIEntityList) {
 					goodsno = (Double.valueOf(wmOmNoticeIEntity.getGoodsQua()) -  Double.valueOf(wmOmNoticeIEntity.getGoodsQuaok())) * Double.valueOf(mvgoods.getChlShl());
-					if(goodsno > 0 ){				
+					if(goodsno > 0 ){
 						String sql = "select  ws.ku_wei_bian_ma,ws.bin_id,ws.shp_ming_cheng,cast(sum(ws.base_goodscount) as signed) as goods_qua, mb.qu_huo_ci_xu, ws.goods_pro_data"
                                      +" from wv_stock ws, md_bin mb  where "
                                     +" ws.ku_wei_bian_ma = mb.ku_wei_bian_ma and mb.ting_yong <> 'Y' and ws.kuctype = '库存'"
@@ -449,17 +449,17 @@ public class WmToDownGoodsController extends BaseController {
 									mvgoods.setGoodsName(result.get(i).get("shp_ming_cheng").toString());//名称
 									mvgoods.setBzhiQi(result.get(i).get("ku_wei_bian_ma").toString());//库位
 									mvgoods.setCfWenCeng(result.get(i).get("bin_id").toString());//托盘
-								
+
 									mvgoods.setChlShl(result.get(i).get("goods_pro_data").toString());//生成日期 setChDanPin
 									break;
 								}
-							
+
 						}
 						}else{
 							j.setSuccess(false);
 							j.setMsg("商品没有库存");
 						}
-		
+
 						break;
 					}
 				}
@@ -474,7 +474,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 添加下架商品明细
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -510,12 +510,12 @@ public class WmToDownGoodsController extends BaseController {
 				wmToDownGoods.setBaseGoodscount(wmToDownGoods
 						.getGoodsQua());
 			}
-			
+
 			if(!wmUtil.checkstcok(wmToDownGoods.getKuWeiBianMa(),wmToDownGoods.getBinIdFrom(),wmToDownGoods.getGoodsId(),wmToDownGoods.getGoodsProData(),wmToDownGoods.getGoodsQua())){
 				message = "库存不足";
 				j.setMsg(message);
 				return j;
-	
+
 			};
 			wmToDownGoodsService.save(wmToDownGoods);
 			systemService.addLog(message, Globals.Log_Type_INSERT,
@@ -532,7 +532,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 更新下架商品明细
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -560,7 +560,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 下架商品明细新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -576,7 +576,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 下架商品明细编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -592,7 +592,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -603,7 +603,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -628,7 +628,7 @@ public class WmToDownGoodsController extends BaseController {
 
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -747,8 +747,8 @@ public class WmToDownGoodsController extends BaseController {
 				wmToDownGoods.setOmBeizhu(wmOmQmIEntity.getOmBeizhu());
 
 				try{
-					WmToDownGoodsEntity wmToDownGoods1 = systemService.findUniqueByProperty(WmToDownGoodsEntity.class,"orderIdI",wmToDownGoods.getOrderIdI());
-					if (wmToDownGoods1!=null){
+					List<WmToDownGoodsEntity> wmToDownGoods1 = systemService.findByProperty(WmToDownGoodsEntity.class,"orderIdI",wmToDownGoods.getOrderIdI());
+					if (wmToDownGoods1!=null&&wmToDownGoods1.size()>0){
 						D0.setOK(false);
 						D0.setErrorMsg("重复保存");
 
