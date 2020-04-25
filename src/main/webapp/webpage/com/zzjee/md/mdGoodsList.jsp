@@ -60,9 +60,9 @@
     <t:dgCol title="停用"  field="zhuangTai"   query="true" dictionary="sf_yn" width="120"></t:dgCol>
       <t:dgFunOpt title="打印" funname="doprint(id)"  urlclass="ace_button"      />
 
-      <t:dgDelOpt title="删除" url="mdGoodsController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
+      <t:dgDelOpt title="删除" operationCode="mdgoodsdel" url="mdGoodsController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="mdGoodsController.do?goAdd" funname="add"></t:dgToolBar>
-   <t:dgToolBar title="编辑" icon="icon-edit" url="mdGoodsController.do?goUpdate" funname="update"></t:dgToolBar>
+   <t:dgToolBar title="编辑" icon="icon-edit" operationCode="mdgoodsedit" url="mdGoodsController.do?goUpdate" funname="update"></t:dgToolBar>
 <%--    <t:dgToolBar title="批量删除"  icon="icon-remove" url="mdGoodsController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar> --%>
    <t:dgToolBar title="查看" icon="icon-search" url="mdGoodsController.do?goUpdate" funname="detail"></t:dgToolBar>
    <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
