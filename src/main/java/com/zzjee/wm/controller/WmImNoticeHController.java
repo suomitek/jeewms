@@ -119,7 +119,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * 进货通知抬头列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -272,7 +272,7 @@ public class WmImNoticeHController extends BaseController {
 		dataGrid.setResults(resultnew);
 		dataGrid.setTotal(resultnew.size());
 		TagUtil.datagrid(response, dataGrid);
-	
+
 	}
 	@RequestMapping(params = "datagridtbatch")
 	public void datagridtbatch(WmImNoticeIEntity wmImNoticeI,
@@ -298,11 +298,11 @@ public class WmImNoticeHController extends BaseController {
 		dataGrid.setResults(resultnew);
 		dataGrid.setTotal(resultnew.size());
 		TagUtil.datagrid(response, dataGrid);
-	
+
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -325,11 +325,11 @@ public class WmImNoticeHController extends BaseController {
 			if (StringUtil.isNotEmpty(query_imData_begin)) {
 				cq.ge("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_begin));
-			} 
+			}
 			if (StringUtil.isNotEmpty(query_imData_end)) {
 				cq.le("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_end));
-			} 
+			}
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -338,7 +338,7 @@ public class WmImNoticeHController extends BaseController {
 		}
 		Map<String,Object> map1 = new HashMap<String,Object>();
 		map1.put("createDate", "desc");
-		cq.setOrder(map1); 
+		cq.setOrder(map1);
 		cq.add();
 
 		this.wmImNoticeHService.getDataGridReturn(cq, true);
@@ -347,7 +347,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -370,11 +370,11 @@ public class WmImNoticeHController extends BaseController {
 			if (StringUtil.isNotEmpty(query_imData_begin)) {
 				cq.ge("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_begin));
-			} 
+			}
 			if (StringUtil.isNotEmpty(query_imData_end)) {
 				cq.le("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_end));
-			} 
+			}
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -387,21 +387,21 @@ public class WmImNoticeHController extends BaseController {
 		if(StringUtil.isNotEmpty(wmUtil.getCusCode())){
 			cq.eq("cusCode", wmUtil.getCusCode());
 		}
-		
-//		Map<String,Object> map = new HashMap<String,Object>();  
-//		map.put("imSta", "desc");  
-//		cq.setOrder(map);  
-		          
-		Map<String,Object> map1 = new HashMap<String,Object>();  
+
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("imSta", "desc");
+//		cq.setOrder(map);
+
+		Map<String,Object> map1 = new HashMap<String,Object>();
 		map1.put("createDate", "desc");
-		cq.setOrder(map1); 
+		cq.setOrder(map1);
 		cq.eq("orderTypeCode", "09");
 		cq.add();
 
 		this.wmImNoticeHService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	//退货
 	@RequestMapping(params = "datagridt")
 	public void datagridt(WmImNoticeHEntity wmImNoticeH,
@@ -419,11 +419,11 @@ public class WmImNoticeHController extends BaseController {
 			if (StringUtil.isNotEmpty(query_imData_begin)) {
 				cq.ge("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_begin));
-			} 
+			}
 			if (StringUtil.isNotEmpty(query_imData_end)) {
 				cq.le("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_end));
-			} 
+			}
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -436,22 +436,22 @@ public class WmImNoticeHController extends BaseController {
 		if(StringUtil.isNotEmpty(wmUtil.getCusCode())){
 			cq.eq("cusCode", wmUtil.getCusCode());
 		}
-		
-//		Map<String,Object> map = new HashMap<String,Object>();  
-//		map.put("imSta", "desc");  
-//		cq.setOrder(map);  
-		          
-		Map<String,Object> map1 = new HashMap<String,Object>();  
+
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("imSta", "desc");
+//		cq.setOrder(map);
+
+		Map<String,Object> map1 = new HashMap<String,Object>();
 		map1.put("createDate", "desc");
-		cq.setOrder(map1); 
+		cq.setOrder(map1);
 		cq.eq("orderTypeCode", "03");
 		cq.add();
 
 		this.wmImNoticeHService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
-	
+
+
 	//退货
 	@RequestMapping(params = "datagridyk")
 	public void datagridyk(WmImNoticeHEntity wmImNoticeH,
@@ -469,11 +469,11 @@ public class WmImNoticeHController extends BaseController {
 			if (StringUtil.isNotEmpty(query_imData_begin)) {
 				cq.ge("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_begin));
-			} 
+			}
 			if (StringUtil.isNotEmpty(query_imData_end)) {
 				cq.le("imData", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 						.parse(query_imData_end));
-			} 
+			}
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -484,19 +484,19 @@ public class WmImNoticeHController extends BaseController {
 			cq.eq("cusCode", wmUtil.getCusCode());
 		}
 
-		Map<String,Object> map1 = new HashMap<String,Object>();  
+		Map<String,Object> map1 = new HashMap<String,Object>();
 		map1.put("createDate", "desc");
-		cq.setOrder(map1); 
+		cq.setOrder(map1);
 		cq.eq("orderTypeCode", "04");
 		cq.add();
 
 		this.wmImNoticeHService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除进货通知抬头
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "appor")
@@ -525,7 +525,7 @@ public class WmImNoticeHController extends BaseController {
 					systemService.updateEntitie(wmImNoticeIEntity);
 				}
 			}catch (Exception e) {
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -535,12 +535,12 @@ public class WmImNoticeHController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * 删除进货通知抬头
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "close")
@@ -579,13 +579,13 @@ public class WmImNoticeHController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * 删除进货通知抬头
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -619,10 +619,10 @@ public class WmImNoticeHController extends BaseController {
 			Object id0 = wmImNoticeH.getNoticeId();
 			// ===================================================================================
 			// 查询-进货通知明细
-			
+
 			if(wmImNoticeH.getOrderTypeCode().equals("04")){
 				String 	tsql = "delete  from wm_in_qm_i where im_notice_id = ?";
-				systemService.executeSql(tsql, wmImNoticeH.getNoticeId());	
+				systemService.executeSql(tsql, wmImNoticeH.getNoticeId());
 			}
 			String hql0 = "from WmImNoticeIEntity where 1 = 1 AND iM_NOTICE_ID = ? ";
 			try {
@@ -639,7 +639,7 @@ public class WmImNoticeHController extends BaseController {
 					}
 				}
 			}catch (Exception e) {
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -676,15 +676,15 @@ public class WmImNoticeHController extends BaseController {
 
 			HSSFWorkbook wb = new HSSFWorkbook();
 			HSSFSheet sheet = wb.createSheet("货品ID");
-			
-			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）    
-			sheet.setMargin(HSSFSheet.BottomMargin,0.1);// 页边距（下）    
-			sheet.setMargin(HSSFSheet.LeftMargin,0.1);// 页边距（左）    
-			sheet.setMargin(HSSFSheet.RightMargin,0.1);// 页边距（右   
+
+			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）
+			sheet.setMargin(HSSFSheet.BottomMargin,0.1);// 页边距（下）
+			sheet.setMargin(HSSFSheet.LeftMargin,0.1);// 页边距（左）
+			sheet.setMargin(HSSFSheet.RightMargin,0.1);// 页边距（右
 			sheet.setColumnWidth(0, 28 * 256);
 			sheet.setColumnWidth(1, 29 * 256);
 			sheet.setColumnWidth(2, 6 * 200);
-			
+
 			sheet.setColumnWidth(3, 14 * 256);
 			sheet.setColumnWidth(4, 14 * 256);
 			sheet.setColumnWidth(5, 6 * 256);
@@ -796,12 +796,12 @@ public class WmImNoticeHController extends BaseController {
 				cell1.setCellStyle(csh);
 				CellRangeAddress c0 = new CellRangeAddress( page*pagesize+cellsNum,  page*pagesize+cellsNum, 0, 5);
 				sheet.addMergedRegion(c0);
-				
+
 				 cellsNum++;
 					Row rowColumnValue1 = sheet.createRow((short) page*pagesize+cellsNum); // 列名
 					rowColumnValue1.setHeight( (short) 1000);
 					Cell cell2 = rowColumnValue1.createCell(0);
-				
+
 					cell2.setCellValue( goods.getShpMingCheng());
 					cell2.setCellStyle(csh1);
 					CellRangeAddress c2 = new CellRangeAddress( page*pagesize+cellsNum,  page*pagesize+cellsNum, 0, 5);
@@ -819,7 +819,7 @@ public class WmImNoticeHController extends BaseController {
 
 				 ImageIO.write(bufferImg, "jpg", byteArrayOut);
 				 anchor = new HSSFClientAnchor(0, 0, 0, 0,(short)2, page*pagesize+cellsNum,
-				 (short)5, page*pagesize+cellsNum+4);	
+				 (short)5, page*pagesize+cellsNum+4);
 				 patriarch.createPicture(anchor,
 				 wb.addPicture(byteArrayOut.toByteArray(),
 				 HSSFWorkbook.PICTURE_TYPE_JPEG));
@@ -834,7 +834,7 @@ public class WmImNoticeHController extends BaseController {
 					CellRangeAddress c13 = new CellRangeAddress( page*pagesize+cellsNum,  page*pagesize+cellsNum, 0, 5);
 					sheet.addMergedRegion(c13);
 					cellsNum++;
-			
+
 				Row rowColumnValue2 = sheet.createRow((short) page*pagesize+cellsNum); // 列名
 				rowColumnValue2.setHeight(high);
 				Cell cell3 = rowColumnValue2.createCell(0);
@@ -849,7 +849,7 @@ public class WmImNoticeHController extends BaseController {
 				try {
 					Calendar cal = Calendar.getInstance();//使用默认时区和语言环境获得一个日历。
 					cal.setTime(DateUtils.str2Date(wmInQmIEntity.getProData(), DateUtils.date_sdf));
-					cal.add(Calendar.DAY_OF_MONTH, Integer.parseInt(goods.getBzhiQi()));//取当前日期的后一天.  
+					cal.add(Calendar.DAY_OF_MONTH, Integer.parseInt(goods.getBzhiQi()));//取当前日期的后一天.
 					cell4.setCellValue("到期日期:"+DateUtils.date2Str(cal.getTime(), DateUtils.date_sdf));
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -865,11 +865,11 @@ public class WmImNoticeHController extends BaseController {
 				cell5.setCellStyle(cs);
 				CellRangeAddress c5 = new CellRangeAddress( page*pagesize+cellsNum,  page*pagesize+cellsNum, 0, 5);
 				sheet.addMergedRegion(c5);
-		
+
 				 page++;
 			}
 			fileOut = response.getOutputStream();
-			 HSSFPrintSetup printSetup = sheet.getPrintSetup();   
+			 HSSFPrintSetup printSetup = sheet.getPrintSetup();
 			 printSetup.setLandscape(true);
 			 printSetup.setPaperSize(HSSFPrintSetup.ENVELOPE_DL_PAPERSIZE);
 			wb.write(fileOut);
@@ -885,10 +885,10 @@ public class WmImNoticeHController extends BaseController {
 			}
 		}
 	}
-	
+
 	/**
 	 * 打印进货通知
-	 * 
+	 *
 	 * @return
 	 */
 
@@ -1140,9 +1140,9 @@ public class WmImNoticeHController extends BaseController {
 		}
 	}
 
-	
-	
-	
+
+
+
 	@RequestMapping(params = "doPrintysd")
 	@ResponseBody
 	public void downReceiveExcelysd(WmImNoticeHEntity wmImNoticeH,
@@ -1162,7 +1162,7 @@ public class WmImNoticeHController extends BaseController {
 //					.getNoticeId()));
 			bufferImg = QRcodeUtil.createImage(wmImNoticeH
 					.getNoticeId());
-		
+
 			// 进行转码，使其支持中文文件名
 //			codedFileName = java.net.URLEncoder.encode("中文", "UTF-8");
 			response.setHeader("content-disposition", "attachment;filename="
@@ -1171,8 +1171,8 @@ public class WmImNoticeHController extends BaseController {
 
 			HSSFWorkbook wb = new HSSFWorkbook();
 			HSSFSheet sheet = wb.createSheet("验收单");
-			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）    
-			sheet.setMargin(HSSFSheet.BottomMargin,0.1);// 页边距（下）    
+			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）
+			sheet.setMargin(HSSFSheet.BottomMargin,0.1);// 页边距（下）
 			sheet.setMargin(HSSFSheet.LeftMargin,0.3);// 页边距（左）
 			sheet.setMargin(HSSFSheet.RightMargin,0.0);// 页边距（右
 //			sheet.setDisplayGridlines(true);
@@ -1192,7 +1192,7 @@ public class WmImNoticeHController extends BaseController {
 			// sheet.setColumnWidth(6, 8 * 256);
 			// sheet.setColumnWidth(7, 8 * 256);
 			// sheet.setColumnWidth(8, 8 * 256);
-			
+
 			// 创建两种单元格格式
 						CellStyle cs = wb.createCellStyle();
 						CellStyle cs1 = wb.createCellStyle();
@@ -1217,7 +1217,7 @@ public class WmImNoticeHController extends BaseController {
 						f2.setFontHeightInPoints((short) 10);
 						f2.setColor(IndexedColors.BLACK.getIndex());
 
-	
+
 						 f5.setFontHeightInPoints((short) 8);
 						 f5.setColor(IndexedColors.BLACK.getIndex());
 
@@ -1228,7 +1228,7 @@ public class WmImNoticeHController extends BaseController {
 						cs.setBorderTop(CellStyle.BORDER_NONE);
 						cs.setBorderBottom(CellStyle.BORDER_NONE);
 						cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-						
+
 						cs1.setFont(f2);
 						cs1.setBorderLeft(CellStyle.BORDER_NONE);
 						cs1.setBorderRight(CellStyle.BORDER_NONE);
@@ -1283,7 +1283,7 @@ public class WmImNoticeHController extends BaseController {
 						cs51.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
 						cs51.setWrapText(true);
-			
+
 						cs52.setFont(f5);
 						cs52.setBorderLeft(CellStyle.BORDER_NONE);
 						cs52.setBorderRight(CellStyle.BORDER_NONE);
@@ -1293,7 +1293,7 @@ public class WmImNoticeHController extends BaseController {
 
 						cs52.setWrapText(true);
 						cs52.setRotation((short)255);
-						
+
 			int page = 0;
 			int cerconNo = 1;
 			String tsql = "SELECT wq.pro_data,wq.goods_unit,wq.rec_deg, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,"
@@ -1309,7 +1309,7 @@ public class WmImNoticeHController extends BaseController {
 		      double sum = 0;
 			double sumzl = 0;
        do {
-  
+
 			// 画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）
 			HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
 			// anchor主要用于设置图片的属性
@@ -1325,7 +1325,7 @@ public class WmImNoticeHController extends BaseController {
 			// 创建第一行
 			Row row = sheet.createRow((short) page*20+0); // 第一行空白
 
-			
+
 			Row row1 = sheet.createRow((short) page*20+1); // 第二行标题
 			row1.setHeight((short) 700);
 			Cell cellTitle = row1.createCell(0);
@@ -1338,66 +1338,66 @@ public class WmImNoticeHController extends BaseController {
 			}else if(wmImNoticeH.getOrderTypeCode().equals("09")){
 				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货验收单");
 			}
-			
-			
+
+
 			cellTitle.setCellStyle(cs);
 
 			Row rowHead1 = sheet.createRow((short) page*20+2); // 头部第一行
 			Cell cellHead1 = rowHead1.createCell(0);
 			cellHead1.setCellValue("公司地址："+ResourceUtil.getConfigByName("comaddr") );
 			cellHead1.setCellStyle(cs1);
-			
+
 			Row rowHead2 = sheet.createRow((short) page*20+3); // 头部第二行
 			Cell cellHead2 = rowHead2.createCell(0);
 			cellHead2.setCellValue("电话："+ResourceUtil.getConfigByName("comtel") );
 			cellHead2.setCellStyle(cs1);
-			
+
 
 			Row rowHead4 = sheet.createRow((short) page*20+4); // 头部第二行
 			Cell cellHead4 = rowHead4.createCell(0);
 			cellHead4.setCellValue("到货日期： " +DateUtils.date2Str(wmImNoticeH.getImData(), DateUtils.date_sdf) );
 			cellHead4.setCellStyle(cs2);
-			
+
 			Cell cellHead42 = rowHead4.createCell(3);
 			cellHead42.setCellValue("预约单号： " +wmImNoticeH.getNoticeId());
 			cellHead42.setCellStyle(cs2);
-			
+
 			Row rowHead5 = sheet.createRow((short) page*20+5); // 头部第二行
 			Cell cellHead5 = rowHead5.createCell(0);
 			cellHead5.setCellValue("客户采购单号： "+wmImNoticeH.getImCusCode() );
 			cellHead5.setCellStyle(cs2);
-			
+
 			Cell cellHead52 = rowHead5.createCell(3);
 			cellHead52.setCellValue("月台： " +wmImNoticeH.getPlatformCode());
 			cellHead52.setCellStyle(cs2);
-			
+
 			Row rowHead6 = sheet.createRow((short) page*20+6); // 头部第二行
 			Cell cellHead6 = rowHead6.createCell(0);
 	        MdCusEntity md = systemService.findUniqueByProperty(MdCusEntity.class, "keHuBianMa", wmImNoticeH.getCusCode());
 
 			cellHead6.setCellValue("客户名称： " +wmImNoticeH.getCusCode()+md.getZhongWenQch());
 			cellHead6.setCellStyle(cs2);
-			
+
 			Cell cellHead62 = rowHead6.createCell(3);
 			cellHead62.setCellValue("供应商/车号： "+wmImNoticeH.getImCarNo() );
 			cellHead62.setCellStyle(cs2);
-			
+
 			Row rowHead7 = sheet.createRow((short) page*20+7); // 头部第二行
 			Cell cellHead7 = rowHead7.createCell(0);
 			cellHead7.setCellValue("客户电话： " +md.getDianHua());
 			cellHead7.setCellStyle(cs2);
-			
+
 			Cell cellHead72 = rowHead7.createCell(3);
 			cellHead72.setCellValue("打印时间： "+DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat) +"                        第"+(page+1)+"页");
 			cellHead72.setCellStyle(cs2);
-			
+
 
 			// 合并单元格
 			CellRangeAddress c = new CellRangeAddress(page*20+0, page*20+0, 0, 9); // 第一行空白
 			CellRangeAddress c1 = new CellRangeAddress(page*20+1, page*20+1, 0, 8);// 第二行标题
 			CellRangeAddress c2 = new CellRangeAddress(page*20+2, page*20+2, 0, 9);// 第三行地址
 			CellRangeAddress c3 = new CellRangeAddress(page*20+3, page*20+3, 0, 9);// 第四行电话
-			
+
 			CellRangeAddress c4 = new CellRangeAddress(page*20+4, page*20+4, 0, 2);// 第5行 到货日期
 			CellRangeAddress c42 = new CellRangeAddress(page*20+4, page*20+4, 3, 9);// 第5行预约单号
 			CellRangeAddress c5 = new CellRangeAddress(page*20+5, page*20+5, 0, 2);// 第6行客户采购单号
@@ -1418,15 +1418,15 @@ public class WmImNoticeHController extends BaseController {
 			sheet.addMergedRegion(c52);
 			sheet.addMergedRegion(c62);
 			sheet.addMergedRegion(c72);
-			
+
 			Cell cell73 = row.createCell(10);
 			cell73.setCellValue("① 财务联 ② 客户联 ③司机联 ④回单联   ");
 			cell73.setCellStyle(cs52);
-			
-			
+
+
 			CellRangeAddress c73 = new CellRangeAddress(page*20+0, page*20+19, 10, 10);//第7行打印时间
 			sheet.addMergedRegion(c73);
-			
+
 			Row rowColumnName = sheet.createRow((short) page*20+8); // 列名
 			String[] columnNames = { "序号", "商品编码", "商品名称", "生产日期", "货温","单位", "数量", "毛重KG","体积cm³","备注" };
                    if(ResourceUtil.getConfigByName("systuopan").equals("yes")){
@@ -1449,7 +1449,7 @@ public class WmImNoticeHController extends BaseController {
 				cell.setCellValue(columnNames[i]);
 				cell.setCellStyle(cs3);
 			}
-			
+
 
 			int cellsNum = page*20+8;
 			int oversize = 0;
@@ -1458,11 +1458,11 @@ public class WmImNoticeHController extends BaseController {
             }
 			for (int i = page*pagesize; i < (page+1)*pagesize + oversize; i++) {
              if(i< size){
- 		
+
 				cellsNum++;
 				Row rowColumnValue = sheet.createRow((short) cellsNum); // 列名
 				rowColumnValue.setHeight((short) 250);
-				
+
 						Cell cell1 = rowColumnValue.createCell(0);
 						cell1.setCellValue(cerconNo);
 						cell1.setCellStyle(cs51);
@@ -1484,35 +1484,35 @@ public class WmImNoticeHController extends BaseController {
 
 						} catch (Exception e) {
 							// TODO: handle exception
-						
+
 						}
-                        
+
 					 try {
 							Cell cell5 = rowColumnValue.createCell(4);// 温度
-					
-							cell5.setCellStyle(cs5);	
+
+							cell5.setCellStyle(cs5);
 							cell5.setCellValue(result.get(i)
 									.get("rec_deg").toString());
 											} catch (Exception e) {
 												// TODO: handle exception
 											}
-					 
+
 					 try {
 							Cell cell6 = rowColumnValue.createCell(5);// 单位
-				
+
 							cell6.setCellStyle(cs5);
 							cell6.setCellValue(result.get(i).get("goods_unit")
 									.toString());
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
-					 
+
 					 try {
 						 sum = sum + Double.parseDouble(result.get(i).get("goods_count")
 									.toString());
 							Cell cell7 = rowColumnValue.createCell(6);// 数量
-		
-							cell7.setCellStyle(cs5);	
+
+							cell7.setCellStyle(cs5);
 							cell7.setCellValue(result.get(i).get("goods_count")
 									.toString());
 						} catch (Exception e) {
@@ -1530,9 +1530,9 @@ public class WmImNoticeHController extends BaseController {
 							// TODO: handle exception
 						}
 						try {
-						
+
 							Cell cell9 = rowColumnValue.createCell(8);// 体积
-						
+
 							cell9.setCellStyle(cs5);
 							if(ResourceUtil.getConfigByName("systuopan").equals("yes")){
 								cell9.setCellValue(result.get(i).get("tuopan")
@@ -1561,11 +1561,11 @@ public class WmImNoticeHController extends BaseController {
 
 						 }
 						cell10.setCellStyle(cs5);
-				
+
 				cerconNo++;
 			}
              if(i== size){
-            	
+
             	 cellsNum++;
  				Row rowColumnValue = sheet.createRow((short) cellsNum); // 列名
  				rowColumnValue.setHeight((short) 250);
@@ -1581,10 +1581,10 @@ public class WmImNoticeHController extends BaseController {
 						 cellsNum, 0, 5);
 				sheet.addMergedRegion(c15);
             	 cerconNo++;
-            	 
+
              }
-             
-           	 
+
+
              }
 			Row rowColumnInfo = sheet.createRow((short) 1 + cellsNum); // 列名
 			rowColumnInfo.setHeight((short) 250);
@@ -1596,7 +1596,7 @@ public class WmImNoticeHController extends BaseController {
 			page++;
    	} while (page<pagecount);
 			fileOut = response.getOutputStream();
-			 HSSFPrintSetup printSetup = sheet.getPrintSetup();   
+			 HSSFPrintSetup printSetup = sheet.getPrintSetup();
 			 printSetup.setPaperSize(HSSFPrintSetup.QUARTO_PAPERSIZE);
 			wb.write(fileOut);
 		} catch (Exception e) {
@@ -1611,11 +1611,11 @@ public class WmImNoticeHController extends BaseController {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * 批量删除进货通知抬头
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doBatchDel")
@@ -1650,7 +1650,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * 添加进货通知抬头
-	 * 
+	 *
 	 * @param
 	 * @return
 	 */
@@ -1708,7 +1708,7 @@ public class WmImNoticeHController extends BaseController {
 			List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
 			for (WmImNoticeIEntity wmImNoticeIEntity : wmImNoticeIList) {
 				if(!StringUtil.isEmpty(wmImNoticeIEntity.getGoodsCode())){
-	
+
 				try {
 
 				    MvGoodsEntity mvgoods = systemService.findUniqueByProperty(MvGoodsEntity.class,"goodsName",wmImNoticeIEntity.getGoodsCode());
@@ -1721,12 +1721,12 @@ public class WmImNoticeHController extends BaseController {
 				}
 
 				wmImNoticeIListnew.add(wmImNoticeIEntity);
-				
+
 				}
 			}
 
 			wmImNoticeHService.addMain(wmImNoticeH, wmImNoticeIListnew);
-		
+
 			try {
 				TuiSongMsgUtil.sendMessage("收货通知", Constants.SMS_SEND_TYPE_3,
 						"RKYYTZ", map, "admin", ResourceUtil.getSessionUserName()
@@ -1755,7 +1755,10 @@ public class WmImNoticeHController extends BaseController {
 			if(StringUtil.isEmpty(formDate)){
 				formDate = "2011-01-01";
 			}
-			yyUtil.getPord(formDate);
+			yyUtil.getPord(formDate);//采购入库
+			yyUtil.getqtrd(formDate);//其他入库
+			yyUtil.getcprd(formDate);//成品入库
+
 
 		}
 		if ("UAS".equals(ResourceUtil.getConfigByName("interfacetype"))){
@@ -1916,7 +1919,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * 更新进货通知抬头
-	 * 
+	 *
 	 * @param
 	 * @return
 	 */
@@ -1964,8 +1967,8 @@ public class WmImNoticeHController extends BaseController {
 					}
 				}
 			}
-			
-			
+
+
 			wmImNoticeHService.updateMain(wmImNoticeH, wmImNoticeIList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE,
 					Globals.Log_Leavel_INFO);
@@ -1980,7 +1983,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * 进货通知抬头新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -2010,29 +2013,29 @@ public class WmImNoticeHController extends BaseController {
 					wmImNoticeH.setWherecon("where cus_code = '"+user.getUserName()+"'");
 				    modelMap.put("roleName", roles);
 				    req.setAttribute("wmImNoticeHPage", wmImNoticeH);
-					
+
 				}else{
 	   if(!StringUtil.isEmpty( wmImNoticeH.getCusCode())){
 			wmImNoticeH.setWherecon("where cus_code = '"+wmImNoticeH.getCusCode()+"'");
 	   }else{
 		   wmImNoticeH.setWherecon("where 1 = 1");
 	   }
-					
+
 
 				    req.setAttribute("wmImNoticeHPage", wmImNoticeH);
 				}
-			}	
+			}
 		}
-		
 
-        
-		
+
+
+
 		return new ModelAndView("com/zzjee/wm/wmImNoticeH-add");
 	}
 
 	/**
 	 * 进货通知抬头编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -2041,8 +2044,8 @@ public class WmImNoticeHController extends BaseController {
 		if (StringUtil.isNotEmpty(wmImNoticeH.getId())) {
 			wmImNoticeH = wmImNoticeHService.getEntity(WmImNoticeHEntity.class,
 					wmImNoticeH.getId());
-			
-			
+
+
 			TSUser user = ResourceUtil.getSessionUserName();
 			String roles = "";
 			if (user != null) {
@@ -2057,13 +2060,13 @@ public class WmImNoticeHController extends BaseController {
 				if(roles.equals("CUS")){
 					wmImNoticeH.setCusCode(user.getUserName());
 					wmImNoticeH.setReadonly("readonly");
-					wmImNoticeH.setWherecon("where cus_code = '"+user.getUserName()+"'");				
+					wmImNoticeH.setWherecon("where cus_code = '"+user.getUserName()+"'");
 				}else{
-				
+
 				wmImNoticeH.setWherecon("where 1 = 1");
 				}
 			}
-			
+
 			req.setAttribute("wmImNoticeHPage", wmImNoticeH);
 		}
 		return new ModelAndView("com/zzjee/wm/wmImNoticeH-update");
@@ -2071,7 +2074,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * 加载明细列表[进货通知明细]
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "wmImNoticeIList")
@@ -2124,7 +2127,7 @@ public class WmImNoticeHController extends BaseController {
 				}
 				if(roles.equals("CUS")){
 					cq.eq("cusCode", user.getUserName());
-					
+
 				}
 			}
 		} catch (Exception e) {
@@ -2160,7 +2163,7 @@ public class WmImNoticeHController extends BaseController {
 
 	/**
 	 * 通过excel导入数据
-	 * 
+	 *
 	 * @param request
 	 * @param
 	 * @return

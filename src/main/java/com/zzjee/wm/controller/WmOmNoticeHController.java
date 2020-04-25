@@ -290,7 +290,7 @@ public class WmOmNoticeHController extends BaseController {
 							}
 						}
 					}catch (Exception e){
-						
+
 					}
                     //wmOmQmIEntityListnew.add(tom);
 				}
@@ -971,7 +971,9 @@ public class WmOmNoticeHController extends BaseController {
 			if(StringUtil.isEmpty(formDate)){
 				formDate = "2011-01-01";
 			}
-			yyUtil.getSdvl(formDate);
+			yyUtil.getqtck(formDate);//其他出库
+			yyUtil.getsdck(formDate);//销售出库
+			yyUtil.getclck(formDate);//材料出库
 
 		}
 		if ("DSC".equals(ResourceUtil.getConfigByName("interfacetype"))){
@@ -1169,9 +1171,9 @@ public class WmOmNoticeHController extends BaseController {
 			f2.setFontHeightInPoints((short) 10);
 			f2.setColor(IndexedColors.BLACK.getIndex());
 
-//	        Font f3=wb.createFont();  
-//	        f3.setFontHeightInPoints((short) 10);  
-//	        f3.setColor(IndexedColors.RED.getIndex());  
+//	        Font f3=wb.createFont();
+//	        f3.setFontHeightInPoints((short) 10);
+//	        f3.setColor(IndexedColors.RED.getIndex());
 
 			// 设置第一种单元格的样式（用于列名）
 			cs.setFont(f);
@@ -1188,7 +1190,7 @@ public class WmOmNoticeHController extends BaseController {
 			cs2.setBorderBottom(CellStyle.BORDER_NONE);
 			cs2.setWrapText(true);
 
-//	        cs2.setAlignment(CellStyle.BORDER_NONE); 
+//	        cs2.setAlignment(CellStyle.BORDER_NONE);
 
 
 			cs3.setFont(f2);
@@ -1196,7 +1198,7 @@ public class WmOmNoticeHController extends BaseController {
 			cs3.setBorderRight(CellStyle.BORDER_MEDIUM);
 			cs3.setBorderTop(CellStyle.BORDER_MEDIUM);
 			cs3.setBorderBottom(CellStyle.BORDER_MEDIUM);
-//	        cs3.setAlignment(CellStyle.BORDER_HAIR); 
+//	        cs3.setAlignment(CellStyle.BORDER_HAIR);
 			cs4.setFont(f2);
 			cs4.setBorderTop(CellStyle.BORDER_MEDIUM);
 			cs4.setBorderBottom(CellStyle.BORDER_MEDIUM);
@@ -1394,8 +1396,8 @@ public class WmOmNoticeHController extends BaseController {
 
 			HSSFWorkbook wb = new HSSFWorkbook();
 			HSSFSheet sheet = wb.createSheet("出库单");
-			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）    
-			sheet.setMargin(HSSFSheet.BottomMargin,1.5);// 页边距（下）    
+			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）
+			sheet.setMargin(HSSFSheet.BottomMargin,1.5);// 页边距（下）
 			sheet.setMargin(HSSFSheet.LeftMargin,0.3);// 页边距（左）
 			sheet.setMargin(HSSFSheet.RightMargin,0.0);// 页边距（右
 //			sheet.setDisplayGridlines(true);

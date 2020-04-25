@@ -271,8 +271,154 @@ public class yyUtil {
         }
     }
 
+    public static  void  getcprd(String indate) {
+//        PO_Pomain  成品入库主表
+//        PO_Podetails  成品入库子表
+        String dbKey=  ResourceUtil.getConfigByName("yydbkey");
+        List<Map<String, Object>> result=null;
+        List<Map<String, Object>> resultdetail=null;
+        String querySql = "select * from RdRecord10 where ddate = '"+indate+"'";
+        Map queryparams =  new LinkedHashMap<String,Object>();
 
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        WmImNoticeHServiceI wmImNoticeHService =ApplicationContextUtil.getContext().getBean(WmImNoticeHServiceI.class);
 
+        if(StringUtils.isNotBlank(dbKey)) {
+            result = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySql, queryparams, 1, 1000000));
+        }
+        if (result!=null&&result.size()>0) {
+            for (int i = 0; i < result.size(); i++) {
+                Map<String, Object> prodbo = result.get(i);
+                String poid =  prodbo.get("id").toString();
+
+                if (StringUtil.isNotEmpty(poid)) {
+                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", poid);
+                    if (wmimh == null) {
+                        WmImNoticeHEntity wmImNoticeH = new WmImNoticeHEntity();
+                        List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
+
+                        wmImNoticeH.setOrderTypeCode("03");
+                        String noticeid = wmUtil.getNextNoticeid(wmImNoticeH.getOrderTypeCode());
+
+                        wmImNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
+                        wmImNoticeH.setNoticeId(noticeid);
+//                        wmImNoticeH.setPlatformCode(Integer.toString(billResult.getData().get(s).getPiId()));
+//                        wmImNoticeH.setPiClass(billResult.getData().get(s).getPiClass());
+//                        wmImNoticeH.setPiMaster(master);
+//                        wmImNoticeH.setSupCode(billResult.getData().get(s).getPiCardcode());
+//                        MdSupEntity mdsup = systemService.findUniqueByProperty(MdSupEntity.class, "gysBianMa", wmImNoticeH.getSupCode());
+//                        if (mdsup != null) {
+//                            wmImNoticeH.setSupName(mdsup.getZhongWenQch());
+//                        }
+                        try{
+                            wmImNoticeH.setImBeizhu(prodbo.get("cMemo").toString());
+                        }catch (Exception e){
+
+                        }
+                        wmImNoticeH.setImCusCode(poid);
+                        String querySqldetail = "select * from RdRecords10 where id = '"+poid+"'";
+                        if (resultdetail!=null){
+                            resultdetail.clear();
+                        }
+                        resultdetail = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySqldetail, queryparams, 1, 1000000));
+
+                        for (int k = 0; k < resultdetail.size(); k++) {
+                            WmImNoticeIEntity wmi = new WmImNoticeIEntity();
+                            Map<String, Object> proddet = resultdetail.get(k);
+                            wmi.setGoodsCode(proddet.get("cInvCode").toString());
+                            MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
+                                    MvGoodsEntity.class, "goodsCode", wmi.getGoodsCode());
+                            if (mvgoods != null) {
+                                wmi.setGoodsName(mvgoods.getGoodsName());
+                                wmi.setGoodsUnit(mvgoods.getShlDanWei());
+                            }
+                            wmi.setGoodsCount(Long.toString(new BigDecimal(proddet.get("iQuantity").toString()).setScale(0, RoundingMode.UP).longValue()));
+//                               wmi.setGoodsPrdData(billResult.getData().get(s).getDetail().get(k).getPdProdmadedate2User());
+//                            wmi.setOtherId();
+                            wmImNoticeIListnew.add(wmi);
+                        }
+                        wmImNoticeHService.addMain(wmImNoticeH, wmImNoticeIListnew);
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+    public static  void  getqtrd(String indate) {
+//        PO_Pomain  其他入库主表
+//        PO_Podetails  其他入库子表
+        String dbKey=  ResourceUtil.getConfigByName("yydbkey");
+        List<Map<String, Object>> result=null;
+        List<Map<String, Object>> resultdetail=null;
+        String querySql = "select * from RdRecord08 where ddate = '"+indate+"'";
+        Map queryparams =  new LinkedHashMap<String,Object>();
+
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        WmImNoticeHServiceI wmImNoticeHService =ApplicationContextUtil.getContext().getBean(WmImNoticeHServiceI.class);
+
+        if(StringUtils.isNotBlank(dbKey)) {
+            result = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySql, queryparams, 1, 1000000));
+        }
+        if (result!=null&&result.size()>0) {
+            for (int i = 0; i < result.size(); i++) {
+                Map<String, Object> prodbo = result.get(i);
+                String poid =  prodbo.get("id").toString();
+
+                if (StringUtil.isNotEmpty(poid)) {
+                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", poid);
+                    if (wmimh == null) {
+                        WmImNoticeHEntity wmImNoticeH = new WmImNoticeHEntity();
+                        List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
+
+                        wmImNoticeH.setOrderTypeCode("09");
+                        String noticeid = wmUtil.getNextNoticeid(wmImNoticeH.getOrderTypeCode());
+
+                        wmImNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
+                        wmImNoticeH.setNoticeId(noticeid);
+//                        wmImNoticeH.setPlatformCode(Integer.toString(billResult.getData().get(s).getPiId()));
+//                        wmImNoticeH.setPiClass(billResult.getData().get(s).getPiClass());
+//                        wmImNoticeH.setPiMaster(master);
+//                        wmImNoticeH.setSupCode(billResult.getData().get(s).getPiCardcode());
+//                        MdSupEntity mdsup = systemService.findUniqueByProperty(MdSupEntity.class, "gysBianMa", wmImNoticeH.getSupCode());
+//                        if (mdsup != null) {
+//                            wmImNoticeH.setSupName(mdsup.getZhongWenQch());
+//                        }
+                        try{
+                            wmImNoticeH.setImBeizhu(prodbo.get("cMemo").toString());
+                        }catch (Exception e){
+
+                        }
+                        wmImNoticeH.setImCusCode(poid);
+                        String querySqldetail = "select * from RdRecords08 where id = '"+poid+"'";
+                        if (resultdetail!=null){
+                            resultdetail.clear();
+                        }
+                        resultdetail = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySqldetail, queryparams, 1, 1000000));
+
+                        for (int k = 0; k < resultdetail.size(); k++) {
+                            WmImNoticeIEntity wmi = new WmImNoticeIEntity();
+                            Map<String, Object> proddet = resultdetail.get(k);
+                            wmi.setGoodsCode(proddet.get("cInvCode").toString());
+                            MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
+                                    MvGoodsEntity.class, "goodsCode", wmi.getGoodsCode());
+                            if (mvgoods != null) {
+                                wmi.setGoodsName(mvgoods.getGoodsName());
+                                wmi.setGoodsUnit(mvgoods.getShlDanWei());
+                            }
+                            wmi.setGoodsCount(Long.toString(new BigDecimal(proddet.get("iQuantity").toString()).setScale(0, RoundingMode.UP).longValue()));
+//                               wmi.setGoodsPrdData(billResult.getData().get(s).getDetail().get(k).getPdProdmadedate2User());
+//                            wmi.setOtherId();
+                            wmImNoticeIListnew.add(wmi);
+                        }
+                        wmImNoticeHService.addMain(wmImNoticeH, wmImNoticeIListnew);
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
     public static  void  getPo(String indate) {
 //        PO_Pomain  采购订单主表
 //        PO_Podetails  采购订单子表
@@ -412,7 +558,194 @@ public class yyUtil {
         }
     }
 
- public  static void addOtherOut(Map<String, Object> params){
+
+
+    public static  void getqtck(String indate) {
+//  /        PO_Pomain  其他出库单主表
+//        PO_Podetails  其他出库单主表子表
+        String dbKey=  ResourceUtil.getConfigByName("yydbkey");
+        List<Map<String, Object>> result=null;
+        List<Map<String, Object>> resultdetail=null;
+        String querySql = "select * from RdRecord09  where   ddate = '"+indate+"'";
+        Map queryparams =  new LinkedHashMap<String,Object>();
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        WmOmNoticeHServiceI wmOmNoticeHService =ApplicationContextUtil.getContext().getBean(WmOmNoticeHServiceI.class);
+        if(StringUtils.isNotBlank(dbKey)) {
+            result = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySql, queryparams, 1, 1000000));
+        }
+        if (result!=null&&result.size()>0) {
+            for (int i = 0; i < result.size(); i++) {
+                Map<String, Object> prodbo = result.get(i);
+                String imcuscode =  prodbo.get("id").toString();
+                if (StringUtil.isNotEmpty(imcuscode)) {
+                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
+                    if (wmimh == null) {
+                        WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
+                        List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
+                        wmOmNoticeH.setOrderTypeCode("19");
+                        wmOmNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
+                        String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
+                        wmOmNoticeH.setOmNoticeId(noticeid);
+                        wmOmNoticeH.setImCusCode(imcuscode);
+                        try{
+                            wmOmNoticeH.setOmBeizhu(prodbo.get("cMemo").toString());
+
+                        }catch (Exception e){
+
+                        }
+//                        String querySqldetail = "select * from DispatchLists  where cWhCode = '28' and  DLID = '"+imcuscode+"'";
+                        String querySqldetail = "select * from RdRecords09  where   id = '"+imcuscode+"'";
+
+                        if (resultdetail!=null){
+                            resultdetail.clear();
+                        }
+                        resultdetail = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySqldetail, queryparams, 1, 1000000));
+                        for (int k = 0; k < resultdetail.size(); k++) {
+                            WmOmNoticeIEntity wmi = new WmOmNoticeIEntity();
+                            Map<String, Object> proddet = resultdetail.get(k);
+                            wmi.setGoodsId(proddet.get("cInvCode").toString());
+                            MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
+                                    MvGoodsEntity.class, "goodsCode", wmi.getGoodsId());
+                            if (mvgoods != null) {
+                                wmi.setGoodsName(mvgoods.getGoodsName());
+                                wmi.setGoodsUnit(mvgoods.getShlDanWei());
+                            }
+                            wmi.setGoodsQua(Long.toString(new BigDecimal(proddet.get("iQuantity").toString()).setScale(0, RoundingMode.UP).longValue()));
+                            wmomNoticeIListnew.add(wmi);
+                        }
+                        wmOmNoticeHService.addMain(wmOmNoticeH, wmomNoticeIListnew);
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    public static  void getsdck(String indate) {
+//  /        PO_Pomain  其他出库单主表
+//        PO_Podetails  其他出库单主表子表
+        String dbKey=  ResourceUtil.getConfigByName("yydbkey");
+        List<Map<String, Object>> result=null;
+        List<Map<String, Object>> resultdetail=null;
+        String querySql = "select * from RdRecord32  where   ddate = '"+indate+"'";
+        Map queryparams =  new LinkedHashMap<String,Object>();
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        WmOmNoticeHServiceI wmOmNoticeHService =ApplicationContextUtil.getContext().getBean(WmOmNoticeHServiceI.class);
+        if(StringUtils.isNotBlank(dbKey)) {
+            result = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySql, queryparams, 1, 1000000));
+        }
+        if (result!=null&&result.size()>0) {
+            for (int i = 0; i < result.size(); i++) {
+                Map<String, Object> prodbo = result.get(i);
+                String imcuscode =  prodbo.get("id").toString();
+                if (StringUtil.isNotEmpty(imcuscode)) {
+                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
+                    if (wmimh == null) {
+                        WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
+                        List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
+                        wmOmNoticeH.setOrderTypeCode("11");
+                        wmOmNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
+                        String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
+                        wmOmNoticeH.setOmNoticeId(noticeid);
+                        wmOmNoticeH.setImCusCode(imcuscode);
+                        try{
+                            wmOmNoticeH.setOmBeizhu(prodbo.get("cMemo").toString());
+
+                        }catch (Exception e){
+
+                        }
+//                        String querySqldetail = "select * from DispatchLists  where cWhCode = '28' and  DLID = '"+imcuscode+"'";
+                        String querySqldetail = "select * from RdRecords32  where   id = '"+imcuscode+"'";
+
+                        if (resultdetail!=null){
+                            resultdetail.clear();
+                        }
+                        resultdetail = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySqldetail, queryparams, 1, 1000000));
+                        for (int k = 0; k < resultdetail.size(); k++) {
+                            WmOmNoticeIEntity wmi = new WmOmNoticeIEntity();
+                            Map<String, Object> proddet = resultdetail.get(k);
+                            wmi.setGoodsId(proddet.get("cInvCode").toString());
+                            MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
+                                    MvGoodsEntity.class, "goodsCode", wmi.getGoodsId());
+                            if (mvgoods != null) {
+                                wmi.setGoodsName(mvgoods.getGoodsName());
+                                wmi.setGoodsUnit(mvgoods.getShlDanWei());
+                            }
+                            wmi.setGoodsQua(Long.toString(new BigDecimal(proddet.get("iQuantity").toString()).setScale(0, RoundingMode.UP).longValue()));
+                            wmomNoticeIListnew.add(wmi);
+                        }
+                        wmOmNoticeHService.addMain(wmOmNoticeH, wmomNoticeIListnew);
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    public static  void getclck(String indate) {
+//  /        PO_Pomain  其他出库单主表
+//        PO_Podetails  其他出库单主表子表
+        String dbKey=  ResourceUtil.getConfigByName("yydbkey");
+        List<Map<String, Object>> result=null;
+        List<Map<String, Object>> resultdetail=null;
+        String querySql = "select * from RdRecord11  where   ddate = '"+indate+"'";
+        Map queryparams =  new LinkedHashMap<String,Object>();
+        SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+        WmOmNoticeHServiceI wmOmNoticeHService =ApplicationContextUtil.getContext().getBean(WmOmNoticeHServiceI.class);
+        if(StringUtils.isNotBlank(dbKey)) {
+            result = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySql, queryparams, 1, 1000000));
+        }
+        if (result!=null&&result.size()>0) {
+            for (int i = 0; i < result.size(); i++) {
+                Map<String, Object> prodbo = result.get(i);
+                String imcuscode =  prodbo.get("id").toString();
+                if (StringUtil.isNotEmpty(imcuscode)) {
+                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
+                    if (wmimh == null) {
+                        WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
+                        List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
+                        wmOmNoticeH.setOrderTypeCode("02");
+                        wmOmNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
+                        String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
+                        wmOmNoticeH.setOmNoticeId(noticeid);
+                        wmOmNoticeH.setImCusCode(imcuscode);
+                        try{
+                            wmOmNoticeH.setOmBeizhu(prodbo.get("cMemo").toString());
+
+                        }catch (Exception e){
+
+                        }
+//                        String querySqldetail = "select * from DispatchLists  where cWhCode = '28' and  DLID = '"+imcuscode+"'";
+                        String querySqldetail = "select * from RdRecords11  where   id = '"+imcuscode+"'";
+
+                        if (resultdetail!=null){
+                            resultdetail.clear();
+                        }
+                        resultdetail = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySqldetail, queryparams, 1, 1000000));
+                        for (int k = 0; k < resultdetail.size(); k++) {
+                            WmOmNoticeIEntity wmi = new WmOmNoticeIEntity();
+                            Map<String, Object> proddet = resultdetail.get(k);
+                            wmi.setGoodsId(proddet.get("cInvCode").toString());
+                            MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
+                                    MvGoodsEntity.class, "goodsCode", wmi.getGoodsId());
+                            if (mvgoods != null) {
+                                wmi.setGoodsName(mvgoods.getGoodsName());
+                                wmi.setGoodsUnit(mvgoods.getShlDanWei());
+                            }
+                            wmi.setGoodsQua(Long.toString(new BigDecimal(proddet.get("iQuantity").toString()).setScale(0, RoundingMode.UP).longValue()));
+                            wmomNoticeIListnew.add(wmi);
+                        }
+                        wmOmNoticeHService.addMain(wmOmNoticeH, wmomNoticeIListnew);
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+    public  static void addOtherOut(Map<String, Object> params){
      String to_account = params.get("to_account").toString();	//提供方id        String page_index = args[1];// 页号
 
      String jsonBody = params.get("jsonBody").toString();
