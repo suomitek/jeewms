@@ -853,9 +853,10 @@ public class WvStockController extends BaseController {
                     } else {
                         insearch = "goodsId = '" + s + "'";
                     }
-                    hql = hql + "  and  (" + insearch + ")";
 
                 }
+                hql = hql + " and ( " + insearch + ") ";
+
 
             }
 //			hql=hql+"  and goodsId  in (:alist)";

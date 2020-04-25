@@ -357,9 +357,9 @@ public class WvNoticeController extends BaseController {
 					} else {
 						insearch = "goodsCode = '" + s + "'";
 					}
-					hql = hql + "  and  (" + insearch + ")";
 
 				}
+				hql = hql + "  and  (" + insearch + ")";
 
 			}
 //			hql=hql+"  and goodsCode  in (:alist)";
