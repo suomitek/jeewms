@@ -13,7 +13,7 @@
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="流程状态"  field="bpmStatus"  hidden="true"  queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>
+   <%--<t:dgCol title="流程状态"  field="bpmStatus"  hidden="true"  queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>--%>
    <t:dgCol title="供应商编码"  field="vendorCode"  query="true"  queryMode="single"  dictionary="wz_pop_vendor,vendorCode,vendorName,vendor_code,vendor_name"  popup="true"  width="120"></t:dgCol>
    <t:dgCol title="供应商名称"  field="vendorName"  query="true"  queryMode="single"  width="120"></t:dgCol>
 
@@ -26,9 +26,9 @@
    <t:dgCol title="备用4"  field="by4"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备用5"  field="by5"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
-   <t:dgFunOpt title="打印" exp="bpmStatus#eq#1" funname="doprint(id)"  urlclass="ace_button" />
+   <t:dgFunOpt title="打印"   funname="doprint(id)"  urlclass="ace_button" />
 
-   <t:dgFunOpt title="审批" funname="doUpdatesp(id)" exp="bpmStatus#eq#0"  urlclass="ace_button" operationCode="updatesp"/>
+   <%--<t:dgFunOpt title="审批" funname="doUpdatesp(id)" exp="bpmStatus#eq#0"  urlclass="ace_button" operationCode="updatesp"/>--%>
    <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
    <%--<t:dgDelOpt title="删除" url="tWzRkHeadController.do?doDel&id={id}"  urlclass="ace_button" urlfont="fa-trash-o"/>--%>
    <t:dgToolBar title="入库" icon="icon-add" url="tWzRkHeadController.do?goAdd" funname="add" width="100%" height="100%"></t:dgToolBar>
@@ -36,7 +36,7 @@
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tWzRkHeadController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tWzRkHeadController.do?goUpdate" funname="detail" width="100%" height="100%"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>

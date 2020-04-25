@@ -14,25 +14,26 @@
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="流程状态"  field="bpmStatus"  query="true"  queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>
-   <t:dgCol title="供应商编码"  field="vendorCode"  query="true"  queryMode="single"  dictionary="wz_pop_vendor,vendorCode,vendorName,vendor_code,vendor_name"  popup="true"  width="120"></t:dgCol>
+   <%--<t:dgCol title="流程状态"  field="bpmStatus"     hidden="true" queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>--%>
+   <t:dgCol title="供应商编码"  field="vendorCode"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="供应商名称"  field="vendorName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="采购订单日期"  field="docDate"  formatter="yyyy-MM-dd"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="采购订单备注"  field="poRemark"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备用1"  field="poBy1"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="采购类别"  field="poBy1"  query="true" dictionary="wz_cglb"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备用2"  field="poBy2"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备用3"  field="poBy3"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备用4"  field="poBy4"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgDelOpt title="删除" url="tWzPoHeadController.do?doDel&id={id}"  urlclass="ace_button" urlfont="fa-trash-o" exp="bpmStatus#eq#1"/>
    <t:dgFunOpt title="完成" funname="docom(id)"  urlclass="ace_button"  exp="bpmStatus#eq#2"     />
-   <t:dgFunOpt title="打印" funname="doprint(id)"  urlclass="ace_button"   exp="bpmStatus#eq#2"   />
+   <%--<t:dgFunOpt title="打印" funname="doprint(id)"  urlclass="ace_button"   exp="bpmStatus#eq#2"   />  --%>
+   <t:dgFunOpt title="打印" funname="doprint(id)"  urlclass="ace_button"     />
 
    <t:dgToolBar title="下单" icon="icon-add" url="tWzPoHeadController.do?goAdd" funname="add" width="100%" height="100%"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tWzPoHeadController.do?goUpdate" funname="update" width="100%" height="100%"></t:dgToolBar>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tWzPoHeadController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tWzPoHeadController.do?goUpdate" funname="detail" width="100%" height="100%"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>

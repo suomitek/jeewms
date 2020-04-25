@@ -1,20 +1,17 @@
 package com.zzjee.wzyw.controller;
+
+import com.alibaba.fastjson.JSONArray;
 import com.zzjee.util.ReportUtils;
 import com.zzjee.wz.entity.TWzMaterialEntity;
-import com.zzjee.wzyw.entity.*;
-import com.zzjee.wzyw.service.TWzRkHeadServiceI;
+import com.zzjee.wzyw.entity.TWzRkHeadEntity;
+import com.zzjee.wzyw.entity.TWzRkItemDto;
+import com.zzjee.wzyw.entity.TWzRkItemEntity;
 import com.zzjee.wzyw.page.TWzRkHeadPage;
-
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.SimpleDateFormat;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.zzjee.wzyw.service.TWzRkHeadServiceI;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
@@ -22,68 +19,55 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.RegionUtil;
-import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
-import org.jeecgframework.core.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
+import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.tag.core.easyui.TagUtil;
-import org.jeecgframework.web.system.pojo.base.TSDepart;
-import org.jeecgframework.web.system.service.SystemService;
+import org.jeecgframework.core.util.*;
+import org.jeecgframework.jwt.util.ResponseMessage;
+import org.jeecgframework.jwt.util.Result;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
+import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.web.system.service.SystemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.io.IOException;
-import java.util.Map;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jeecgframework.jwt.util.GsonUtil;
-import org.jeecgframework.jwt.util.ResponseMessage;
-import org.jeecgframework.jwt.util.Result;
-import com.alibaba.fastjson.JSONArray;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.net.URI;
-import org.springframework.http.MediaType;
-import org.springframework.web.util.UriComponentsBuilder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-/**   
+/**
  * @Title: Controller
  * @Description: 入库抬头
  * @author onlineGenerator
  * @date 2018-05-20 21:43:08
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Api(value="TWzRkHead",description="入库抬头",tags="tWzRkHeadController")
@@ -103,11 +87,11 @@ public class TWzRkHeadController extends BaseController {
 	private Validator validator;
 
 	@Autowired
-	JdbcDao jdbcDao;
+    JdbcDao jdbcDao;
 
 	/**
 	 * 入库抬头列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -117,7 +101,7 @@ public class TWzRkHeadController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -153,7 +137,7 @@ public class TWzRkHeadController extends BaseController {
 
 	/**
 	 * 删除入库抬头
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -176,12 +160,12 @@ public class TWzRkHeadController extends BaseController {
 
 	/**
 	 * 批量删除入库抬头
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
 	@ResponseBody
-	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
+	public AjaxJson doBatchDel(String ids, HttpServletRequest request){
 		AjaxJson j = new AjaxJson();
 		String message = "入库抬头删除成功";
 		try{
@@ -203,13 +187,13 @@ public class TWzRkHeadController extends BaseController {
 
 	/**
 	 * 添加入库抬头
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(TWzRkHeadEntity tWzRkHead,TWzRkHeadPage tWzRkHeadPage, HttpServletRequest request) {
+	public AjaxJson doAdd(TWzRkHeadEntity tWzRkHead, TWzRkHeadPage tWzRkHeadPage, HttpServletRequest request) {
 		List<TWzRkItemEntity> tWzRkItemList =  tWzRkHeadPage.getTWzRkItemList();
 		AjaxJson j = new AjaxJson();
 		String message = "添加成功";
@@ -243,13 +227,13 @@ public class TWzRkHeadController extends BaseController {
 	}
 	/**
 	 * 更新入库抬头
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(TWzRkHeadEntity tWzRkHead,TWzRkHeadPage tWzRkHeadPage, HttpServletRequest request) {
+	public AjaxJson doUpdate(TWzRkHeadEntity tWzRkHead, TWzRkHeadPage tWzRkHeadPage, HttpServletRequest request) {
 		List<TWzRkItemEntity> tWzRkItemList =  tWzRkHeadPage.getTWzRkItemList();
 		AjaxJson j = new AjaxJson();
 		String message = "更新成功";
@@ -267,7 +251,7 @@ public class TWzRkHeadController extends BaseController {
 
 	/**
 	 * 入库抬头新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -278,10 +262,10 @@ public class TWzRkHeadController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wzyw/tWzRkHead-add");
 	}
-	
+
 	/**
 	 * 入库抬头编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -292,16 +276,16 @@ public class TWzRkHeadController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wzyw/tWzRkHead-update");
 	}
-	
-	
+
+
 	/**
 	 * 加载明细列表[入库商品]
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "tWzRkItemList")
 	public ModelAndView tWzRkItemList(TWzRkHeadEntity tWzRkHead, HttpServletRequest req) {
-	
+
 		//===================================================================================
 		//获取参数
 		Object id0 = tWzRkHead.getId();
@@ -346,7 +330,7 @@ public class TWzRkHeadController extends BaseController {
     * @param response
     */
     @RequestMapping(params = "exportXls")
-    public String exportXls(TWzRkHeadEntity tWzRkHead,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid,ModelMap map) {
+    public String exportXls(TWzRkHeadEntity tWzRkHead, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid, ModelMap map) {
     	CriteriaQuery cq = new CriteriaQuery(TWzRkHeadEntity.class, dataGrid);
     	//查询条件组装器
     	org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzRkHead);
@@ -374,8 +358,8 @@ public class TWzRkHeadController extends BaseController {
             }
         }
         map.put(NormalExcelConstants.FILE_NAME,"入库抬头");
-        map.put(NormalExcelConstants.CLASS,TWzRkHeadPage.class);
-        map.put(NormalExcelConstants.PARAMS,new ExportParams("入库抬头列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+        map.put(NormalExcelConstants.CLASS, TWzRkHeadPage.class);
+        map.put(NormalExcelConstants.PARAMS,new ExportParams("入库抬头列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
             "导出信息"));
         map.put(NormalExcelConstants.DATA_LIST,pageList);
         return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -427,7 +411,7 @@ public class TWzRkHeadController extends BaseController {
 	@RequestMapping(params = "exportXlsByT")
 	public String exportXlsByT(ModelMap map) {
 		map.put(NormalExcelConstants.FILE_NAME,"入库抬头");
-		map.put(NormalExcelConstants.CLASS,TWzRkHeadPage.class);
+		map.put(NormalExcelConstants.CLASS, TWzRkHeadPage.class);
 		map.put(NormalExcelConstants.PARAMS,new ExportParams("入库抬头列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
 		"导出信息"));
 		map.put(NormalExcelConstants.DATA_LIST,new ArrayList());
@@ -444,7 +428,7 @@ public class TWzRkHeadController extends BaseController {
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 
- 	
+
  	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="入库抬头列表信息",produces="application/json",httpMethod="GET")
@@ -468,7 +452,7 @@ public class TWzRkHeadController extends BaseController {
         }
 		return Result.success(pageList);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="根据ID获取入库抬头信息",notes="根据ID获取入库抬头信息",httpMethod="GET",produces="application/json")
@@ -489,7 +473,7 @@ public class TWzRkHeadController extends BaseController {
 		}
 		return Result.success(page);
 	}
- 	
+
  	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value="创建入库抬头")
@@ -502,7 +486,7 @@ public class TWzRkHeadController extends BaseController {
 
 		//保存
 		List<TWzRkItemEntity> tWzRkItemList =  tWzRkHeadPage.getTWzRkItemList();
-		
+
 		TWzRkHeadEntity tWzRkHead = new TWzRkHeadEntity();
 		try{
 			MyBeanUtils.copyBeanNotNull2Bean(tWzRkHeadPage,tWzRkHead);
@@ -514,7 +498,7 @@ public class TWzRkHeadController extends BaseController {
 
 		return Result.success(tWzRkHead);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value="更新入库抬头",notes="更新入库抬头")
@@ -527,7 +511,7 @@ public class TWzRkHeadController extends BaseController {
 
 		//保存
 		List<TWzRkItemEntity> tWzRkItemList =  tWzRkHeadPage.getTWzRkItemList();
-		
+
 		TWzRkHeadEntity tWzRkHead = new TWzRkHeadEntity();
 		try{
 			MyBeanUtils.copyBeanNotNull2Bean(tWzRkHeadPage,tWzRkHead);
@@ -540,7 +524,7 @@ public class TWzRkHeadController extends BaseController {
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
 		return Result.success();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value="删除入库抬头")
@@ -680,11 +664,11 @@ public class TWzRkHeadController extends BaseController {
 			cell21.setCellStyle(cs2);
 			Cell cell22 = row2.createCell(3);
 
-			cell22.setCellValue("单据日期：" + DateUtils.date2Str(tWzRkHead.getDocDate(),DateUtils.date_sdf));
+			cell22.setCellValue("单据日期：" + DateUtils.date2Str(tWzRkHead.getDocDate(), DateUtils.date_sdf));
 			cell22.setCellStyle(cs2);
 			Cell cell23 = row2.createCell(6);
 
-			cell23.setCellValue("单据编号：" + tWzRkHead.getId());
+			cell23.setCellValue("入库单号：" + tWzRkHead.getId());
 			cell23.setCellStyle(cs2);
 
 			// 合并单元格
@@ -705,8 +689,8 @@ public class TWzRkHeadController extends BaseController {
 			rowColumnName.setHeight((short) 500);
 			String[] columnNames = { "序号", "编码/商品名称", "规格", "单位", "仓库","数量","单价",
 					"金额","备注" };
-            Double totalAmount = 0d;
-            Integer totalNumber = 0;
+            Double totalAmount = 0.00;
+			Double totalNumber = 0.00;
 			for (int i = 0; i < columnNames.length; i++) {
 				Cell cell = rowColumnName.createCell(i);
 				cell.setCellValue(columnNames[i]);
@@ -759,16 +743,19 @@ public class TWzRkHeadController extends BaseController {
 				try {
 
 					Cell cell6 = rowColumnValue.createCell(5);
-					cell6.setCellValue(entity.getMatQty());
+//					cell6.setCellValue(entity.getMatQty());
+					cell6.setCellValue(StringUtil.moneyToString(entity.getMatQty(),"#.0000"));
 					cell6.setCellStyle(cs3);
-					totalNumber = totalNumber + Integer.parseInt(entity.getMatQty());
+					totalNumber = totalNumber + Double.parseDouble(entity.getMatQty());
 				}catch (Exception e){
 
 				}
 				try {
 
 					Cell cell7 = rowColumnValue.createCell(6);
-					cell7.setCellValue(entity.getMatPrice());
+//					cell7.setCellValue(entity.getMatPrice());
+					cell7.setCellValue(StringUtil.moneyToString(entity.getMatPrice(),"#.00"));
+
 					cell7.setCellStyle(cs3);
 				}catch (Exception e){
 
@@ -776,7 +763,9 @@ public class TWzRkHeadController extends BaseController {
 				try {
 
 					Cell cell8 = rowColumnValue.createCell(7);
-					cell8.setCellValue(entity.getMatAmount());
+//					cell8.setCellValue(entity.getMatAmount());
+					cell8.setCellValue(StringUtil.moneyToString(entity.getMatAmount(),"#.00"));
+
 					cell8.setCellStyle(cs3);
 					totalAmount = totalAmount + Double.parseDouble(entity.getMatAmount());
 				}catch (Exception e){
@@ -799,13 +788,13 @@ public class TWzRkHeadController extends BaseController {
 			cellrow.setCellValue("合计");
 			cellrow.setCellStyle(cs4);
 			Cell cellTotatl2 = rowColumnInfo.createCell(5);
-			cellTotatl2.setCellValue(totalNumber);
+			cellTotatl2.setCellValue(StringUtil.moneyToString(totalNumber,"#.0000"));
 			cellTotatl2.setCellStyle(cs3);
 			Cell cellTotatl3 = rowColumnInfo.createCell(6);
 			cellTotatl3.setCellValue("");
 			cellTotatl3.setCellStyle(cs3);
 			Cell cellTotatl4 = rowColumnInfo.createCell(7);
-			cellTotatl4.setCellValue(totalAmount);
+			cellTotatl4.setCellValue(StringUtil.moneyToString(totalAmount,"#.00"));
 			cellTotatl4.setCellStyle(cs3);
 			Cell cellTotatl5 = rowColumnInfo.createCell(8);
 			cellTotatl5.setCellValue("");
@@ -818,7 +807,7 @@ public class TWzRkHeadController extends BaseController {
             //底部合计金额大写转为汉字
 			Row rowColumnInfo2 = sheet.createRow((short) 2 + cellsNum); // 列名
 			Cell cellrow2 = rowColumnInfo2.createCell(0);
-			cellrow2.setCellValue("合计金额大写：" + ReportUtils.number2CNMontrayUnit(new BigDecimal(totalAmount)));
+			cellrow2.setCellValue("合计金额大写：" + ReportUtils.number2CNMontrayUnit(new BigDecimal(StringUtil.moneyToString(totalAmount,"#.00"))));
 			cellrow2.setCellStyle(cs4);
 			//合并单元格
 			CellRangeAddress cellAmount = new CellRangeAddress(2 + cellsNum, 2 + cellsNum, 0, 8);

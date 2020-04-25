@@ -54,7 +54,7 @@
 				<label class="Validform_label">供应商编码:</label>
 			</td>
 			<td class="value">
-					<input id="vendorCode" name="vendorCode" type="text" style="width: 150px" class="searchbox-inputtext" 		datatype="*" ignore="checked"   onclick="popupClick(this,'vendorCode,vendorName','wz_pop_vendor')"  value='${tWzRkHeadPage.vendorCode}'/>
+					<input id="vendorCode" name="vendorCode" type="text" style="width: 150px" class="searchbox-inputtext" 		datatype="*" ignore="checked"    value='${tWzRkHeadPage.vendorCode}'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">供应商编码</label>
 			</td>

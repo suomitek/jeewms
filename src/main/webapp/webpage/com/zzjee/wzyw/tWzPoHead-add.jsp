@@ -48,7 +48,7 @@
 				<label class="Validform_label">供应商编码:</label>
 			</td>
 			<td class="value">
-				<input id="vendorCode" name="vendorCode" type="text" style="width: 150px" class="searchbox-inputtext"  ignore="ignore"  onclick="popupClick(this,'vendor_code,vendor_name','vendorCode,vendorName','wz_pop_vendor')"/>			 
+				<input id="vendorCode" name="vendorCode" type="text" style="width: 150px" class="searchbox-inputtext"  ignore="ignore"  onclick="popupClick(this,'vendor_code,vendor_name','vendorCode,vendorName','wz_pop_vendor')"/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">供应商编码</label>
 			</td>
@@ -79,7 +79,16 @@
 				<label class="Validform_label" style="display: none;">采购订单备注</label>
 			</td>
 		</tr>
-	
+		<tr>
+			<td align="right">
+				<label class="Validform_label">采购类别:</label>
+			</td>
+			<td class="value">
+				<t:dictSelect field="poBy1" type="radio"  defaultVal="集中采购" typeGroupCode="wz_cglb"    hasLabel="false"  title="采购类别" ></t:dictSelect>
+
+			</td>
+
+		</tr>
 	</table>
 			<div style="width: auto;height: 200px;">
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
@@ -132,4 +141,3 @@
 		</table>
  </body>
  <script src = "webpage/com/zzjee/wzyw/tWzPoHead.js"></script>
-	

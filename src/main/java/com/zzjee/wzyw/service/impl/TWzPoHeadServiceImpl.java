@@ -1,37 +1,35 @@
 package com.zzjee.wzyw.service.impl;
-import com.zzjee.wzyw.service.TWzPoHeadServiceI;
-import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+
 import com.zzjee.wzyw.entity.TWzPoHeadEntity;
 import com.zzjee.wzyw.entity.TWzPoItemEntity;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+import com.zzjee.wzyw.service.TWzPoHeadServiceI;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.core.util.oConvertUtils;
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.UUID;
-import java.io.Serializable;
 
 
 @Service("tWzPoHeadService")
 @Transactional
 public class TWzPoHeadServiceImpl extends CommonServiceImpl implements TWzPoHeadServiceI {
-	
+
  	public <T> void delete(T entity) {
  		super.delete(entity);
  		//执行删除操作配置的sql增强
 		this.doDelSql((TWzPoHeadEntity)entity);
  	}
-	
+
 	public void addMain(TWzPoHeadEntity tWzPoHead,
 	        List<TWzPoItemEntity> tWzPoItemList){
 			//保存主信息
 			this.save(tWzPoHead);
-		
+
 			/**保存-采购订单行项目*/
 			for(TWzPoItemEntity tWzPoItem:tWzPoItemList){
 				//外键设置
@@ -42,7 +40,7 @@ public class TWzPoHeadServiceImpl extends CommonServiceImpl implements TWzPoHead
  			this.doAddSql(tWzPoHead);
 	}
 
-	
+
 	public void updateMain(TWzPoHeadEntity tWzPoHead,
 	        List<TWzPoItemEntity> tWzPoItemList) {
 		//保存主表信息
@@ -86,7 +84,7 @@ public class TWzPoHeadServiceImpl extends CommonServiceImpl implements TWzPoHead
 		    		//如果数据库存在的明细，前台没有传递过来则是删除-采购订单行项目
 		    		super.delete(oldE);
 	    		}
-	    		
+
 			}
 			//3.持久化新增的数据-采购订单行项目
 			for(TWzPoItemEntity tWzPoItem:tWzPoItemList){
@@ -101,7 +99,7 @@ public class TWzPoHeadServiceImpl extends CommonServiceImpl implements TWzPoHead
  		this.doUpdateSql(tWzPoHead);
 	}
 
-	
+
 	public void delMain(TWzPoHeadEntity tWzPoHead) {
 		//删除主表信息
 		this.delete(tWzPoHead);
@@ -114,8 +112,8 @@ public class TWzPoHeadServiceImpl extends CommonServiceImpl implements TWzPoHead
 	    List<TWzPoItemEntity> tWzPoItemOldList = this.findHql(hql0,id0);
 		this.deleteAllEntitie(tWzPoItemOldList);
 	}
-	
- 	
+
+
  	/**
 	 * 默认按钮-sql增强-新增操作
 	 * @param id
@@ -140,7 +138,7 @@ public class TWzPoHeadServiceImpl extends CommonServiceImpl implements TWzPoHead
  	public boolean doDelSql(TWzPoHeadEntity t){
 	 	return true;
  	}
- 	
+
  	/**
 	 * 替换sql中的变量
 	 * @param sql

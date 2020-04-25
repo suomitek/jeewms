@@ -1,30 +1,20 @@
 
 package com.zzjee.wzyw.page;
-import com.zzjee.wzyw.entity.TWzPoHeadEntity;
+
 import com.zzjee.wzyw.entity.TWzPoItemEntity;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelCollection;
 
-/**   
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
  * @Title: Entity
  * @Description: 物料采购订单
  * @author onlineGenerator
  * @date 2018-05-21 13:23:13
- * @version V1.0   
+ * @version V1.0
  *
  */
 public class TWzPoHeadPage implements java.io.Serializable {
@@ -69,7 +59,7 @@ public class TWzPoHeadPage implements java.io.Serializable {
 	private String poBy3;
 	/**备用4*/
 	private String poBy4;
-	
+
 	/**
 	 *方法: 取得java.lang.Integer
 	 *@return: java.lang.Integer  主键

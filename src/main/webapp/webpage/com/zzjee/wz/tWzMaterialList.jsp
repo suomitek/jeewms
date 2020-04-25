@@ -19,14 +19,17 @@
    <t:dgCol title="单位"  field="matUnit"  queryMode="single"  dictionary="ba_unit,UNIT_CODE,UNIT_ZH_NAME"  width="120"></t:dgCol>
    <t:dgCol title="规格"  field="matGuige"  queryMode="single"  width="80"></t:dgCol>
    <t:dgCol title="等级"  field="matClass"  queryMode="single"  width="80"></t:dgCol>
-   <t:dgCol title="标准价元"  field="matPrice"  queryMode="single"  width="80"></t:dgCol>
+<%--   <t:dgCol title="标准价元"  field="matPrice"  queryMode="single"  width="80"></t:dgCol>--%>
    <t:dgCol title="安全库存"  field="matAqkc"  queryMode="single"  width="80"></t:dgCol>
-   <t:dgCol title="仓库"  field="matLocation"  queryMode="single"  dictionary="t_wz_location,mat_location,mat_location"  width="120"></t:dgCol>
-   <t:dgCol title="备用1"  field="by1"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备用2"  field="by2"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备用3"  field="by3"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备用4"  field="by4"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备用5"  field="by5"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="库存地点"  field="matLocation"  queryMode="single"  dictionary="t_wz_location,mat_location,mat_location"  width="120"></t:dgCol>
+   <t:dgCol title="物料条码"  field="by1"    queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="产品大类"  field="by2"     queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="产品小类"  field="by3"     queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="存储位置"  field="by4"    queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="所属设备"  field="by5"     queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="物资图片"  field="by6"    queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="库位"  field="by7"    queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="库区"  field="by8"    queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tWzMaterialController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tWzMaterialController.do?goAdd" funname="add"></t:dgToolBar>
@@ -43,9 +46,9 @@
  <script type="text/javascript">
  $(document).ready(function(){
  });
- 
-   
- 
+
+
+
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'tWzMaterialController.do?upload', "tWzMaterialList");

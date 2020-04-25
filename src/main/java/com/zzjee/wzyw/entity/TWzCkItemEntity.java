@@ -1,28 +1,17 @@
 package com.zzjee.wzyw.entity;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.lang.String;
-import java.lang.Double;
-import java.lang.Integer;
-import java.math.BigDecimal;
-import javax.xml.soap.Text;
-import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
-/**   
+import javax.persistence.*;
+import java.util.Date;
+
+/**
  * @Title: Entity
  * @Description: 出库商品
  * @author onlineGenerator
  * @date 2018-05-20 21:43:28
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Entity
@@ -87,7 +76,7 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	private String by4;
 	/**备用5*/
 	private String by5;
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -95,7 +84,7 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	
+
 	@Column(name ="ID",nullable=false,length=36)
 	public String getId(){
 		return this.id;
@@ -108,12 +97,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setId(String id){
 		this.id = id;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  创建人名称
 	 */
-	
+
 	@Column(name ="CREATE_NAME",nullable=true,length=50)
 	public String getCreateName(){
 		return this.createName;
@@ -126,12 +115,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setCreateName(String createName){
 		this.createName = createName;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  创建人登录名称
 	 */
-	
+
 	@Column(name ="CREATE_BY",nullable=true,length=50)
 	public String getCreateBy(){
 		return this.createBy;
@@ -144,12 +133,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setCreateBy(String createBy){
 		this.createBy = createBy;
 	}
-	
+
 	/**
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  创建日期
 	 */
-	
+
 	@Column(name ="CREATE_DATE",nullable=true,length=20)
 	public Date getCreateDate(){
 		return this.createDate;
@@ -162,12 +151,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setCreateDate(Date createDate){
 		this.createDate = createDate;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  更新人名称
 	 */
-	
+
 	@Column(name ="UPDATE_NAME",nullable=true,length=50)
 	public String getUpdateName(){
 		return this.updateName;
@@ -180,12 +169,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setUpdateName(String updateName){
 		this.updateName = updateName;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  更新人登录名称
 	 */
-	
+
 	@Column(name ="UPDATE_BY",nullable=true,length=50)
 	public String getUpdateBy(){
 		return this.updateBy;
@@ -198,12 +187,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setUpdateBy(String updateBy){
 		this.updateBy = updateBy;
 	}
-	
+
 	/**
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  更新日期
 	 */
-	
+
 	@Column(name ="UPDATE_DATE",nullable=true,length=20)
 	public Date getUpdateDate(){
 		return this.updateDate;
@@ -216,12 +205,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setUpdateDate(Date updateDate){
 		this.updateDate = updateDate;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属部门
 	 */
-	
+
 	@Column(name ="SYS_ORG_CODE",nullable=true,length=50)
 	public String getSysOrgCode(){
 		return this.sysOrgCode;
@@ -234,12 +223,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setSysOrgCode(String sysOrgCode){
 		this.sysOrgCode = sysOrgCode;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属公司
 	 */
-	
+
 	@Column(name ="SYS_COMPANY_CODE",nullable=true,length=50)
 	public String getSysCompanyCode(){
 		return this.sysCompanyCode;
@@ -252,12 +241,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setSysCompanyCode(String sysCompanyCode){
 		this.sysCompanyCode = sysCompanyCode;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  流程状态
 	 */
-	
+
 	@Column(name ="BPM_STATUS",nullable=true,length=32)
 	public String getBpmStatus(){
 		return this.bpmStatus;
@@ -270,12 +259,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setBpmStatus(String bpmStatus){
 		this.bpmStatus = bpmStatus;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  外键
 	 */
-	
+
 	@Column(name ="WZCK_HID",nullable=true,length=32)
 	public String getWzckHid(){
 		return this.wzckHid;
@@ -288,12 +277,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setWzckHid(String wzckHid){
 		this.wzckHid = wzckHid;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  物料编码
 	 */
-	
+
 	@Column(name ="MAT_CODE",nullable=true,length=32)
 	public String getMatCode(){
 		return this.matCode;
@@ -306,12 +295,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatCode(String matCode){
 		this.matCode = matCode;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  物料名称
 	 */
-	
+
 	@Column(name ="MAT_NAME",nullable=true,length=32)
 	public String getMatName(){
 		return this.matName;
@@ -324,12 +313,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatName(String matName){
 		this.matName = matName;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  数量
 	 */
-	
+
 	@Column(name ="MAT_QTY",nullable=true,length=32)
 	public String getMatQty(){
 		return this.matQty;
@@ -342,12 +331,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatQty(String matQty){
 		this.matQty = matQty;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  单位
 	 */
-	
+
 	@Column(name ="MAT_UNIT",nullable=true,length=32)
 	public String getMatUnit(){
 		return this.matUnit;
@@ -360,12 +349,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatUnit(String matUnit){
 		this.matUnit = matUnit;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  仓库
 	 */
-	
+
 	@Column(name ="MAT_LOCATION",nullable=true,length=32)
 	public String getMatLocation(){
 		return this.matLocation;
@@ -378,12 +367,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatLocation(String matLocation){
 		this.matLocation = matLocation;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  批次
 	 */
-	
+
 	@Column(name ="MAT_BATCH",nullable=true,length=32)
 	public String getMatBatch(){
 		return this.matBatch;
@@ -396,12 +385,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatBatch(String matBatch){
 		this.matBatch = matBatch;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  单价
 	 */
-	
+
 	@Column(name ="MAT_PRICE",nullable=true,length=32)
 	public String getMatPrice(){
 		return this.matPrice;
@@ -414,12 +403,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatPrice(String matPrice){
 		this.matPrice = matPrice;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  总价值
 	 */
-	
+
 	@Column(name ="MAT_AMOUNT",nullable=true,length=32)
 	public String getMatAmount(){
 		return this.matAmount;
@@ -432,12 +421,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setMatAmount(String matAmount){
 		this.matAmount = matAmount;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备注
 	 */
-	
+
 	@Column(name ="ITEM_REMARK",nullable=true,length=232)
 	public String getItemRemark(){
 		return this.itemRemark;
@@ -450,12 +439,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setItemRemark(String itemRemark){
 		this.itemRemark = itemRemark;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用1
 	 */
-	
+
 	@Column(name ="BY1",nullable=true,length=32)
 	public String getBy1(){
 		return this.by1;
@@ -468,12 +457,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setBy1(String by1){
 		this.by1 = by1;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用2
 	 */
-	
+
 	@Column(name ="BY2",nullable=true,length=32)
 	public String getBy2(){
 		return this.by2;
@@ -486,12 +475,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setBy2(String by2){
 		this.by2 = by2;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用3
 	 */
-	
+
 	@Column(name ="BY3",nullable=true,length=32)
 	public String getBy3(){
 		return this.by3;
@@ -504,12 +493,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setBy3(String by3){
 		this.by3 = by3;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用4
 	 */
-	
+
 	@Column(name ="BY4",nullable=true,length=32)
 	public String getBy4(){
 		return this.by4;
@@ -522,12 +511,12 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setBy4(String by4){
 		this.by4 = by4;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用5
 	 */
-	
+
 	@Column(name ="BY5",nullable=true,length=32)
 	public String getBy5(){
 		return this.by5;
@@ -540,5 +529,5 @@ public class TWzCkItemEntity implements java.io.Serializable {
 	public void setBy5(String by5){
 		this.by5 = by5;
 	}
-	
+
 }

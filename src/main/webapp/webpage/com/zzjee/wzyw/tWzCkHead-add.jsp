@@ -43,32 +43,37 @@
   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" tiptype="1" beforeSubmit="doAddcheck()" action="tWzCkHeadController.do?doAdd" >
 					<input id="id" name="id" type="hidden" value="${tWzCkHeadPage.id }"/>
 	<table cellpadding="0" cellspacing="1" class="formtable">
-		<%--<tr>--%>
-			<%--<td align="right">--%>
-				<%--<label class="Validform_label">领用部门:</label>--%>
-			<%--</td>--%>
-			<%--<td class="value">--%>
-		     	 <%--<input id="orgCode" name="orgCode" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />--%>
-				<%--<span class="Validform_checktip"></span>--%>
-				<%--<label class="Validform_label" style="display: none;">领用部门</label>--%>
-			<%--</td>--%>
-			<%--<td align="right">--%>
-				<%--<label class="Validform_label">领用部门名称:</label>--%>
-			<%--</td>--%>
-			<%--<td class="value">--%>
-		     	 <%--<input id="orgName" name="orgName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />--%>
-				<%--<span class="Validform_checktip"></span>--%>
-				<%--<label class="Validform_label" style="display: none;">领用部门名称</label>--%>
-			<%--</td>--%>
-		<%--</tr>--%>
 		<tr>
+			<td align="right">
+				<label class="Validform_label">出库类别:</label>
+			</td>
+			<td class="value">
+				<t:dictSelect field="by1" type="radio"  defaultVal="领料出库" typeGroupCode="wz_cklb"    hasLabel="false"  title="出库类别" ></t:dictSelect>
+				<span class="Validform_checktip"></span>
+			</td>
+			<td align="right">
+				<label class="Validform_label">业务类型 :</label>
+			</td>
+			<td class="value">
+				<t:dictSelect field="by2" type="radio"  defaultVal="出库"  typeGroupCode="wz_ywlx"    hasLabel="false"  title="业务类型" ></t:dictSelect>
+				<span class="Validform_checktip"></span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				<label class="Validform_label">再利用程度 :</label>
+			</td>
+			<td>
+			<t:dictSelect field="by3" type="radio"  defaultVal="正常出库"  typeGroupCode="wz_zlycd"    hasLabel="false"  title="再利用程度" ></t:dictSelect>
+				<span class="Validform_checktip"></span>
+			</td>
+
             <td align="right">
                 <label class="Validform_label">手工审批:</label>
             </td>
             <td class="value">
                 <t:dictSelect field="ckSgsp" type="radio"   typeGroupCode="sf_yn"  defaultVal="N" hasLabel="false"  title="手工审批" ></t:dictSelect>
                 <span class="Validform_checktip"></span>
-                <label class="Validform_label" style="display: none;">手工审批</label>
             </td>
 			<%--<td align="right">--%>
 				<%--<label class="Validform_label">领用人:</label>--%>
@@ -78,33 +83,33 @@
 				<%--<span class="Validform_checktip"></span>--%>
 				<%--<label class="Validform_label" style="display: none;">领用人</label>--%>
 			<%--</td>--%>
-			<td align="right">
-				<label class="Validform_label">领用人名字:</label>
-			</td>
-			<td class="value">
-				<t:userSelect  title="用户名称"   selectedNamesInputId="ckName" selectedIdsInputId="ckUsername" windowWidth="1000px" windowHeight="600px"></t:userSelect>
-
-				<%--<input id="ckName" name="ckName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />--%>
-				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">领用人名字</label>
-			</td>
 		</tr>
 		<tr>
+			<td align="right">
+				<label class="Validform_label">领用人(${usernametext}):</label>
+			</td>
+			<td class="value">
+				<%--<t:userSelect  userNamesDefalutVal='${username}'  title="用户名称"   selectedNamesInputId="ckName" selectedIdsInputId="ckUsername" readonly="readonly"  windowWidth="1000px"  windowHeight="600px"></t:userSelect>--%>
+
+				<input id="ckUsername" name="ckUsername" type="text" value='${username}' readonly="readonly" style="width: 150px" class="inputxt"  ignore="ignore" />不可更改
+				<span class="Validform_checktip"></span>
+			</td>
+
 			<td align="right">
 				<label class="Validform_label">单据日期:</label>
 			</td>
 			<td class="value">
 					  <input id="docDate" name="docDate" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore"  />
 				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">单据日期</label>
 			</td>
+		</tr>
+		<tr>
 			<td align="right">
 				<label class="Validform_label">出库备注:</label>
 			</td>
-			<td class="value">
+			<td class="value" colspan="3">
 		     	 <input id="ckRemark" name="ckRemark" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
 				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">出库备注</label>
 			</td>
 		</tr>
 		<tr>
@@ -118,13 +123,13 @@
 				<%--<label class="Validform_label" style="display: none;">附件</label>--%>
 			<%--</td>--%>
 		</tr>
-	
+
 	</table>
 			<div style="width: auto;height: 200px;">
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
 				<div style="width:800px;height:1px;"></div>
 				<t:tabs id="tt" iframe="false" tabPosition="top" fit="false">
-				 <t:tab href="tWzCkHeadController.do?tWzCkItemList&id=${tWzCkHeadPage.id}" icon="icon-search" title="出库商品" id="tWzCkItem"></t:tab>
+				 <t:tab href="tWzCkHeadController.do?tWzCkItemList&id=${tWzCkHeadPage.id}" icon="icon-search" title="出库项目" id="tWzCkItem"></t:tab>
 				</t:tabs>
 			</div>
 			</t:formvalid>
@@ -139,7 +144,7 @@
 					  <label class="Validform_label" style="display: none;">物料编码</label>
 				  </td>
 				  <td align="left">
-					  	<input name="tWzCkItemList[#index#].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;"  onchange="checkstock('tWzCkItemList[#index#].matName')"		datatype="*" ignore="ignore" />
+					  	<input name="tWzCkItemList[#index#].matName" maxlength="32" type="text" class="inputxt"  style="width:120px;"   		datatype="*" ignore="ignore" />
 					  <label class="Validform_label" style="display: none;">物料名称</label>
 				  </td>
 				  <td align="left">
@@ -167,8 +172,8 @@
 					  <label class="Validform_label" style="display: none;">备注</label>
 				  </td>
 				<td align="left">
-					<input name="tWzCkItemList[#index#].by1" maxlength="232" type="text" class="inputxt"  style="width:120px;"  ignore="ignore" />
-					<label class="Validform_label" style="display: none;">备注2</label>
+					<input name="tWzCkItemList[#index#].matAmount" maxlength="232" type="text" class="inputxt"  style="width:120px;"  ignore="ignore" />
+					<label class="Validform_label" style="display: none;">总价</label>
 				</td>
 				<td align="left">
 					<input name="tWzCkItemList[#index#].by2" maxlength="232" type="text" class="inputxt"  style="width:120px;"  ignore="ignore" />
@@ -179,4 +184,3 @@
 		</table>
  </body>
  <script src = "webpage/com/zzjee/wzyw/tWzCkHead.js"></script>
-	

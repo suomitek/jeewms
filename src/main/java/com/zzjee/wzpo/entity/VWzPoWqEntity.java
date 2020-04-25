@@ -1,29 +1,17 @@
 package com.zzjee.wzpo.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.lang.String;
-import java.lang.Double;
-import java.lang.Integer;
-import java.math.BigDecimal;
-import javax.xml.soap.Text;
-import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
-/**   
+import javax.persistence.*;
+import java.util.Date;
+
+/**
  * @Title: Entity
  * @Description: v_wz_po_wq
  * @author onlineGenerator
  * @date 2018-05-21 15:57:04
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Entity
@@ -32,6 +20,18 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class VWzPoWqEntity implements java.io.Serializable {
 	/**id*/
 	private String id;
+	/**供应商编码*/
+	@Excel(name="供应商编码",width=15)
+	private String vendorCode;
+	/**供应商名称*/
+	@Excel(name="供应商名称",width=15)
+	private String vendorName;
+	/**采购订单日期*/
+	@Excel(name="采购订单日期",width=15,format = "yyyy-MM-dd")
+	private Date docDate;
+	/**采购订单备注*/
+	@Excel(name="采购订单备注",width=15)
+	private String poRemark;
 	/**物料编码*/
 	@Excel(name="物料编码",width=15)
 	private String matCode;
@@ -228,4 +228,81 @@ public class VWzPoWqEntity implements java.io.Serializable {
 		this.matQtyWq1 = matQtyWq1;
 	}
 
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  供应商编码
+	 */
+
+	@Column(name ="VENDOR_CODE",nullable=true,length=32)
+	public String getVendorCode(){
+		return this.vendorCode;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  供应商编码
+	 */
+	public void setVendorCode(String vendorCode){
+		this.vendorCode = vendorCode;
+	}
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  供应商名称
+	 */
+
+	@Column(name ="VENDOR_NAME",nullable=true,length=32)
+	public String getVendorName(){
+		return this.vendorName;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  供应商名称
+	 */
+	public void setVendorName(String vendorName){
+		this.vendorName = vendorName;
+	}
+
+	/**
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  采购订单日期
+	 */
+
+	@Column(name ="DOC_DATE",nullable=true,length=32)
+	public Date getDocDate(){
+		return this.docDate;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  采购订单日期
+	 */
+	public void setDocDate(Date docDate){
+		this.docDate = docDate;
+	}
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  采购订单备注
+	 */
+
+	@Column(name ="PO_REMARK",nullable=true,length=232)
+	public String getPoRemark(){
+		return this.poRemark;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  采购订单备注
+	 */
+	public void setPoRemark(String poRemark){
+		this.poRemark = poRemark;
+	}
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  备用1
+	 */
 }

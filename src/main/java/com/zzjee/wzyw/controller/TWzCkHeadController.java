@@ -1,86 +1,80 @@
 package com.zzjee.wzyw.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.zzjee.md.entity.MvGoodsEntity;
 import com.zzjee.util.ReportUtils;
-import com.zzjee.wzyw.entity.*;
-import com.zzjee.wzyw.service.TWzCkHeadServiceI;
+import com.zzjee.wm.entity.WmOmNoticeHEntity;
+import com.zzjee.wm.entity.WmOmNoticeIEntity;
+import com.zzjee.wm.service.WmOmNoticeHServiceI;
+import com.zzjee.wmutil.wmUtil;
+import com.zzjee.wz.entity.TWzMaterialEntity;
+import com.zzjee.wzrepair.entity.TWzRepairEntity;
+import com.zzjee.wzrepair.service.TWzRepairServiceI;
+import com.zzjee.wzyw.entity.TWzCkHeadEntity;
+import com.zzjee.wzyw.entity.TWzCkItemDto;
+import com.zzjee.wzyw.entity.TWzCkItemEntity;
 import com.zzjee.wzyw.page.TWzCkHeadPage;
-
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.SimpleDateFormat;
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.zzjee.wzyw.service.TWzCkHeadServiceI;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
-import org.jeecgframework.core.util.*;
-import org.jeecgframework.web.system.pojo.base.TSUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
+import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.tag.core.easyui.TagUtil;
-import org.jeecgframework.web.system.pojo.base.TSDepart;
-import org.jeecgframework.web.system.service.SystemService;
+import org.jeecgframework.core.util.*;
+import org.jeecgframework.jwt.util.ResponseMessage;
+import org.jeecgframework.jwt.util.Result;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
+import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.web.system.pojo.base.TSUser;
+import org.jeecgframework.web.system.service.SystemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.io.IOException;
-import java.util.Map;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jeecgframework.jwt.util.GsonUtil;
-import org.jeecgframework.jwt.util.ResponseMessage;
-import org.jeecgframework.jwt.util.Result;
-import com.alibaba.fastjson.JSONArray;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.net.URI;
-import org.springframework.http.MediaType;
-import org.springframework.web.util.UriComponentsBuilder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-/**   
+/**
  * @Title: Controller
  * @Description: 物料出库
  * @author onlineGenerator
  * @date 2018-05-20 21:43:29
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Api(value="TWzCkHead",description="物料出库",tags="tWzCkHeadController")
@@ -100,11 +94,14 @@ public class TWzCkHeadController extends BaseController {
 	private Validator validator;
 
 	@Autowired
-	JdbcDao jdbcDao;
-
+    JdbcDao jdbcDao;
+	@Autowired
+	private WmOmNoticeHServiceI wmOmNoticeHService;
+	@Autowired
+	private TWzRepairServiceI tWzRepairService;
 	/**
 	 * 物料出库列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -117,7 +114,7 @@ public class TWzCkHeadController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -161,7 +158,10 @@ public class TWzCkHeadController extends BaseController {
 			if(StringUtil.isNotEmpty(query_docDate_end)){
 				cq.le("docDate", Integer.parseInt(query_docDate_end));
 			}
-			cq.eq("bpmStatus","2");
+			String[] ina = new String[2];
+			ina[0]="2";
+			ina[1]="3";
+			cq.in("bpmStatus",ina);
 //			cq.eq("updateBy",ResourceUtil.getSessionUser().getUserName());
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -175,7 +175,7 @@ public class TWzCkHeadController extends BaseController {
 
 	/**
 	 * 删除物料出库
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -198,12 +198,12 @@ public class TWzCkHeadController extends BaseController {
 
 	/**
 	 * 批量删除物料出库
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
 	@ResponseBody
-	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
+	public AjaxJson doBatchDel(String ids, HttpServletRequest request){
 		AjaxJson j = new AjaxJson();
 		String message = "物料出库删除成功";
 		try{
@@ -211,6 +211,8 @@ public class TWzCkHeadController extends BaseController {
 				TWzCkHeadEntity tWzCkHead = systemService.getEntity(TWzCkHeadEntity.class,
 				Integer.parseInt(id)
 				);
+//				tWzCkHead.setBpmStatus("已删除");
+//				systemService.updateEntitie(tWzCkHead);
 				tWzCkHeadService.delMain(tWzCkHead);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
@@ -231,7 +233,7 @@ public class TWzCkHeadController extends BaseController {
 	 */
 	@RequestMapping(params = "doAddcheck")
 	@ResponseBody
-	public AjaxJson doAddcheck(String mat_code ,String  mat_location,String mat_qty, HttpServletRequest request) {
+	public AjaxJson doAddcheck(String mat_code , String  mat_location, String mat_qty, HttpServletRequest request) {
 		AjaxJson j = new AjaxJson();
 		String message = "库存充足";
 		try{
@@ -264,12 +266,12 @@ public class TWzCkHeadController extends BaseController {
 
 	/**
 	 * 添加物料出库
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(TWzCkHeadEntity tWzCkHead,TWzCkHeadPage tWzCkHeadPage, HttpServletRequest request) {
+	public AjaxJson doAdd(TWzCkHeadEntity tWzCkHead, TWzCkHeadPage tWzCkHeadPage, HttpServletRequest request) {
 		List<TWzCkItemEntity> tWzCkItemList =  tWzCkHeadPage.getTWzCkItemList();
 		AjaxJson j = new AjaxJson();
 		String message = "添加成功";
@@ -281,10 +283,10 @@ public class TWzCkHeadController extends BaseController {
 			}
 
 			try{
-				String[] strs = tWzCkHead.getCkUsername() .split(",");
+//				String[] strs = tWzCkHead.getCkUsername() .split(",");
 				//第一个分号之前的字符串自然就是数组里的第一个
-				String userid = strs[0];
-				TSUser user = systemService.get(TSUser.class,userid);
+				String username = tWzCkHead.getCkUsername();
+				TSUser user =  systemService.findUniqueByProperty(TSUser.class,"userName",username);
 				tWzCkHead.setCkName(user.getRealName());
 				tWzCkHead.setCkUsername(user.getUserName());
 				tWzCkHead.setOrgCode(user.getUserOrgList().get(0).getTsDepart().getOrgCode());
@@ -319,7 +321,7 @@ public class TWzCkHeadController extends BaseController {
 		String hql0 = "from TWzCkItemEntity where 1 = 1 AND wZCK_HID = ? ";
 		String sql = "select c.mat_code,c.mat_name,c.mat_location,h.ck_name,c.mat_qty,c.mat_unit,c.mat_price,(c.mat_qty*c.mat_price) as mat_amount,c.create_date\n" +
 				" from t_wz_ck_item c LEFT JOIN t_wz_ck_head h ON c.wzck_hid = h.id where c.wzck_hid = " + id;
-		List<TWzCkItemDto> tWzCkItemOldList =  jdbcDao.find(sql,TWzCkItemDto.class,null);
+		List<TWzCkItemDto> tWzCkItemOldList =  jdbcDao.find(sql, TWzCkItemDto.class,null);
 		try {
 			StringBuffer sber = new StringBuffer();
 
@@ -337,14 +339,14 @@ public class TWzCkHeadController extends BaseController {
 			sheet.setMargin(HSSFSheet.LeftMargin,0.8);// 页边距（左）
 			sheet.setMargin(HSSFSheet.RightMargin,0.0);// 页边距（右
 			sheet.setColumnWidth(0, 5 * 256);
-			sheet.setColumnWidth(1, 8 * 256);
-			sheet.setColumnWidth(2, 8 * 200);
+			sheet.setColumnWidth(1, 10 * 256);
+			sheet.setColumnWidth(2, 15 * 200);
 			sheet.setColumnWidth(3, 10 * 256);
 			sheet.setColumnWidth(4, 10 * 256);
 			sheet.setColumnWidth(5, 10 * 256);
-			sheet.setColumnWidth(6, 10 * 256);
-			sheet.setColumnWidth(7, 10 * 256);
-			sheet.setColumnWidth(8, 15 * 256);
+			sheet.setColumnWidth(6, 5 * 256);
+			sheet.setColumnWidth(7, 5 * 256);
+			sheet.setColumnWidth(8, 10 * 256);
 			//{ "序号", "物料编码", "物料名称",  "仓库", "领用人",  "数量", "单位", "单价","金额" }
 			// sheet.setColumnWidth(7, 8 * 256);
 			// sheet.setColumnWidth(8, 8 * 256);
@@ -420,19 +422,19 @@ public class TWzCkHeadController extends BaseController {
 			Row rowHead1 = sheet.createRow((short) 2); // 头部第一行
 			rowHead1.setHeight((short) 500);
 			Cell cellHead11 = rowHead1.createCell(0);
-			cellHead11.setCellValue("出库单号：" + id);
+			cellHead11.setCellValue("出库单号：" + id+"                    类型：" + tWzCkHead.getBy2());
 			cellHead11.setCellStyle(cs2);
-			Cell cellHead12 = rowHead1.createCell(4);
+			Cell cellHead12 = rowHead1.createCell(6);
 
-			cellHead12.setCellValue("出库日期：" + DateUtils.date2Str(tWzCkHead.getCreateDate(),DateUtils.date_sdf));
+			cellHead12.setCellValue("出库日期：" + DateUtils.date2Str(tWzCkHead.getCreateDate(), DateUtils.date_sdf));
 			cellHead12.setCellStyle(cs2);
 
 
 			// 合并单元格
 			CellRangeAddress c = new CellRangeAddress(0, 0, 0, 8); // 第一行空白
 			CellRangeAddress c0 = new CellRangeAddress(1, 1, 0, 8);// 第二行标题
-			CellRangeAddress c11 = new CellRangeAddress(2, 2, 0, 3);// 第三行供应商
-			CellRangeAddress c12 = new CellRangeAddress(2, 2, 4, 8);// 第三行单据日期
+			CellRangeAddress c11 = new CellRangeAddress(2, 2, 0, 5);// 第三行供应商
+			CellRangeAddress c12 = new CellRangeAddress(2, 2, 6, 8);// 第三行单据日期
 
 			sheet.addMergedRegion(c);
 			sheet.addMergedRegion(c0);
@@ -446,7 +448,7 @@ public class TWzCkHeadController extends BaseController {
 					"金额" };
 
 			Double totalAmount = 0d;
-			Integer totalNumber = 0;
+			Double totalNumber = 0d;
 
 			for (int i = 0; i < columnNames.length; i++) {
 				Cell cell = rowColumnName.createCell(i);
@@ -497,9 +499,9 @@ public class TWzCkHeadController extends BaseController {
 
 
 				Cell cell6 = rowColumnValue.createCell(5);
-				cell6.setCellValue(entity.getMatQty());
+				cell6.setCellValue(StringUtil.moneyToString(entity.getMatQty(),"#.0000"));
 				cell6.setCellStyle(cs3);
-			    totalNumber = totalNumber + Integer.parseInt(entity.getMatQty());
+			    totalNumber = totalNumber + Double.parseDouble(entity.getMatQty());
 				}catch (Exception e){
 
 				}
@@ -512,14 +514,14 @@ public class TWzCkHeadController extends BaseController {
 				}
 				try {
 					Cell cell8 = rowColumnValue.createCell(7);
-					cell8.setCellValue(entity.getMatPrice());
+					cell8.setCellValue(StringUtil.moneyToString(entity.getMatPrice(),"#.00"));
 					cell8.setCellStyle(cs3);
 				}catch (Exception e){
 
 				}
 				try {
 					Cell cell9 = rowColumnValue.createCell(8);
-					cell9.setCellValue(entity.getMatAmount());
+					cell9.setCellValue(StringUtil.moneyToString(entity.getMatAmount(),"#.00"));
 					cell9.setCellStyle(cs3);
 					totalAmount = totalAmount + Double.parseDouble(entity.getMatAmount());
 				}catch (Exception e){
@@ -534,7 +536,7 @@ public class TWzCkHeadController extends BaseController {
 			cellrow.setCellValue("合计");
 			cellrow.setCellStyle(cs4);
 			Cell cellTotatl2 = rowColumnInfo.createCell(5);
-			cellTotatl2.setCellValue(totalNumber);
+			cellTotatl2.setCellValue(StringUtil.moneyToString(totalNumber,"#.0000"));
 			cellTotatl2.setCellStyle(cs3);
 			Cell cellTotatl3 = rowColumnInfo.createCell(6);
 			cellTotatl3.setCellValue("");
@@ -543,7 +545,7 @@ public class TWzCkHeadController extends BaseController {
 			cellTotatl4.setCellValue("");
 			cellTotatl4.setCellStyle(cs3);
 			Cell cellTotatl5 = rowColumnInfo.createCell(8);
-			cellTotatl5.setCellValue(totalAmount);
+			cellTotatl5.setCellValue(StringUtil.moneyToString(totalAmount,"#.00"));
 			cellTotatl5.setCellStyle(cs3);
 			//合并单元格
 			CellRangeAddress cellTotal = new CellRangeAddress(1 + cellsNum, 1 + cellsNum, 0, 4);
@@ -553,7 +555,7 @@ public class TWzCkHeadController extends BaseController {
 			//底部合计金额大写转为汉字
 			Row rowColumnInfo2 = sheet.createRow((short) 2 + cellsNum); // 列名
 			Cell cellrow2 = rowColumnInfo2.createCell(0);
-			cellrow2.setCellValue("合计金额大写：" + ReportUtils.number2CNMontrayUnit(new BigDecimal(totalAmount)));
+			cellrow2.setCellValue("合计金额大写：" + ReportUtils.number2CNMontrayUnit(new BigDecimal(StringUtil.moneyToString(totalAmount,"#.00"))));
 			cellrow2.setCellStyle(cs4);
 			//合并单元格
 			CellRangeAddress cellAmount = new CellRangeAddress(2 + cellsNum, 2 + cellsNum, 0, 8);
@@ -601,13 +603,91 @@ public class TWzCkHeadController extends BaseController {
 		String message = "审批成功";
 		try{
 			TWzCkHeadEntity tWzCkHead = systemService.get(TWzCkHeadEntity.class,Integer.parseInt(id));
-			tWzCkHead.setBpmStatus("1");String hql0 = "from TWzCkItemEntity where 1 = 1 AND wzck_hid = ? ";
+			tWzCkHead.setBpmStatus("1");
+			String hql0 = "from TWzCkItemEntity where 1 = 1 AND wzck_hid = ? ";
 			List<TWzCkItemEntity> tWzCkItemList = systemService.findHql(hql0,id);
 			for (TWzCkItemEntity tWzCkItemEntity : tWzCkItemList) {
 				tWzCkItemEntity.setBpmStatus("1");
 				systemService.saveOrUpdate(tWzCkItemEntity);
+				TWzRepairEntity tWzRepairEntity = new TWzRepairEntity();
+				tWzRepairEntity.setCkId(tWzCkHead.getId().toString());
+				tWzRepairEntity.setCkItmeId(tWzCkItemEntity.getId());
+				tWzRepairEntity.setMatCode(tWzCkItemEntity.getMatCode());
+				tWzRepairEntity.setMatName(tWzCkItemEntity.getMatName());
+				tWzRepairEntity.setMatLocation(tWzCkItemEntity.getMatLocation());
+				tWzRepairEntity.setMatQty(tWzCkItemEntity.getMatQty());
+				TWzMaterialEntity wz = systemService.findUniqueByProperty(TWzMaterialEntity.class, "matCode", tWzCkItemEntity.getMatCode());
+				tWzRepairEntity.setMatGuige(wz.getMatGuige());
+ 				tWzRepairService.save(tWzRepairEntity);
 			}
 			systemService.saveOrUpdate(tWzCkHead);
+			 String cuscosde = "";
+			 String ckid = tWzCkHead.getId().toString();
+				List<WmOmNoticeHEntity>  wmomh = systemService.findByProperty(WmOmNoticeHEntity.class, "imCusCode", ckid);
+				if(wmomh!=null&&wmomh.size()>0){
+					message="出库通知已生成";
+					j.setMsg(message);
+					return j;
+				}
+
+				List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
+				for (TWzCkItemEntity page : tWzCkItemList) {
+ 						WmOmNoticeIEntity wmi = new WmOmNoticeIEntity();
+						wmi.setGoodsId(page.getMatCode());
+						MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
+								MvGoodsEntity.class, "goodsCode", wmi.getGoodsId());
+						if (mvgoods != null) {
+							wmi.setGoodsName(mvgoods.getGoodsName());
+							wmi.setGoodsUnit(mvgoods.getShlDanWei());
+						}
+						try{
+							wmi.setGoodsQua(page.getMatQty());
+							String[] args=page.getMatQty().split("\\.");
+							wmi.setGoodsQua(args[0]);
+						}catch (Exception e){
+
+						}
+
+//                               wmi.setGoodsPrdData(billResult.getData().get(s).getDetail().get(k).getPdProdmadedate2User());
+						wmi.setOtherId(page.getId());
+//						wmi.setBinId(page.getBinId());
+//						wmi.setBinOm(page.getBinOm());
+						if(StringUtil.isNotEmpty(page.getMatBatch())){
+							try{
+								wmi.setGoodsProData(DateUtils.str2Date(page.getMatBatch(), DateUtils.date_sdf));
+
+							}catch (Exception e){
+
+							}
+						}
+						wmomNoticeIListnew.add(wmi);
+ 				}
+				WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
+//				wmOmNoticeH.setReMember(pageheader.getReMember());
+//				wmOmNoticeH.setReCarno(pageheader.getReCarno());
+//				wmOmNoticeH.setDelvMember(pageheader.getDelvMember());
+//				wmOmNoticeH.setDelvMobile(pageheader.getDelvMobile());
+//				wmOmNoticeH.setDelvData(DateUtils.date2Str()tWzCkHead.getDocDate());
+				wmOmNoticeH.setOrderTypeCode("11");
+				wmOmNoticeH.setCusCode(cuscosde);
+				String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
+				wmOmNoticeH.setOmNoticeId(noticeid);
+				wmOmNoticeH.setOmBeizhu(tWzCkHead.getCkRemark());
+
+				wmOmNoticeH.setImCusCode(ckid);
+				wmOmNoticeHService.addMain(wmOmNoticeH, wmomNoticeIListnew);
+
+
+
+
+
+
+
+
+
+
+
+
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -622,12 +702,12 @@ public class TWzCkHeadController extends BaseController {
 
 	/**
 	 * 更新物料出库
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(TWzCkHeadEntity tWzCkHead,TWzCkHeadPage tWzCkHeadPage, HttpServletRequest request) {
+	public AjaxJson doUpdate(TWzCkHeadEntity tWzCkHead, TWzCkHeadPage tWzCkHeadPage, HttpServletRequest request) {
 		List<TWzCkItemEntity> tWzCkItemList =  tWzCkHeadPage.getTWzCkItemList();
 		AjaxJson j = new AjaxJson();
 		String message = "更新成功";
@@ -658,7 +738,7 @@ public class TWzCkHeadController extends BaseController {
 
 	/**
 	 * 物料出库新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -667,12 +747,16 @@ public class TWzCkHeadController extends BaseController {
 			tWzCkHead = tWzCkHeadService.getEntity(TWzCkHeadEntity.class, tWzCkHead.getId());
 			req.setAttribute("tWzCkHeadPage", tWzCkHead);
 		}
+
+		req.setAttribute("username", ResourceUtil.getSessionUser().getUserName());
+		req.setAttribute("usernametext", ResourceUtil.getSessionUser().getRealName());
+
 		return new ModelAndView("com/zzjee/wzyw/tWzCkHead-add");
 	}
-	
+
 	/**
 	 * 物料出库编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -683,16 +767,16 @@ public class TWzCkHeadController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wzyw/tWzCkHead-update");
 	}
-	
-	
+
+
 	/**
 	 * 加载明细列表[出库商品]
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "tWzCkItemList")
 	public ModelAndView tWzCkItemList(TWzCkHeadEntity tWzCkHead, HttpServletRequest req) {
-	
+
 		//===================================================================================
 		//获取参数
 		Object id0 = tWzCkHead.getId();
@@ -738,7 +822,7 @@ public class TWzCkHeadController extends BaseController {
     * @param response
     */
     @RequestMapping(params = "exportXls")
-    public String exportXls(TWzCkHeadEntity tWzCkHead,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid,ModelMap map) {
+    public String exportXls(TWzCkHeadEntity tWzCkHead, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid, ModelMap map) {
     	CriteriaQuery cq = new CriteriaQuery(TWzCkHeadEntity.class, dataGrid);
     	//查询条件组装器
     	org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzCkHead);
@@ -767,7 +851,7 @@ public class TWzCkHeadController extends BaseController {
         }
         map.put(NormalExcelConstants.FILE_NAME,"物料出库");
         map.put(NormalExcelConstants.CLASS,TWzCkHeadPage.class);
-        map.put(NormalExcelConstants.PARAMS,new ExportParams("物料出库列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+        map.put(NormalExcelConstants.PARAMS,new ExportParams("物料出库列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
             "导出信息"));
         map.put(NormalExcelConstants.DATA_LIST,pageList);
         return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -836,7 +920,7 @@ public class TWzCkHeadController extends BaseController {
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 
- 	
+
  	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="物料出库列表信息",produces="application/json",httpMethod="GET")
@@ -860,7 +944,7 @@ public class TWzCkHeadController extends BaseController {
         }
 		return Result.success(pageList);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="根据ID获取物料出库信息",notes="根据ID获取物料出库信息",httpMethod="GET",produces="application/json")
@@ -881,7 +965,7 @@ public class TWzCkHeadController extends BaseController {
 		}
 		return Result.success(page);
 	}
- 	
+
  	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value="创建物料出库")
@@ -894,7 +978,7 @@ public class TWzCkHeadController extends BaseController {
 
 		//保存
 		List<TWzCkItemEntity> tWzCkItemList =  tWzCkHeadPage.getTWzCkItemList();
-		
+
 		TWzCkHeadEntity tWzCkHead = new TWzCkHeadEntity();
 		try{
 			MyBeanUtils.copyBeanNotNull2Bean(tWzCkHeadPage,tWzCkHead);
@@ -906,7 +990,7 @@ public class TWzCkHeadController extends BaseController {
 
 		return Result.success(tWzCkHead);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value="更新物料出库",notes="更新物料出库")
@@ -919,7 +1003,7 @@ public class TWzCkHeadController extends BaseController {
 
 		//保存
 		List<TWzCkItemEntity> tWzCkItemList =  tWzCkHeadPage.getTWzCkItemList();
-		
+
 		TWzCkHeadEntity tWzCkHead = new TWzCkHeadEntity();
 		try{
 			MyBeanUtils.copyBeanNotNull2Bean(tWzCkHeadPage,tWzCkHead);
@@ -932,7 +1016,7 @@ public class TWzCkHeadController extends BaseController {
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
 		return Result.success();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value="删除物料出库")

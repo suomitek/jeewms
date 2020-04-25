@@ -58,7 +58,7 @@
             备注
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-            备注2
+            总价
         </td>
         <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
             备注3
@@ -80,8 +80,8 @@
             <input name="tWzCkItemList[0].sysCompanyCode" type="hidden"/>
             <input name="tWzCkItemList[0].bpmStatus" type="hidden"/>
             <input name="tWzCkItemList[0].wzckHid" type="hidden"/>
-            <input name="tWzCkItemList[0].matAmount" type="hidden"/>
-            <input name="tWzCkItemList[0].by1" type="hidden"/>
+<%--            <input name="tWzCkItemList[0].matAmount" type="hidden"/>--%>
+<%--            <input name="tWzCkItemList[0].by1" type="hidden"/>--%>
             <input name="tWzCkItemList[0].by2" type="hidden"/>
             <input name="tWzCkItemList[0].by3" type="hidden"/>
             <input name="tWzCkItemList[0].by4" type="hidden"/>
@@ -119,8 +119,8 @@
                 <label class="Validform_label" style="display: none;">备注</label>
             </td>
             <td align="left">
-                <input name="tWzCkItemList[0].by1" maxlength="232" type="text" class="inputxt" readonly="readonly" style="width:120px;"  ignore="ignore" >
-                <label class="Validform_label" style="display: none;">备注2</label>
+                <input name="tWzCkItemList[0].matAmount" maxlength="232" type="text" class="inputxt" readonly="readonly" style="width:120px;"  ignore="ignore" >
+                <label class="Validform_label" style="display: none;">总价</label>
             </td>
             <td align="left">
                 <input name="tWzCkItemList[0].by2" maxlength="232" type="text" class="inputxt" readonly="readonly" style="width:120px;"  ignore="ignore" >
@@ -144,8 +144,8 @@
                 <input name="tWzCkItemList[${stuts.index }].sysCompanyCode" type="hidden" value="${poVal.sysCompanyCode }"/>
                 <input name="tWzCkItemList[${stuts.index }].bpmStatus" type="hidden" value="${poVal.bpmStatus }"/>
                 <input name="tWzCkItemList[${stuts.index }].wzckHid" type="hidden" value="${poVal.wzckHid }"/>
-                <input name="tWzCkItemList[${stuts.index }].matAmount" type="hidden" value="${poVal.matAmount }"/>
-                <input name="tWzCkItemList[${stuts.index }].by1" type="hidden" value="${poVal.by1 }"/>
+<%--                <input name="tWzCkItemList[${stuts.index }].matAmount" type="hidden" value="${poVal.matAmount }"/>--%>
+<%--                <input name="tWzCkItemList[${stuts.index }].by1" type="hidden" value="${poVal.by1 }"/>--%>
                 <input name="tWzCkItemList[${stuts.index }].by2" type="hidden" value="${poVal.by2 }"/>
                 <input name="tWzCkItemList[${stuts.index }].by3" type="hidden" value="${poVal.by3 }"/>
                 <input name="tWzCkItemList[${stuts.index }].by4" type="hidden" value="${poVal.by4 }"/>
@@ -183,8 +183,8 @@
                     <label class="Validform_label" style="display: none;">备注</label>
                 </td>
                 <td align="left">
-                    <input name="tWzCkItemList[${stuts.index }].by1" maxlength="232" type="text" class="inputxt"  style="width:120px;"  readonly="readonly" ignore="ignore"  value="${poVal.by1 }"/>
-                    <label class="Validform_label" style="display: none;">备注2</label>
+                    <input name="tWzCkItemList[${stuts.index }].matAmount" maxlength="232" type="text" class="inputxt"  style="width:120px;"  readonly="readonly" ignore="ignore"  value="${poVal.by1 }"/>
+                    <label class="Validform_label" style="display: none;">总价</label>
                 </td>
                 <td align="left">
                     <input name="tWzCkItemList[${stuts.index }].by2" maxlength="232" type="text" class="inputxt"  style="width:120px;"  readonly="readonly" ignore="ignore"  value="${poVal.by2 }"/>

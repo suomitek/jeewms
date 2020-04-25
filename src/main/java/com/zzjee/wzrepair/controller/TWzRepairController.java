@@ -1,12 +1,7 @@
-package com.zzjee.wz.controller;
+package com.zzjee.wzrepair.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.zzjee.wz.entity.TWzLocationEntity;
-import com.zzjee.wz.service.TWzLocationServiceI;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
+import com.zzjee.wzrepair.entity.TWzRepairEntity;
+import com.zzjee.wzrepair.service.TWzRepairServiceI;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -19,8 +14,6 @@ import org.jeecgframework.core.util.ExceptionUtil;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.StringUtil;
-import org.jeecgframework.jwt.util.ResponseMessage;
-import org.jeecgframework.jwt.util.Result;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
@@ -28,8 +21,10 @@ import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,23 +46,22 @@ import java.util.Set;
 
 /**
  * @Title: Controller
- * @Description: 仓库
+ * @Description: 交旧领新登记表
  * @author onlineGenerator
- * @date 2018-05-20 21:41:04
+ * @date 2020-02-24 11:36:29
  * @version V1.0
  *
  */
-@Api(value="TWzLocation",description="库存地点",tags="tWzLocationController")
 @Controller
-@RequestMapping("/tWzLocationController")
-public class TWzLocationController extends BaseController {
+@RequestMapping("/tWzRepairController")
+public class TWzRepairController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(TWzLocationController.class);
+	private static final Logger logger = Logger.getLogger(com.zzjee.wzrepair.controller.TWzRepairController.class);
 
 	@Autowired
-	private TWzLocationServiceI tWzLocationService;
+	private TWzRepairServiceI tWzRepairService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -75,13 +70,13 @@ public class TWzLocationController extends BaseController {
 
 
 	/**
-	 * 仓库列表 页面跳转
+	 * 交旧领新登记表列表 页面跳转
 	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/zzjee/wz/tWzLocationList");
+		return new ModelAndView("com/zzjee/wzrepair/tWzRepairList");
 	}
 
 	/**
@@ -94,38 +89,38 @@ public class TWzLocationController extends BaseController {
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(TWzLocationEntity tWzLocation,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(TWzLocationEntity.class, dataGrid);
+	public void datagrid(TWzRepairEntity tWzRepair,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(TWzRepairEntity.class, dataGrid);
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzLocation, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzRepair, request.getParameterMap());
 		try{
 		//自定义追加查询条件
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.tWzLocationService.getDataGridReturn(cq, true);
+		this.tWzRepairService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
 
 	/**
-	 * 删除仓库
+	 * 删除交旧领新登记表
 	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
 	@ResponseBody
-	public AjaxJson doDel(TWzLocationEntity tWzLocation, HttpServletRequest request) {
+	public AjaxJson doDel(TWzRepairEntity tWzRepair, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		tWzLocation = systemService.getEntity(TWzLocationEntity.class, tWzLocation.getId());
-		message = "仓库删除成功";
+		tWzRepair = systemService.getEntity(TWzRepairEntity.class, tWzRepair.getId());
+		message = "交旧领新登记表删除成功";
 		try{
-			tWzLocationService.delete(tWzLocation);
+			tWzRepairService.delete(tWzRepair);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "仓库删除失败";
+			message = "交旧领新登记表删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -133,7 +128,7 @@ public class TWzLocationController extends BaseController {
 	}
 
 	/**
-	 * 批量删除仓库
+	 * 批量删除交旧领新登记表
 	 *
 	 * @return
 	 */
@@ -142,18 +137,18 @@ public class TWzLocationController extends BaseController {
 	public AjaxJson doBatchDel(String ids, HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "仓库删除成功";
+		message = "交旧领新登记表删除成功";
 		try{
 			for(String id:ids.split(",")){
-				TWzLocationEntity tWzLocation = systemService.getEntity(TWzLocationEntity.class,
-				Integer.parseInt(id)
+				TWzRepairEntity tWzRepair = systemService.getEntity(TWzRepairEntity.class,
+				id
 				);
-				tWzLocationService.delete(tWzLocation);
+				tWzRepairService.delete(tWzRepair);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "仓库删除失败";
+			message = "交旧领新登记表删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -162,22 +157,23 @@ public class TWzLocationController extends BaseController {
 
 
 	/**
-	 * 添加仓库
+	 * 添加交旧领新登记表
 	 *
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(TWzLocationEntity tWzLocation, HttpServletRequest request) {
+	public AjaxJson doAdd(TWzRepairEntity tWzRepair, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "仓库添加成功";
+		message = "交旧领新登记表添加成功";
 		try{
-			tWzLocationService.save(tWzLocation);
+			tWzRepairService.save(tWzRepair);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "仓库添加失败";
+			message = "交旧领新登记表添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -185,24 +181,25 @@ public class TWzLocationController extends BaseController {
 	}
 
 	/**
-	 * 更新仓库
+	 * 更新交旧领新登记表
 	 *
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(TWzLocationEntity tWzLocation, HttpServletRequest request) {
+	public AjaxJson doUpdate(TWzRepairEntity tWzRepair, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "仓库更新成功";
-		TWzLocationEntity t = tWzLocationService.get(TWzLocationEntity.class, tWzLocation.getId());
+		message = "交旧领新登记表更新成功";
+		TWzRepairEntity t = tWzRepairService.get(TWzRepairEntity.class, tWzRepair.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(tWzLocation, t);
-			tWzLocationService.saveOrUpdate(t);
+			MyBeanUtils.copyBeanNotNull2Bean(tWzRepair, t);
+			tWzRepairService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "仓库更新失败";
+			message = "交旧领新登记表更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -211,30 +208,30 @@ public class TWzLocationController extends BaseController {
 
 
 	/**
-	 * 仓库新增页面跳转
+	 * 交旧领新登记表新增页面跳转
 	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(TWzLocationEntity tWzLocation, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(tWzLocation.getId())) {
-			tWzLocation = tWzLocationService.getEntity(TWzLocationEntity.class, tWzLocation.getId());
-			req.setAttribute("tWzLocationPage", tWzLocation);
+	public ModelAndView goAdd(TWzRepairEntity tWzRepair, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(tWzRepair.getId())) {
+			tWzRepair = tWzRepairService.getEntity(TWzRepairEntity.class, tWzRepair.getId());
+			req.setAttribute("tWzRepairPage", tWzRepair);
 		}
-		return new ModelAndView("com/zzjee/wz/tWzLocation-add");
+		return new ModelAndView("com/zzjee/wzrepair/tWzRepair-add");
 	}
 	/**
-	 * 仓库编辑页面跳转
+	 * 交旧领新登记表编辑页面跳转
 	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(TWzLocationEntity tWzLocation, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(tWzLocation.getId())) {
-			tWzLocation = tWzLocationService.getEntity(TWzLocationEntity.class, tWzLocation.getId());
-			req.setAttribute("tWzLocationPage", tWzLocation);
+	public ModelAndView goUpdate(TWzRepairEntity tWzRepair, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(tWzRepair.getId())) {
+			tWzRepair = tWzRepairService.getEntity(TWzRepairEntity.class, tWzRepair.getId());
+			req.setAttribute("tWzRepairPage", tWzRepair);
 		}
-		return new ModelAndView("com/zzjee/wz/tWzLocation-update");
+		return new ModelAndView("com/zzjee/wzrepair/tWzRepair-update");
 	}
 
 	/**
@@ -244,7 +241,7 @@ public class TWzLocationController extends BaseController {
 	 */
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","tWzLocationController");
+		req.setAttribute("controller_name","tWzRepairController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 
@@ -255,16 +252,16 @@ public class TWzLocationController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(TWzLocationEntity tWzLocation, HttpServletRequest request, HttpServletResponse response
+	public String exportXls(TWzRepairEntity tWzRepair, HttpServletRequest request, HttpServletResponse response
 			, DataGrid dataGrid, ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(TWzLocationEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzLocation, request.getParameterMap());
-		List<TWzLocationEntity> tWzLocations = this.tWzLocationService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"仓库");
-		modelMap.put(NormalExcelConstants.CLASS,TWzLocationEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("仓库列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
+		CriteriaQuery cq = new CriteriaQuery(TWzRepairEntity.class, dataGrid);
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzRepair, request.getParameterMap());
+		List<TWzRepairEntity> tWzRepairs = this.tWzRepairService.getListByCriteriaQuery(cq,false);
+		modelMap.put(NormalExcelConstants.FILE_NAME,"交旧领新登记表");
+		modelMap.put(NormalExcelConstants.CLASS,TWzRepairEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("交旧领新登记表列表", "导出人:"+ ResourceUtil.getSessionUserName().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,tWzLocations);
+		modelMap.put(NormalExcelConstants.DATA_LIST,tWzRepairs);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
@@ -274,11 +271,11 @@ public class TWzLocationController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(TWzLocationEntity tWzLocation, HttpServletRequest request, HttpServletResponse response
+	public String exportXlsByT(TWzRepairEntity tWzRepair, HttpServletRequest request, HttpServletResponse response
 			, DataGrid dataGrid, ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"仓库");
-    	modelMap.put(NormalExcelConstants.CLASS,TWzLocationEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("仓库列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"交旧领新登记表");
+    	modelMap.put(NormalExcelConstants.CLASS,TWzRepairEntity.class);
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("交旧领新登记表列表", "导出人:"+ ResourceUtil.getSessionUserName().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -299,9 +296,9 @@ public class TWzLocationController extends BaseController {
 			params.setHeadRows(1);
 			params.setNeedSave(true);
 			try {
-				List<TWzLocationEntity> listTWzLocationEntitys = ExcelImportUtil.importExcel(file.getInputStream(),TWzLocationEntity.class,params);
-				for (TWzLocationEntity tWzLocation : listTWzLocationEntitys) {
-					tWzLocationService.save(tWzLocation);
+				List<TWzRepairEntity> listTWzRepairEntitys = ExcelImportUtil.importExcel(file.getInputStream(),TWzRepairEntity.class,params);
+				for (TWzRepairEntity tWzRepair : listTWzRepairEntitys) {
+					tWzRepairService.save(tWzRepair);
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -320,81 +317,69 @@ public class TWzLocationController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="仓库列表信息",produces="application/json",httpMethod="GET")
-	public ResponseMessage<List<TWzLocationEntity>> list() {
-		List<TWzLocationEntity> listTWzLocations=tWzLocationService.getList(TWzLocationEntity.class);
-		return Result.success(listTWzLocations);
+	public List<TWzRepairEntity> list() {
+		List<TWzRepairEntity> listTWzRepairs=tWzRepairService.getList(TWzRepairEntity.class);
+		return listTWzRepairs;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取仓库信息",notes="根据ID获取仓库信息",httpMethod="GET",produces="application/json")
-	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
-		TWzLocationEntity task = tWzLocationService.get(TWzLocationEntity.class, id);
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
+		TWzRepairEntity task = tWzRepairService.get(TWzRepairEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取仓库信息为空");
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
-		return Result.success(task);
+		return new ResponseEntity(task, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建仓库")
-	public ResponseMessage<?> create(@ApiParam(name="仓库对象")@RequestBody TWzLocationEntity tWzLocation, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<?> create(@RequestBody TWzRepairEntity tWzRepair, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<TWzLocationEntity>> failures = validator.validate(tWzLocation);
+		Set<ConstraintViolation<TWzRepairEntity>> failures = validator.validate(tWzRepair);
 		if (!failures.isEmpty()) {
-			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
+			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
 		}
 
 		//保存
 		try{
-			tWzLocationService.save(tWzLocation);
+			tWzRepairService.save(tWzRepair);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("仓库信息保存失败");
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		return Result.success(tWzLocation);
+		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
+		String id = tWzRepair.getId();
+		URI uri = uriBuilder.path("/rest/tWzRepairController/" + id).build().toUri();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(uri);
+
+		return new ResponseEntity(headers, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	@ApiOperation(value="更新仓库",notes="更新仓库")
-	public ResponseMessage<?> update(@ApiParam(name="仓库对象")@RequestBody TWzLocationEntity tWzLocation) {
+	public ResponseEntity<?> update(@RequestBody TWzRepairEntity tWzRepair) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<TWzLocationEntity>> failures = validator.validate(tWzLocation);
+		Set<ConstraintViolation<TWzRepairEntity>> failures = validator.validate(tWzRepair);
 		if (!failures.isEmpty()) {
-			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
+			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
 		}
 
 		//保存
 		try{
-			tWzLocationService.saveOrUpdate(tWzLocation);
+			tWzRepairService.saveOrUpdate(tWzRepair);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("更新仓库信息失败");
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return Result.success("更新仓库信息成功");
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除仓库")
-	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
-		logger.info("delete[{}]" + id);
-		// 验证
-		if (StringUtils.isEmpty(id)) {
-			return Result.error("ID不能为空");
-		}
-		try {
-			tWzLocationService.deleteEntityById(TWzLocationEntity.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error("仓库删除失败");
-		}
-
-		return Result.success();
+	public void delete(@PathVariable("id") String id) {
+		tWzRepairService.deleteEntityById(TWzRepairEntity.class, id);
 	}
 }

@@ -1,30 +1,33 @@
-package com.zzjee.wz.entity;
+package com.zzjee.wzrepair.entity;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * @Title: Entity
- * @Description: 物料
+ * @Description: 交旧领新登记表
  * @author onlineGenerator
- * @date 2018-05-20 21:40:03
+ * @date 2020-02-24 11:36:29
  * @version V1.0
  *
  */
 @Entity
-@Table(name = "t_wz_material", schema = "")
+@Table(name = "t_wz_repair", schema = "")
 @SuppressWarnings("serial")
-public class TWzMaterialEntity implements java.io.Serializable {
+public class TWzRepairEntity implements java.io.Serializable {
 	/**主键*/
-	private Integer id;
+	private String id;
 	/**创建人名称*/
+	@Excel(name="创建人名称")
 	private String createName;
 	/**创建人登录名称*/
+	@Excel(name="创建人登录名称")
 	private String createBy;
 	/**创建日期*/
+	@Excel(name="创建日期",format = "yyyy-MM-dd")
 	private Date createDate;
 	/**更新人名称*/
 	private String updateName;
@@ -39,68 +42,71 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	/**流程状态*/
 	private String bpmStatus;
 	/**物料编码*/
-	@Excel(name="物料编码",width=15)
+	@Excel(name="物料编码")
 	private String matCode;
 	/**物料名称*/
-	@Excel(name="物料名称",width=15)
+	@Excel(name="物料名称")
 	private String matName;
-	/**单位*/
-	@Excel(name="单位",width=15,dictTable ="ba_unit",dicCode ="UNIT_CODE",dicText ="UNIT_ZH_NAME")
-	private String matUnit;
-	/**规格*/
-	@Excel(name="规格",width=15)
-	private String matGuige;
-	/**等级*/
-	@Excel(name="等级",width=15)
-	private String matClass;
-	/**标准价元*/
-	@Excel(name="标准价元",width=15)
-	private BigDecimal matPrice;
-	/**安全库存*/
-	@Excel(name="安全库存",width=15)
-	private Integer matAqkc;
-	/**仓库*/
-	@Excel(name="仓库",width=15,dictTable ="t_wz_location",dicCode ="mat_location",dicText ="mat_location")
+	/**库存地点*/
+	@Excel(name="库存地点")
 	private String matLocation;
-	/**备用1*/
-	private String by1;
-	/**备用2*/
-	private String by2;
-	/**备用3*/
-	private String by3;
-	/**备用4*/
-	private String by4;
-	/**备用5*/
-	private String by5;
-	private String by6;
-	private String by7;
-	private String by8;
-	private String by9;
+	/**数量*/
+	@Excel(name="数量")
+	private String matQty;
+	/**规格*/
+	@Excel(name="规格")
+	private String matGuige;
+	/**单位*/
+	@Excel(name="单位")
+	private String matUnit;
+	/**原价值*/
+	@Excel(name="原价值")
+	private String matOriamount;
+	/**现价值*/
+	@Excel(name="现价值")
+	private String matNowamount;
+	/**修复时间*/
+	@Excel(name="修复时间")
+	private String repairDate;
+	/**修复人*/
+	@Excel(name="修复人")
+	private String repairUser;
+	/**验收人*/
+	@Excel(name="验收人")
+	private String qmUser;
+	/**修复备注*/
+	@Excel(name="修复备注")
+	private String repairRemark;
+	/**出库单号*/
+	@Excel(name="出库单号")
+	private String ckId;
+	/**出库项目*/
+	@Excel(name="出库项目")
+	private String ckItmeId;
 
 	/**
-	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  主键
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  主键
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-
-	@Column(name ="ID",nullable=false,length=20)
-	public Integer getId(){
+	@GeneratedValue(generator = "paymentableGenerator")
+	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
+	@Column(name ="ID",nullable=false,length=36)
+	public String getId(){
 		return this.id;
 	}
 
 	/**
-	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  主键
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  主键
 	 */
-	public void setId(Integer id){
+	public void setId(String id){
 		this.id = id;
 	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  创建人名称
 	 */
-
 	@Column(name ="CREATE_NAME",nullable=true,length=50)
 	public String getCreateName(){
 		return this.createName;
@@ -117,7 +123,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  创建人登录名称
 	 */
-
 	@Column(name ="CREATE_BY",nullable=true,length=50)
 	public String getCreateBy(){
 		return this.createBy;
@@ -134,7 +139,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  创建日期
 	 */
-
 	@Column(name ="CREATE_DATE",nullable=true,length=20)
 	public Date getCreateDate(){
 		return this.createDate;
@@ -151,7 +155,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  更新人名称
 	 */
-
 	@Column(name ="UPDATE_NAME",nullable=true,length=50)
 	public String getUpdateName(){
 		return this.updateName;
@@ -168,7 +171,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  更新人登录名称
 	 */
-
 	@Column(name ="UPDATE_BY",nullable=true,length=50)
 	public String getUpdateBy(){
 		return this.updateBy;
@@ -185,7 +187,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  更新日期
 	 */
-
 	@Column(name ="UPDATE_DATE",nullable=true,length=20)
 	public Date getUpdateDate(){
 		return this.updateDate;
@@ -202,7 +203,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属部门
 	 */
-
 	@Column(name ="SYS_ORG_CODE",nullable=true,length=50)
 	public String getSysOrgCode(){
 		return this.sysOrgCode;
@@ -219,7 +219,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属公司
 	 */
-
 	@Column(name ="SYS_COMPANY_CODE",nullable=true,length=50)
 	public String getSysCompanyCode(){
 		return this.sysCompanyCode;
@@ -236,7 +235,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  流程状态
 	 */
-
 	@Column(name ="BPM_STATUS",nullable=true,length=32)
 	public String getBpmStatus(){
 		return this.bpmStatus;
@@ -253,7 +251,6 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  物料编码
 	 */
-
 	@Column(name ="MAT_CODE",nullable=true,length=32)
 	public String getMatCode(){
 		return this.matCode;
@@ -270,8 +267,7 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  物料名称
 	 */
-
-	@Column(name ="MAT_NAME",nullable=true,length=132)
+	@Column(name ="MAT_NAME",nullable=true,length=64)
 	public String getMatName(){
 		return this.matName;
 	}
@@ -285,26 +281,40 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  单位
+	 *@return: java.lang.String  库存地点
 	 */
-
-	@Column(name ="MAT_UNIT",nullable=true,length=32)
-	public String getMatUnit(){
-		return this.matUnit;
+	@Column(name ="MAT_LOCATION",nullable=true,length=32)
+	public String getMatLocation(){
+		return this.matLocation;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  单位
+	 *@param: java.lang.String  库存地点
 	 */
-	public void setMatUnit(String matUnit){
-		this.matUnit = matUnit;
+	public void setMatLocation(String matLocation){
+		this.matLocation = matLocation;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  数量
+	 */
+	@Column(name ="MAT_QTY",nullable=true,length=32)
+	public String getMatQty(){
+		return this.matQty;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  数量
+	 */
+	public void setMatQty(String matQty){
+		this.matQty = matQty;
 	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  规格
 	 */
-
 	@Column(name ="MAT_GUIGE",nullable=true,length=32)
 	public String getMatGuige(){
 		return this.matGuige;
@@ -319,191 +329,146 @@ public class TWzMaterialEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  等级
+	 *@return: java.lang.String  单位
 	 */
-
-	@Column(name ="MAT_CLASS",nullable=true,length=32)
-	public String getMatClass(){
-		return this.matClass;
+	@Column(name ="MAT_UNIT",nullable=true,length=32)
+	public String getMatUnit(){
+		return this.matUnit;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  等级
+	 *@param: java.lang.String  单位
 	 */
-	public void setMatClass(String matClass){
-		this.matClass = matClass;
-	}
-	/**
-	 *方法: 取得java.math.BigDecimal
-	 *@return: java.math.BigDecimal  标准价元
-	 */
-
-	@Column(name ="MAT_PRICE",nullable=true,length=32)
-	public BigDecimal getMatPrice(){
-		return this.matPrice;
-	}
-
-	/**
-	 *方法: 设置java.math.BigDecimal
-	 *@param: java.math.BigDecimal  标准价元
-	 */
-	public void setMatPrice(BigDecimal matPrice){
-		this.matPrice = matPrice;
-	}
-	/**
-	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  安全库存
-	 */
-
-	@Column(name ="MAT_AQKC",nullable=true,length=32)
-	public Integer getMatAqkc(){
-		return this.matAqkc;
-	}
-
-	/**
-	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  安全库存
-	 */
-	public void setMatAqkc(Integer matAqkc){
-		this.matAqkc = matAqkc;
+	public void setMatUnit(String matUnit){
+		this.matUnit = matUnit;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  仓库
+	 *@return: java.lang.String  原价值
 	 */
-
-	@Column(name ="MAT_LOCATION",nullable=true,length=32)
-	public String getMatLocation(){
-		return this.matLocation;
+	@Column(name ="MAT_ORIAMOUNT",nullable=true,length=32)
+	public String getMatOriamount(){
+		return this.matOriamount;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  仓库
+	 *@param: java.lang.String  原价值
 	 */
-	public void setMatLocation(String matLocation){
-		this.matLocation = matLocation;
+	public void setMatOriamount(String matOriamount){
+		this.matOriamount = matOriamount;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用1
+	 *@return: java.lang.String  现价值
 	 */
-
-	@Column(name ="BY1",nullable=true,length=32)
-	public String getBy1(){
-		return this.by1;
+	@Column(name ="MAT_NOWAMOUNT",nullable=true,length=32)
+	public String getMatNowamount(){
+		return this.matNowamount;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用1
+	 *@param: java.lang.String  现价值
 	 */
-	public void setBy1(String by1){
-		this.by1 = by1;
+	public void setMatNowamount(String matNowamount){
+		this.matNowamount = matNowamount;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用2
+	 *@return: java.lang.String  修复时间
 	 */
-
-	@Column(name ="BY2",nullable=true,length=32)
-	public String getBy2(){
-		return this.by2;
+	@Column(name ="REPAIR_DATE",nullable=true,length=32)
+	public String getRepairDate(){
+		return this.repairDate;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用2
+	 *@param: java.lang.String  修复时间
 	 */
-	public void setBy2(String by2){
-		this.by2 = by2;
+	public void setRepairDate(String repairDate){
+		this.repairDate = repairDate;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用3
+	 *@return: java.lang.String  修复人
 	 */
-
-	@Column(name ="BY3",nullable=true,length=32)
-	public String getBy3(){
-		return this.by3;
+	@Column(name ="REPAIR_USER",nullable=true,length=32)
+	public String getRepairUser(){
+		return this.repairUser;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用3
+	 *@param: java.lang.String  修复人
 	 */
-	public void setBy3(String by3){
-		this.by3 = by3;
+	public void setRepairUser(String repairUser){
+		this.repairUser = repairUser;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用4
+	 *@return: java.lang.String  验收人
 	 */
-
-	@Column(name ="BY4",nullable=true,length=32)
-	public String getBy4(){
-		return this.by4;
+	@Column(name ="QM_USER",nullable=true,length=32)
+	public String getQmUser(){
+		return this.qmUser;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用4
+	 *@param: java.lang.String  验收人
 	 */
-	public void setBy4(String by4){
-		this.by4 = by4;
+	public void setQmUser(String qmUser){
+		this.qmUser = qmUser;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用5
+	 *@return: java.lang.String  修复备注
 	 */
-
-	@Column(name ="BY5",nullable=true,length=32)
-	public String getBy5(){
-		return this.by5;
+	@Column(name ="REPAIR_REMARK",nullable=true,length=320)
+	public String getRepairRemark(){
+		return this.repairRemark;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用5
+	 *@param: java.lang.String  修复备注
 	 */
-	public void setBy5(String by5){
-		this.by5 = by5;
+	public void setRepairRemark(String repairRemark){
+		this.repairRemark = repairRemark;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  出库单号
+	 */
+	@Column(name ="CK_ID",nullable=true,length=32)
+	public String getCkId(){
+		return this.ckId;
 	}
 
-	@Column(name ="BY6",nullable=true,length=32)
-	public String getBy6() {
-		return by6;
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  出库单号
+	 */
+	public void setCkId(String ckId){
+		this.ckId = ckId;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  出库项目
+	 */
+	@Column(name ="CK_ITME_ID",nullable=true,length=32)
+	public String getCkItmeId(){
+		return this.ckItmeId;
 	}
 
-	public void setBy6(String by6) {
-		this.by6 = by6;
-	}
-
-	@Column(name ="BY7",nullable=true,length=32)
-	public String getBy7() {
-		return by7;
-	}
-
-	public void setBy7(String by7) {
-		this.by7 = by7;
-	}
-
-	@Column(name ="BY8",nullable=true,length=32)
-	public String getBy8() {
-		return by8;
-	}
-
-	public void setBy8(String by8) {
-		this.by8 = by8;
-	}
-
-	@Column(name ="BY9",nullable=true,length=32)
-	public String getBy9() {
-		return by9;
-	}
-
-	public void setBy9(String by9) {
-		this.by9 = by9;
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  出库项目
+	 */
+	public void setCkItmeId(String ckItmeId){
+		this.ckItmeId = ckItmeId;
 	}
 }

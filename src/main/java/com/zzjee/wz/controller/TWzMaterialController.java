@@ -1,85 +1,61 @@
 package com.zzjee.wz.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.zzjee.md.entity.MdGoodsEntity;
+import com.zzjee.md.service.MdGoodsServiceI;
 import com.zzjee.wz.entity.TWzMaterialEntity;
 import com.zzjee.wz.service.TWzMaterialServiceI;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.SimpleDateFormat;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
-import org.jeecgframework.core.common.model.common.TreeChildCount;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.core.util.StringUtil;
-import org.jeecgframework.tag.core.easyui.TagUtil;
-import org.jeecgframework.web.system.pojo.base.TSDepart;
-import org.jeecgframework.web.system.service.SystemService;
+import org.jeecgframework.core.util.ExceptionUtil;
 import org.jeecgframework.core.util.MyBeanUtils;
-
-import java.io.OutputStream;
-import org.jeecgframework.core.util.BrowserUtils;
-import org.jeecgframework.poi.excel.ExcelExportUtil;
+import org.jeecgframework.core.util.ResourceUtil;
+import org.jeecgframework.core.util.StringUtil;
+import org.jeecgframework.jwt.util.ResponseMessage;
+import org.jeecgframework.jwt.util.Result;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
-import org.jeecgframework.poi.excel.entity.TemplateExportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
-import org.jeecgframework.poi.excel.entity.vo.TemplateExcelConstants;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.jeecgframework.core.util.ResourceUtil;
-import java.io.IOException;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.web.system.service.SystemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
-import org.jeecgframework.core.util.ExceptionUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.net.URI;
-import org.springframework.http.MediaType;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.apache.commons.lang3.StringUtils;
-import org.jeecgframework.jwt.util.GsonUtil;
-import org.jeecgframework.jwt.util.ResponseMessage;
-import org.jeecgframework.jwt.util.Result;
-import com.alibaba.fastjson.JSONArray;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 物料
  * @author onlineGenerator
  * @date 2018-05-20 21:40:03
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Api(value="TWzMaterial",description="物料",tags="tWzMaterialController")
@@ -97,12 +73,13 @@ public class TWzMaterialController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
 
+	@Autowired
+	private MdGoodsServiceI mdGoodsService;
 
 	/**
 	 * 物料列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -112,7 +89,7 @@ public class TWzMaterialController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -133,10 +110,10 @@ public class TWzMaterialController extends BaseController {
 		this.tWzMaterialService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除物料
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -157,21 +134,21 @@ public class TWzMaterialController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除物料
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
 	@ResponseBody
-	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
+	public AjaxJson doBatchDel(String ids, HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "物料删除成功";
 		try{
 			for(String id:ids.split(",")){
-				TWzMaterialEntity tWzMaterial = systemService.getEntity(TWzMaterialEntity.class, 
+				TWzMaterialEntity tWzMaterial = systemService.getEntity(TWzMaterialEntity.class,
 				Integer.parseInt(id)
 				);
 				tWzMaterialService.delete(tWzMaterial);
@@ -189,7 +166,7 @@ public class TWzMaterialController extends BaseController {
 
 	/**
 	 * 添加物料
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -200,6 +177,31 @@ public class TWzMaterialController extends BaseController {
 		message = "物料添加成功";
 		try{
 			tWzMaterialService.save(tWzMaterial);
+
+			MdGoodsEntity mdn = mdGoodsService.findUniqueByProperty(MdGoodsEntity.class,"shpBianMa",tWzMaterial.getMatCode());
+			if(mdn==null){
+				mdn = new MdGoodsEntity();
+				mdn.setShpBianMa(tWzMaterial.getMatCode());
+				mdn.setSuoShuKeHu(ResourceUtil.getConfigByName("default.cuscode"));
+				mdn.setChlShl("1");
+				mdn.setShpMingCheng(tWzMaterial.getMatName());
+				mdn.setBzhiQi("999");
+				mdn.setChpShuXing(tWzMaterial.getBy3());
+				mdn.setJshDanWei(tWzMaterial.getMatUnit());
+				mdn.setShlDanWei(tWzMaterial.getMatUnit());
+				mdn.setShpTiaoMa(tWzMaterial.getBy1());
+				mdn.setCfWenCeng(tWzMaterial.getBy2());
+				mdn.setJiZhunwendu("1");
+				mdn.setTiJiCm("1");
+				mdn.setZhlKg("1");
+				mdn.setChlKongZhi("N");
+				mdn.setJfShpLei("10");
+				mdn.setMpCengGao("99");
+				mdn.setMpDanCeng("99");
+
+				mdGoodsService.save(mdn);
+			}
+
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -209,10 +211,10 @@ public class TWzMaterialController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新物料
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -234,11 +236,11 @@ public class TWzMaterialController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 物料新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -251,7 +253,7 @@ public class TWzMaterialController extends BaseController {
 	}
 	/**
 	 * 物料编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -262,10 +264,10 @@ public class TWzMaterialController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wz/tWzMaterial-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -273,49 +275,49 @@ public class TWzMaterialController extends BaseController {
 		req.setAttribute("controller_name","tWzMaterialController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(TWzMaterialEntity tWzMaterial,HttpServletRequest request,HttpServletResponse response
-			, DataGrid dataGrid,ModelMap modelMap) {
+	public String exportXls(TWzMaterialEntity tWzMaterial, HttpServletRequest request, HttpServletResponse response
+			, DataGrid dataGrid, ModelMap modelMap) {
 		CriteriaQuery cq = new CriteriaQuery(TWzMaterialEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tWzMaterial, request.getParameterMap());
 		List<TWzMaterialEntity> tWzMaterials = this.tWzMaterialService.getListByCriteriaQuery(cq,false);
 		modelMap.put(NormalExcelConstants.FILE_NAME,"物料");
 		modelMap.put(NormalExcelConstants.CLASS,TWzMaterialEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物料列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物料列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST,tWzMaterials);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(TWzMaterialEntity tWzMaterial,HttpServletRequest request,HttpServletResponse response
-			, DataGrid dataGrid,ModelMap modelMap) {
+	public String exportXlsByT(TWzMaterialEntity tWzMaterial, HttpServletRequest request, HttpServletResponse response
+			, DataGrid dataGrid, ModelMap modelMap) {
     	modelMap.put(NormalExcelConstants.FILE_NAME,"物料");
     	modelMap.put(NormalExcelConstants.CLASS,TWzMaterialEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物料列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("物料列表", "导出人:"+ ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -350,7 +352,7 @@ public class TWzMaterialController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="物料列表信息",produces="application/json",httpMethod="GET")
@@ -358,7 +360,7 @@ public class TWzMaterialController extends BaseController {
 		List<TWzMaterialEntity> listTWzMaterials=tWzMaterialService.getList(TWzMaterialEntity.class);
 		return Result.success(listTWzMaterials);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="根据ID获取物料信息",notes="根据ID获取物料信息",httpMethod="GET",produces="application/json")

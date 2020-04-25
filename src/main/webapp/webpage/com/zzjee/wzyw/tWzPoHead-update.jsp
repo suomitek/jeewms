@@ -48,7 +48,7 @@
 				<label class="Validform_label">供应商编码:</label>
 			</td>
 			<td class="value">
-					<input id="vendorCode" name="vendorCode" type="text" style="width: 150px" class="searchbox-inputtext"  ignore="ignore"   onclick="popupClick(this,'vendorCode,vendorName','wz_pop_vendor')"  value='${tWzPoHeadPage.vendorCode}'/>			    
+					<input id="vendorCode" name="vendorCode" type="text" style="width: 150px" class="searchbox-inputtext"  ignore="ignore"   onclick="popupClick(this,'vendorCode,vendorName','wz_pop_vendor')"  value='${tWzPoHeadPage.vendorCode}'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">供应商编码</label>
 			</td>
@@ -79,7 +79,16 @@
 				<label class="Validform_label" style="display: none;">采购订单备注</label>
 			</td>
 		</tr>
-	
+		<tr>
+			<td align="right">
+				<label class="Validform_label">采购类别:</label>
+			</td>
+			<td class="value">
+				<t:dictSelect field="poBy1" type="radio"   typeGroupCode="wz_cglb"    hasLabel="false" defaultVal='${tWzPoHeadPage.poBy1}' title="采购类别" ></t:dictSelect>
+
+			</td>
+
+		</tr>
 			</table>
 			<div style="width: auto;height: 200px;">
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
@@ -97,8 +106,8 @@
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 				  <td align="left">
 					  				<input name="tWzPoItemList[#index#].matCode" name="tWzPoItemList[#index#].matCode" type="text" style="width: 150px" class="searchbox-inputtext"  ignore="ignore"    onclick="popupClick(this,'mat_code,mat_name,mat_unit,mat_location,mat_price','matCode,matName,matUnit,matLocation,matPrice','wz_material_pop')" value="${poVal.matCode }" />
-					     						
-					       
+
+
 					  <label class="Validform_label" style="display: none;">物料编码</label>
 				  </td>
 				  <td align="left">

@@ -1,28 +1,16 @@
 package com.zzjee.wzyw.entity;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.lang.String;
-import java.lang.Double;
-import java.lang.Integer;
-import java.math.BigDecimal;
-import javax.xml.soap.Text;
-import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
+
 import org.jeecgframework.poi.excel.annotation.Excel;
 
-/**   
+import javax.persistence.*;
+import java.util.Date;
+
+/**
  * @Title: Entity
  * @Description: 物料采购订单
  * @author onlineGenerator
  * @date 2018-05-21 13:23:13
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Entity
@@ -69,14 +57,14 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	private String poBy3;
 	/**备用4*/
 	private String poBy4;
-	
+
 	/**
 	 *方法: 取得java.lang.Integer
 	 *@return: java.lang.Integer  主键
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
+
 	@Column(name ="ID",nullable=false,length=20)
 	public Integer getId(){
 		return this.id;
@@ -89,12 +77,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setId(Integer id){
 		this.id = id;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  创建人名称
 	 */
-	
+
 	@Column(name ="CREATE_NAME",nullable=true,length=50)
 	public String getCreateName(){
 		return this.createName;
@@ -107,12 +95,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setCreateName(String createName){
 		this.createName = createName;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  创建人登录名称
 	 */
-	
+
 	@Column(name ="CREATE_BY",nullable=true,length=50)
 	public String getCreateBy(){
 		return this.createBy;
@@ -125,12 +113,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setCreateBy(String createBy){
 		this.createBy = createBy;
 	}
-	
+
 	/**
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  创建日期
 	 */
-	
+
 	@Column(name ="CREATE_DATE",nullable=true,length=20)
 	public Date getCreateDate(){
 		return this.createDate;
@@ -143,12 +131,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setCreateDate(Date createDate){
 		this.createDate = createDate;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  更新人名称
 	 */
-	
+
 	@Column(name ="UPDATE_NAME",nullable=true,length=50)
 	public String getUpdateName(){
 		return this.updateName;
@@ -161,12 +149,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setUpdateName(String updateName){
 		this.updateName = updateName;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  更新人登录名称
 	 */
-	
+
 	@Column(name ="UPDATE_BY",nullable=true,length=50)
 	public String getUpdateBy(){
 		return this.updateBy;
@@ -179,12 +167,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setUpdateBy(String updateBy){
 		this.updateBy = updateBy;
 	}
-	
+
 	/**
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  更新日期
 	 */
-	
+
 	@Column(name ="UPDATE_DATE",nullable=true,length=20)
 	public Date getUpdateDate(){
 		return this.updateDate;
@@ -197,12 +185,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setUpdateDate(Date updateDate){
 		this.updateDate = updateDate;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属部门
 	 */
-	
+
 	@Column(name ="SYS_ORG_CODE",nullable=true,length=50)
 	public String getSysOrgCode(){
 		return this.sysOrgCode;
@@ -215,12 +203,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setSysOrgCode(String sysOrgCode){
 		this.sysOrgCode = sysOrgCode;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属公司
 	 */
-	
+
 	@Column(name ="SYS_COMPANY_CODE",nullable=true,length=50)
 	public String getSysCompanyCode(){
 		return this.sysCompanyCode;
@@ -233,12 +221,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setSysCompanyCode(String sysCompanyCode){
 		this.sysCompanyCode = sysCompanyCode;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  流程状态
 	 */
-	
+
 	@Column(name ="BPM_STATUS",nullable=true,length=32)
 	public String getBpmStatus(){
 		return this.bpmStatus;
@@ -251,12 +239,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setBpmStatus(String bpmStatus){
 		this.bpmStatus = bpmStatus;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  供应商编码
 	 */
-	
+
 	@Column(name ="VENDOR_CODE",nullable=true,length=32)
 	public String getVendorCode(){
 		return this.vendorCode;
@@ -269,12 +257,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setVendorCode(String vendorCode){
 		this.vendorCode = vendorCode;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  供应商名称
 	 */
-	
+
 	@Column(name ="VENDOR_NAME",nullable=true,length=32)
 	public String getVendorName(){
 		return this.vendorName;
@@ -287,12 +275,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setVendorName(String vendorName){
 		this.vendorName = vendorName;
 	}
-	
+
 	/**
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  采购订单日期
 	 */
-	
+
 	@Column(name ="DOC_DATE",nullable=true,length=32)
 	public Date getDocDate(){
 		return this.docDate;
@@ -305,12 +293,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setDocDate(Date docDate){
 		this.docDate = docDate;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  采购订单备注
 	 */
-	
+
 	@Column(name ="PO_REMARK",nullable=true,length=232)
 	public String getPoRemark(){
 		return this.poRemark;
@@ -323,12 +311,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setPoRemark(String poRemark){
 		this.poRemark = poRemark;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用1
 	 */
-	
+
 	@Column(name ="PO_BY1",nullable=true,length=32)
 	public String getPoBy1(){
 		return this.poBy1;
@@ -341,12 +329,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setPoBy1(String poBy1){
 		this.poBy1 = poBy1;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用2
 	 */
-	
+
 	@Column(name ="PO_BY2",nullable=true,length=32)
 	public String getPoBy2(){
 		return this.poBy2;
@@ -359,12 +347,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setPoBy2(String poBy2){
 		this.poBy2 = poBy2;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用3
 	 */
-	
+
 	@Column(name ="PO_BY3",nullable=true,length=32)
 	public String getPoBy3(){
 		return this.poBy3;
@@ -377,12 +365,12 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setPoBy3(String poBy3){
 		this.poBy3 = poBy3;
 	}
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备用4
 	 */
-	
+
 	@Column(name ="PO_BY4",nullable=true,length=32)
 	public String getPoBy4(){
 		return this.poBy4;
@@ -395,5 +383,5 @@ public class TWzPoHeadEntity implements java.io.Serializable {
 	public void setPoBy4(String poBy4){
 		this.poBy4 = poBy4;
 	}
-	
+
 }

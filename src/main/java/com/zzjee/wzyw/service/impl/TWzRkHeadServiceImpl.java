@@ -1,38 +1,36 @@
 package com.zzjee.wzyw.service.impl;
-import com.zzjee.wzyw.service.TWzRkHeadServiceI;
-import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+
 import com.zzjee.wzyw.entity.TWzRkHeadEntity;
 import com.zzjee.wzyw.entity.TWzRkItemEntity;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+import com.zzjee.wzyw.service.TWzRkHeadServiceI;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.core.util.oConvertUtils;
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.UUID;
-import java.io.Serializable;
 
 
 @Service("tWzRkHeadService")
 @Transactional
 public class TWzRkHeadServiceImpl extends CommonServiceImpl implements TWzRkHeadServiceI {
-	
+
  	public <T> void delete(T entity) {
  		super.delete(entity);
  		//执行删除操作配置的sql增强
 		this.doDelSql((TWzRkHeadEntity)entity);
  	}
-	
+
 	public void addMain(TWzRkHeadEntity tWzRkHead,
-	        List<TWzRkItemEntity> tWzRkItemList){
+                        List<TWzRkItemEntity> tWzRkItemList){
 			//保存主信息
 		    tWzRkHead.setBpmStatus("0");
 			this.save(tWzRkHead);
-		
+
 			/**保存-入库商品*/
 			for(TWzRkItemEntity tWzRkItem:tWzRkItemList){
 				//外键设置
@@ -44,9 +42,9 @@ public class TWzRkHeadServiceImpl extends CommonServiceImpl implements TWzRkHead
  			this.doAddSql(tWzRkHead);
 	}
 
-	
+
 	public void updateMain(TWzRkHeadEntity tWzRkHead,
-	        List<TWzRkItemEntity> tWzRkItemList) {
+                           List<TWzRkItemEntity> tWzRkItemList) {
 		//保存主表信息
 		if(StringUtil.isNotEmpty(tWzRkHead.getId())){
 			try {
@@ -88,7 +86,7 @@ public class TWzRkHeadServiceImpl extends CommonServiceImpl implements TWzRkHead
 		    		//如果数据库存在的明细，前台没有传递过来则是删除-入库商品
 		    		super.delete(oldE);
 	    		}
-	    		
+
 			}
 			//3.持久化新增的数据-入库商品
 			for(TWzRkItemEntity tWzRkItem:tWzRkItemList){
@@ -103,7 +101,7 @@ public class TWzRkHeadServiceImpl extends CommonServiceImpl implements TWzRkHead
  		this.doUpdateSql(tWzRkHead);
 	}
 
-	
+
 	public void delMain(TWzRkHeadEntity tWzRkHead) {
 		//删除主表信息
 		this.delete(tWzRkHead);
@@ -116,8 +114,8 @@ public class TWzRkHeadServiceImpl extends CommonServiceImpl implements TWzRkHead
 	    List<TWzRkItemEntity> tWzRkItemOldList = this.findHql(hql0,id0);
 		this.deleteAllEntitie(tWzRkItemOldList);
 	}
-	
- 	
+
+
  	/**
 	 * 默认按钮-sql增强-新增操作
 	 * @param id
@@ -143,13 +141,13 @@ public class TWzRkHeadServiceImpl extends CommonServiceImpl implements TWzRkHead
  	public boolean doDelSql(TWzRkHeadEntity t){
 	 	return true;
  	}
- 	
+
  	/**
 	 * 替换sql中的变量
 	 * @param sql
 	 * @return
 	 */
- 	public String replaceVal(String sql,TWzRkHeadEntity t){
+ 	public String replaceVal(String sql, TWzRkHeadEntity t){
  		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
  		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
  		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));

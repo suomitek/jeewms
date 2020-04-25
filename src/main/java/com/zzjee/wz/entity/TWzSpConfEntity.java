@@ -1,29 +1,16 @@
 package com.zzjee.wz.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.lang.String;
-import java.lang.Double;
-import java.lang.Integer;
-import java.math.BigDecimal;
-import javax.xml.soap.Text;
-import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
-/**   
+import javax.persistence.*;
+import java.util.Date;
+
+/**
  * @Title: Entity
  * @Description: 审批配置
  * @author onlineGenerator
  * @date 2018-05-20 21:40:51
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Entity
@@ -62,7 +49,7 @@ public class TWzSpConfEntity implements java.io.Serializable {
 	/**备注*/
 	@Excel(name="备注",width=15)
 	private String spRemark;
-	
+
 	/**
 	 *方法: 取得java.lang.Integer
 	 *@return: java.lang.Integer  主键

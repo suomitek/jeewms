@@ -1,42 +1,44 @@
 package com.zzjee.wzpo.service.impl;
+
+import com.zzjee.wzpo.entity.VWzPoWqEntity;
 import com.zzjee.wzpo.service.VWzPoWqServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.zzjee.wzpo.entity.VWzPoWqEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.io.Serializable;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.core.util.MyClassLoader;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.web.cgform.enhance.CgformEnhanceJavaInter;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Service("vWzPoWqService")
 @Transactional
 public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServiceI {
 
-	
+
  	public void delete(VWzPoWqEntity entity) throws Exception{
  		super.delete(entity);
  		//执行删除操作增强业务
 		this.doDelBus(entity);
  	}
- 	
+
  	public Serializable save(VWzPoWqEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		//执行新增操作增强业务
  		this.doAddBus(entity);
  		return t;
  	}
- 	
+
  	public void saveOrUpdate(VWzPoWqEntity entity) throws Exception{
  		super.saveOrUpdate(entity);
  		//执行更新操作增强业务
  		this.doUpdateBus(entity);
  	}
- 	
+
  	/**
 	 * 新增操作增强业务
 	 * @param t
@@ -45,7 +47,7 @@ public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServ
 	private void doAddBus(VWzPoWqEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
-	 	
+
 	 	//-----------------java增强 start---------------------------
 	 	//-----------------java增强 end-----------------------------
  	}
@@ -57,7 +59,7 @@ public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServ
 	private void doUpdateBus(VWzPoWqEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
-	 	
+
 	 	//-----------------java增强 start---------------------------
 	 	//-----------------java增强 end-----------------------------
  	}
@@ -69,11 +71,11 @@ public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServ
 	private void doDelBus(VWzPoWqEntity t) throws Exception{
 	    //-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
-	 	
+
 	 	//-----------------java增强 start---------------------------
 	 	//-----------------java增强 end-----------------------------
  	}
- 	
+
  	private Map<String,Object> populationMap(VWzPoWqEntity t){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", t.getId());
@@ -87,7 +89,7 @@ public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServ
 		map.put("mat_qty_wq", t.getMatQtyWq());
 		return map;
 	}
- 	
+
  	/**
 	 * 替换sql中的变量
 	 * @param sql
@@ -107,7 +109,7 @@ public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServ
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
- 	
+
  	/**
 	 * 执行JAVA增强
 	 */
@@ -128,7 +130,7 @@ public class VWzPoWqServiceImpl extends CommonServiceImpl implements VWzPoWqServ
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new Exception("执行JAVA增强出现异常！");
-			} 
+			}
 		}
  	}
 }

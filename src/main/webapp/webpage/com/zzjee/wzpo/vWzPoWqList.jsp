@@ -5,6 +5,10 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="vWzPoWqList" checkbox="true" pagination="true" fitColumns="true" title="批量采购入库" actionUrl="vWzPoWqController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="供应商编码"  field="vendorCode"  query="true"  queryMode="single"  dictionary="wz_pop_vendor,vendorCode,vendorName,vendor_code,vendor_name"  popup="true"  width="120"></t:dgCol>
+   <t:dgCol title="供应商名称"  field="vendorName"  query="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="采购订单日期"  field="docDate"  formatter="yyyy-MM-dd"  query="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="采购订单备注"  field="poRemark"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="物料编码"  field="matCode" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="物料名称"  field="matName"  query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位"  field="matUnit"  queryMode="group"  width="120"></t:dgCol>
@@ -27,7 +31,7 @@
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="vWzPoWqController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="查看" icon="icon-search" url="vWzPoWqController.do?goUpdate" funname="detail"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>

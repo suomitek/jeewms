@@ -1,8 +1,7 @@
-package com.zzjee.wz.service.impl;
+package com.zzjee.wzrepair.service.impl;
 
-
-import com.zzjee.wz.entity.TWzMaterialEntity;
-import com.zzjee.wz.service.TWzMaterialServiceI;
+import com.zzjee.wzrepair.entity.TWzRepairEntity;
+import com.zzjee.wzrepair.service.TWzRepairServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.core.util.MyClassLoader;
@@ -16,25 +15,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Service("tWzMaterialService")
+@Service("tWzRepairService")
 @Transactional
-public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMaterialServiceI {
+public class TWzRepairServiceImpl extends CommonServiceImpl implements TWzRepairServiceI {
 
 
- 	public void delete(TWzMaterialEntity entity) throws Exception{
+ 	public void delete(TWzRepairEntity entity) throws Exception{
  		super.delete(entity);
  		//执行删除操作增强业务
 		this.doDelBus(entity);
  	}
 
- 	public Serializable save(TWzMaterialEntity entity) throws Exception{
+ 	public Serializable save(TWzRepairEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		//执行新增操作增强业务
  		this.doAddBus(entity);
  		return t;
  	}
 
- 	public void saveOrUpdate(TWzMaterialEntity entity) throws Exception{
+ 	public void saveOrUpdate(TWzRepairEntity entity) throws Exception{
  		super.saveOrUpdate(entity);
  		//执行更新操作增强业务
  		this.doUpdateBus(entity);
@@ -45,7 +44,7 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 	 * @param t
 	 * @return
 	 */
-	private void doAddBus(TWzMaterialEntity t) throws Exception{
+	private void doAddBus(TWzRepairEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 
@@ -57,7 +56,7 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 	 * @param t
 	 * @return
 	 */
-	private void doUpdateBus(TWzMaterialEntity t) throws Exception{
+	private void doUpdateBus(TWzRepairEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 
@@ -69,7 +68,7 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 	 * @param id
 	 * @return
 	 */
-	private void doDelBus(TWzMaterialEntity t) throws Exception{
+	private void doDelBus(TWzRepairEntity t) throws Exception{
 	    //-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 
@@ -77,7 +76,7 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 	 	//-----------------java增强 end-----------------------------
  	}
 
- 	private Map<String,Object> populationMap(TWzMaterialEntity t){
+ 	private Map<String,Object> populationMap(TWzRepairEntity t){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", t.getId());
 		map.put("create_name", t.getCreateName());
@@ -91,17 +90,18 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 		map.put("bpm_status", t.getBpmStatus());
 		map.put("mat_code", t.getMatCode());
 		map.put("mat_name", t.getMatName());
-		map.put("mat_unit", t.getMatUnit());
-		map.put("mat_guige", t.getMatGuige());
-		map.put("mat_class", t.getMatClass());
-		map.put("mat_price", t.getMatPrice());
-		map.put("mat_aqkc", t.getMatAqkc());
 		map.put("mat_location", t.getMatLocation());
-		map.put("by1", t.getBy1());
-		map.put("by2", t.getBy2());
-		map.put("by3", t.getBy3());
-		map.put("by4", t.getBy4());
-		map.put("by5", t.getBy5());
+		map.put("mat_qty", t.getMatQty());
+		map.put("mat_guige", t.getMatGuige());
+		map.put("mat_unit", t.getMatUnit());
+		map.put("mat_oriamount", t.getMatOriamount());
+		map.put("mat_nowamount", t.getMatNowamount());
+		map.put("repair_date", t.getRepairDate());
+		map.put("repair_user", t.getRepairUser());
+		map.put("qm_user", t.getQmUser());
+		map.put("repair_remark", t.getRepairRemark());
+		map.put("ck_id", t.getCkId());
+		map.put("ck_itme_id", t.getCkItmeId());
 		return map;
 	}
 
@@ -111,7 +111,7 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 	 * @param t
 	 * @return
 	 */
- 	public String replaceVal(String sql, TWzMaterialEntity t){
+ 	public String replaceVal(String sql,TWzRepairEntity t){
  		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
  		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
  		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
@@ -124,17 +124,18 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
  		sql  = sql.replace("#{bpm_status}",String.valueOf(t.getBpmStatus()));
  		sql  = sql.replace("#{mat_code}",String.valueOf(t.getMatCode()));
  		sql  = sql.replace("#{mat_name}",String.valueOf(t.getMatName()));
- 		sql  = sql.replace("#{mat_unit}",String.valueOf(t.getMatUnit()));
- 		sql  = sql.replace("#{mat_guige}",String.valueOf(t.getMatGuige()));
- 		sql  = sql.replace("#{mat_class}",String.valueOf(t.getMatClass()));
- 		sql  = sql.replace("#{mat_price}",String.valueOf(t.getMatPrice()));
- 		sql  = sql.replace("#{mat_aqkc}",String.valueOf(t.getMatAqkc()));
  		sql  = sql.replace("#{mat_location}",String.valueOf(t.getMatLocation()));
- 		sql  = sql.replace("#{by1}",String.valueOf(t.getBy1()));
- 		sql  = sql.replace("#{by2}",String.valueOf(t.getBy2()));
- 		sql  = sql.replace("#{by3}",String.valueOf(t.getBy3()));
- 		sql  = sql.replace("#{by4}",String.valueOf(t.getBy4()));
- 		sql  = sql.replace("#{by5}",String.valueOf(t.getBy5()));
+ 		sql  = sql.replace("#{mat_qty}",String.valueOf(t.getMatQty()));
+ 		sql  = sql.replace("#{mat_guige}",String.valueOf(t.getMatGuige()));
+ 		sql  = sql.replace("#{mat_unit}",String.valueOf(t.getMatUnit()));
+ 		sql  = sql.replace("#{mat_oriamount}",String.valueOf(t.getMatOriamount()));
+ 		sql  = sql.replace("#{mat_nowamount}",String.valueOf(t.getMatNowamount()));
+ 		sql  = sql.replace("#{repair_date}",String.valueOf(t.getRepairDate()));
+ 		sql  = sql.replace("#{repair_user}",String.valueOf(t.getRepairUser()));
+ 		sql  = sql.replace("#{qm_user}",String.valueOf(t.getQmUser()));
+ 		sql  = sql.replace("#{repair_remark}",String.valueOf(t.getRepairRemark()));
+ 		sql  = sql.replace("#{ck_id}",String.valueOf(t.getCkId()));
+ 		sql  = sql.replace("#{ck_itme_id}",String.valueOf(t.getCkItmeId()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
@@ -154,7 +155,7 @@ public class TWzMaterialServiceImpl extends CommonServiceImpl implements TWzMate
 				}
 				if(obj instanceof CgformEnhanceJavaInter){
 					CgformEnhanceJavaInter javaInter = (CgformEnhanceJavaInter) obj;
-					javaInter.execute("t_wz_material",data);
+					javaInter.execute("t_wz_repair",data);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

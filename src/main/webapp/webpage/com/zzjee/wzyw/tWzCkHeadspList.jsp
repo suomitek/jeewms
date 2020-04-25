@@ -13,7 +13,7 @@
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="流程状态"  field="bpmStatus"  queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>
+   <t:dgCol title="流程状态"  field="bpmStatus" hidden="true"  queryMode="single"  dictionary="bpm_status"  width="120"></t:dgCol>
    <t:dgCol title="领用部门"  field="orgCode"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="领用部门名称"  field="orgName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="领用人"  field="ckUsername"  query="true"  queryMode="single"  width="120"></t:dgCol>
@@ -34,10 +34,10 @@
    <%--<t:dgDelOpt title="删除" url="tWzCkHeadController.do?doUpdatesp&id={id}"  urlclass="ace_button" urlfont="fa-trash-o"/>--%>
    <t:dgToolBar title="出库" icon="icon-add" url="tWzCkHeadController.do?goAdd" funname="add" width="100%" height="100%"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tWzCkHeadController.do?goUpdate" funname="update" width="100%" height="100%"></t:dgToolBar>
-   <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tWzCkHeadController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
+   <t:dgToolBar title="批量删除"  icon="icon-remove" url="tWzCkHeadController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="tWzCkHeadController.do?goUpdate" funname="detail" width="100%" height="100%"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
