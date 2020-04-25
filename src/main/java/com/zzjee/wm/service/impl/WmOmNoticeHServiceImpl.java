@@ -1,6 +1,7 @@
 package com.zzjee.wm.service.impl;
 import com.zzjee.md.entity.MdCusEntity;
 import com.zzjee.md.entity.MvGoodsEntity;
+import com.zzjee.tms.entity.TmsMdCheliangEntity;
 import com.zzjee.tms.entity.TmsYwDingdanEntity;
 import com.zzjee.wm.entity.WmTmsNoticeHEntity;
 import com.zzjee.wm.entity.WmTmsNoticeIEntity;
@@ -28,13 +29,13 @@ import java.io.Serializable;
 @Service("wmOmNoticeHService")
 @Transactional
 public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNoticeHServiceI {
-	
+
  	public <T> void delete(T entity) {
  		super.delete(entity);
  		//执行删除操作配置的sql增强
 		this.doDelSql((WmOmNoticeHEntity)entity);
  	}
-	
+
 	public void addMain(WmOmNoticeHEntity wmOmNoticeH,
 	        List<WmOmNoticeIEntity> wmOmNoticeIList){
 			//保存主信息
@@ -137,7 +138,7 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 			try{
 				MvGoodsEntity mvgoods = this.findUniqueByProperty(MvGoodsEntity.class, "goodsCode", wmOmNoticeI.getGoodsId()) ;
 				if(mvgoods!=null){
-					huowu=huowu+mvgoods.getGoodsName();
+					huowu=huowu+";"+mvgoods.getGoodsName()+","+wmOmNoticeI.getBaseGoodscount();
 					wmOmNoticeI.setGoodsName(mvgoods.getGoodsName());
 					try{
 						wmOmNoticeI.setBaseUnit(mvgoods.getBaseunit());
@@ -149,11 +150,13 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 						}
 						try{
 							tiji= tiji+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getTiJiCm());
+							}catch (Exception e){
+						}
+						try{
 							zhongl= zhongl+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getZhlKg());
-//							chang= chang+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.get());
-//							kuan= kuan+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getZhlKg());
-//							gao= gao+ Double.parseDouble(wmOmNoticeI.getBaseGoodscount())*Double.parseDouble(mvgoods.getZhlKg());
-
+						}catch (Exception e){
+						}
+						try{
 							jishu = jishu + Double.parseDouble(wmOmNoticeI.getBaseGoodscount());
 						}catch (Exception e){
 						}
@@ -172,9 +175,41 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 			this.save(wmOmNoticeI);
 		}
 
+
+
+		TmsYwDingdanEntity tms = new TmsYwDingdanEntity();
+		tms.setYwkhdh(wmOmNoticeH.getImCusCode());//单号
+		tms.setYwddbz(wmOmNoticeH.getOmBeizhu());//备注
+		tms.setShrsj(wmOmNoticeH.getDelvMobile());//收货人手机
+		tms.setShouhuoren(wmOmNoticeH.getDelvMember());//收货人
+		tms.setShrdh(wmOmNoticeH.getDelvAddr());//收货人地址
+		tms.setBy1(wmOmNoticeH.getReMember());//区域
+		tms.setHwshjs(jishu.toString());
+		tms.setTiji(tiji.toString());
+		tms.setZhongl(zhongl.toString());
+		tms.setHuowu(huowu);
+		String siji = "";
+		String chel = "";
+		try{
+			String qu = wmOmNoticeH.getReMember();
+			String hqlsearchquyu = "from TmsMdCheliangEntity where quyu like '%"+qu+"%'";
+			List<TmsMdCheliangEntity>  listcl = this.findHql(hqlsearchquyu);
+			siji = listcl.get(0).getUsername();
+			chel = listcl.get(0).getChepaihao();
+		}catch (Exception e){
+
+		}
+
+		tms.setChehao(chel);
+		tms.setSiji(siji);
+		tms.setFadh(wmOmNoticeH.getOmNoticeId());
+		tms.setZhuangtai("已下单");
+		tms.setFahuoren(wmOmNoticeH.getPiClass());//配送点
+		this.save(tms);
+
 	}
 
-	
+
 	public void updateMain(WmOmNoticeHEntity wmOmNoticeH,
 	        List<WmOmNoticeIEntity> wmOmNoticeIList,List<TmsYwDingdanEntity> wmOmtmsIList) {
 		//保存主表信息
@@ -219,7 +254,7 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 		    		//如果数据库存在的明细，前台没有传递过来则是删除-出货商品明细
 		    		super.delete(oldE);
 	    		}
-	    		
+
 			}
 			//3.持久化新增的数据-出货商品明细
 			for(WmOmNoticeIEntity wmOmNoticeI:wmOmNoticeIList){
@@ -236,7 +271,7 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 					}else{
 						wmOmNoticeI.setBaseGoodscount(wmOmNoticeI.getGoodsQua());
 					}
-					
+
 					wmOmNoticeI.setCusCode(wmOmNoticeH.getCusCode());
 					wmOmNoticeI.setPlanSta("N");
 					wmOmNoticeI.setGoodsQuaok("0");
@@ -287,7 +322,7 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
  		this.doUpdateSql(wmOmNoticeH);
 	}
 
-	
+
 	public void delMain(WmOmNoticeHEntity wmOmNoticeH) {
 		//删除主表信息
 		this.delete(wmOmNoticeH);
@@ -300,8 +335,8 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 	    List<WmOmNoticeIEntity> wmOmNoticeIOldList = this.findHql(hql0,id0);
 		this.deleteAllEntitie(wmOmNoticeIOldList);
 	}
-	
- 	
+
+
  	/**
 	 * 默认按钮-sql增强-新增操作
 	 * @return
@@ -323,7 +358,7 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
  	public boolean doDelSql(WmOmNoticeHEntity t){
 	 	return true;
  	}
- 	
+
  	/**
 	 * 替换sql中的变量
 	 * @param sql

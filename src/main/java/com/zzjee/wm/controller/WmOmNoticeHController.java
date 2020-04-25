@@ -2466,31 +2466,7 @@ public class WmOmNoticeHController extends BaseController {
 			wmOmNoticeIListnew.add(t);
 		}
 		wmOmNoticeHService.addMaintms(wmOmNoticeH, wmOmNoticeIListnew);
-		TmsYwDingdanEntity tms = new TmsYwDingdanEntity();
-		tms.setYwkhdh(wmOmNoticeH.getImCusCode());//单号
-		tms.setYwddbz(wmOmNoticeH.getOmBeizhu());//备注
-		tms.setShrsj(wmOmNoticeH.getDelvMobile());//收货人手机
-		tms.setShouhuoren(wmOmNoticeH.getDelvMember());//收货人
-		tms.setShrdh(wmOmNoticeH.getDelvAddr());//收货人地址
-		tms.setBy1(wmOmNoticeH.getReMember());//区域
-		String siji = "";
-		String chel = "";
-		try{
-			String qu = wmOmNoticeH.getReMember();
-			String hqlsearchquyu = "from TmsMdCheliangEntity where quyu like '%"+qu+"%'";
-			List<TmsMdCheliangEntity>  listcl = systemService.findHql(hqlsearchquyu);
-			siji = listcl.get(0).getUsername();
-			chel = listcl.get(0).getChepaihao();
-		}catch (Exception e){
 
-		}
-
-		tms.setChehao(chel);
-		tms.setSiji(siji);
-		tms.setFadh(noticeid);
-		tms.setZhuangtai("已下单");
-		tms.setFahuoren(wmOmNoticeH.getPiClass());//配送点
-		systemService.save(tms);
 		D0.setOK(true);
 		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
 		return new ResponseEntity(D0, HttpStatus.OK);
