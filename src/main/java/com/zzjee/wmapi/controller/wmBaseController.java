@@ -22,6 +22,7 @@ import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
+import org.jeecgframework.web.system.sms.util.task.SmsSendTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,12 +48,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**   
+/**
  * @Title: wmBaseControllerController
  * @Description: wmBaseController
  * @author erzhongxmu
  * @date 2018-05-30 20:21:50
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -67,6 +68,8 @@ public class wmBaseController extends BaseController {
 //	private WvGiServiceI wvGiService;
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private SmsSendTask smsSendTask;
 //	@Autowired
 //	private Validator validator;
 	/**
@@ -245,7 +248,22 @@ public class wmBaseController extends BaseController {
 		D0.setObj(listerp);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
+	@RequestMapping(value="runtask",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?>  runtask( @RequestParam(value="username", required=false) String username,
+									  @RequestParam(value="all", required=false)String all,
 
+									  @RequestParam(value="searchstr", required=false)String searchstr,
+									  @RequestParam(value="searchstr2", required=false)String searchstr2,
+									  @RequestParam(value="searchstrin1", required=false)String searchstrin1,
+									  @RequestParam(value="searchstrin2", required=false)String searchstrin2,
+									  @RequestParam(value="searchstrin3", required=false)String searchstrin3) {
+
+
+		ResultDO D0 = new  ResultDO();
+		smsSendTask.run();
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
 
 
 }

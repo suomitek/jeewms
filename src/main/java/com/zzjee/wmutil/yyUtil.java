@@ -215,9 +215,10 @@ public class yyUtil {
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("id").toString();
+                String otherid =  prodbo.get("cCode").toString();
 
                 if (StringUtil.isNotEmpty(poid)) {
-                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", poid);
+                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", otherid);
                     if (wmimh == null) {
                         WmImNoticeHEntity wmImNoticeH = new WmImNoticeHEntity();
                         List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
@@ -240,7 +241,7 @@ public class yyUtil {
                         }catch (Exception e){
 
                         }
-                        wmImNoticeH.setImCusCode(poid);
+                        wmImNoticeH.setImCusCode(otherid);
                         String querySqldetail = "select * from RdRecords01 where id = '"+poid+"'";
                         if (resultdetail!=null){
                             resultdetail.clear();
@@ -290,9 +291,10 @@ public class yyUtil {
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("id").toString();
+                String otherid =  prodbo.get("cCode").toString();
 
                 if (StringUtil.isNotEmpty(poid)) {
-                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", poid);
+                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", otherid);
                     if (wmimh == null) {
                         WmImNoticeHEntity wmImNoticeH = new WmImNoticeHEntity();
                         List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
@@ -315,7 +317,8 @@ public class yyUtil {
                         }catch (Exception e){
 
                         }
-                        wmImNoticeH.setImCusCode(poid);
+//                        wmImNoticeH.setImCusCode(poid);
+                        wmImNoticeH.setImCusCode(otherid);
                         String querySqldetail = "select * from RdRecords10 where id = '"+poid+"'";
                         if (resultdetail!=null){
                             resultdetail.clear();
@@ -364,9 +367,10 @@ public class yyUtil {
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("id").toString();
+                String otherid =  prodbo.get("cCode").toString();
 
                 if (StringUtil.isNotEmpty(poid)) {
-                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", poid);
+                    WmImNoticeHEntity wmimh = systemService.findUniqueByProperty(WmImNoticeHEntity.class, "imCusCode", otherid);
                     if (wmimh == null) {
                         WmImNoticeHEntity wmImNoticeH = new WmImNoticeHEntity();
                         List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
@@ -389,7 +393,7 @@ public class yyUtil {
                         }catch (Exception e){
 
                         }
-                        wmImNoticeH.setImCusCode(poid);
+                        wmImNoticeH.setImCusCode(otherid);
                         String querySqldetail = "select * from RdRecords08 where id = '"+poid+"'";
                         if (resultdetail!=null){
                             resultdetail.clear();
@@ -577,8 +581,10 @@ public class yyUtil {
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("id").toString();
+                String otherid =  prodbo.get("cCode").toString();
+
                 if (StringUtil.isNotEmpty(imcuscode)) {
-                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
+                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", otherid);
                     if (wmimh == null) {
                         WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
                         List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
@@ -586,7 +592,7 @@ public class yyUtil {
                         wmOmNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
                         String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
                         wmOmNoticeH.setOmNoticeId(noticeid);
-                        wmOmNoticeH.setImCusCode(imcuscode);
+                        wmOmNoticeH.setImCusCode(otherid);
                         try{
                             wmOmNoticeH.setOmBeizhu(prodbo.get("cMemo").toString());
 
@@ -639,8 +645,10 @@ public class yyUtil {
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("id").toString();
+                String otherid =  prodbo.get("cCode").toString();
+
                 if (StringUtil.isNotEmpty(imcuscode)) {
-                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
+                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", otherid);
                     if (wmimh == null) {
                         WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
                         List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
@@ -648,7 +656,7 @@ public class yyUtil {
                         wmOmNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
                         String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
                         wmOmNoticeH.setOmNoticeId(noticeid);
-                        wmOmNoticeH.setImCusCode(imcuscode);
+                        wmOmNoticeH.setImCusCode(otherid);
                         try{
                             wmOmNoticeH.setOmBeizhu(prodbo.get("cMemo").toString());
 
@@ -701,8 +709,10 @@ public class yyUtil {
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("id").toString();
+                String otherid =  prodbo.get("cCode").toString();
+
                 if (StringUtil.isNotEmpty(imcuscode)) {
-                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", imcuscode);
+                    WmOmNoticeHEntity wmimh = systemService.findUniqueByProperty(WmOmNoticeHEntity.class, "imCusCode", otherid);
                     if (wmimh == null) {
                         WmOmNoticeHEntity wmOmNoticeH = new WmOmNoticeHEntity();
                         List<WmOmNoticeIEntity> wmomNoticeIListnew = new ArrayList<WmOmNoticeIEntity>();
@@ -710,7 +720,7 @@ public class yyUtil {
                         wmOmNoticeH.setCusCode(ResourceUtil.getConfigByName("yy.cuscode"));
                         String noticeid = wmUtil.getNextomNoticeId(wmOmNoticeH.getOrderTypeCode());
                         wmOmNoticeH.setOmNoticeId(noticeid);
-                        wmOmNoticeH.setImCusCode(imcuscode);
+                        wmOmNoticeH.setImCusCode(otherid);
                         try{
                             wmOmNoticeH.setOmBeizhu(prodbo.get("cMemo").toString());
 
