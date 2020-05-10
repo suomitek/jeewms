@@ -1,39 +1,19 @@
 package com.zzjee.wm.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
+import com.zzjee.api.ResultDO;
+import com.zzjee.md.entity.MdCusEntity;
+import com.zzjee.md.entity.MdGoodsEntity;
+import com.zzjee.md.entity.MdSupEntity;
+import com.zzjee.md.entity.MvGoodsEntity;
 import com.zzjee.wm.entity.*;
+import com.zzjee.wm.page.WmImNoticeHPage;
+import com.zzjee.wm.page.WmNoticeImpPage;
+import com.zzjee.wm.service.WmImNoticeHServiceI;
+import com.zzjee.wmutil.*;
+import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
-import org.apache.poi.hssf.usermodel.HSSFPatriarch;
-import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -42,13 +22,7 @@ import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.core.util.BarcodeUtil;
-import org.jeecgframework.core.util.DateUtils;
-import org.jeecgframework.core.util.ExceptionUtil;
-import org.jeecgframework.core.util.MyBeanUtils;
-import org.jeecgframework.core.util.QRcodeUtil;
-import org.jeecgframework.core.util.ResourceUtil;
-import org.jeecgframework.core.util.StringUtil;
+import org.jeecgframework.core.util.*;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
@@ -66,32 +40,23 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import com.zzjee.api.ResultDO;
-import com.zzjee.md.entity.MdCusEntity;
-import com.zzjee.md.entity.MdGoodsEntity;
-import com.zzjee.md.entity.MdSupEntity;
-import com.zzjee.md.entity.MvGoodsEntity;
-import com.zzjee.wm.page.WmImNoticeHPage;
-import com.zzjee.wm.page.WmNoticeImpPage;
-import com.zzjee.wm.service.WmImNoticeHServiceI;
-import com.zzjee.wmutil.billResult;
-import com.zzjee.wmutil.resResult;
-import com.zzjee.wmutil.wmIntUtil;
-import com.zzjee.wmutil.wmUtil;
-import com.zzjee.wmutil.yyUtil;
-
-import net.sf.json.JSONArray;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Title: Controller
@@ -159,7 +124,7 @@ public class WmImNoticeHController extends BaseController {
 	public ModelAndView doPrint(String id,HttpServletRequest request) {
 		WmImNoticeHEntity wmImNoticeHEntity = wmImNoticeHService.getEntity(WmImNoticeHEntity.class, id);
 		request.setAttribute("wmImNoticeHPage", wmImNoticeHEntity);
-		request.setAttribute("kprq",DateUtils.date2Str(wmImNoticeHEntity.getCreateDate(),DateUtils.date_sdf));
+		request.setAttribute("kprq", DateUtils.date2Str(wmImNoticeHEntity.getCreateDate(), DateUtils.date_sdf));
 		request.setAttribute("comname", ResourceUtil.getConfigByName("comname"));
 
 		if(StringUtil.isNotEmpty(wmImNoticeHEntity.getImCusCode())){
@@ -242,14 +207,14 @@ public class WmImNoticeHController extends BaseController {
 
 	@RequestMapping(params = "datagridbatch")
 	public void datagridbatch(WmImNoticeIEntity wmImNoticeI,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid) {
+                              HttpServletRequest request, HttpServletResponse response,
+                              DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeIEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
 				wmImNoticeI);
 		if ("on".equals(ResourceUtil.getConfigByName("comgroup"))){
-			cq.like("sysOrgCode",wmUtil.getCurrentDepartCode()+"%");
+			cq.like("sysOrgCode", wmUtil.getCurrentDepartCode()+"%");
 		}
 		cq.eq("binPre", "N");
 		cq.add();
@@ -276,8 +241,8 @@ public class WmImNoticeHController extends BaseController {
 	}
 	@RequestMapping(params = "datagridtbatch")
 	public void datagridtbatch(WmImNoticeIEntity wmImNoticeI,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid) {
+                               HttpServletRequest request, HttpServletResponse response,
+                               DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeIEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
@@ -311,8 +276,8 @@ public class WmImNoticeHController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid) {
+                         HttpServletRequest request, HttpServletResponse response,
+                         DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeHEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
@@ -356,8 +321,8 @@ public class WmImNoticeHController extends BaseController {
 
 	@RequestMapping(params = "datagridqt")
 	public void datagridqt(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid) {
+                           HttpServletRequest request, HttpServletResponse response,
+                           DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeHEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
@@ -405,8 +370,8 @@ public class WmImNoticeHController extends BaseController {
 	//退货
 	@RequestMapping(params = "datagridt")
 	public void datagridt(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid) {
+                          HttpServletRequest request, HttpServletResponse response,
+                          DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeHEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
@@ -455,8 +420,8 @@ public class WmImNoticeHController extends BaseController {
 	//退货
 	@RequestMapping(params = "datagridyk")
 	public void datagridyk(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid) {
+                           HttpServletRequest request, HttpServletResponse response,
+                           DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeHEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
@@ -502,7 +467,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "appor")
 	@ResponseBody
 	public AjaxJson doappor(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request) {
+                            HttpServletRequest request) {
 		AjaxJson j = new AjaxJson();
 
 		String message = "审核成功";
@@ -546,7 +511,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "close")
 	@ResponseBody
 	public AjaxJson doclose(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request) {
+                            HttpServletRequest request) {
 		AjaxJson j = new AjaxJson();
 
 		String message = "完成成功";
@@ -591,7 +556,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "doDel")
 	@ResponseBody
 	public AjaxJson doDel(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request) {
+                          HttpServletRequest request) {
 		boolean  deltrue = true;
 		if(!"database".equals(ResourceUtil.getConfigByName("sys.del"))){
 			deltrue=false;
@@ -652,7 +617,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "doPrinthpid")
 	@ResponseBody
 	public void downReceiveExcelhpid(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response) {
+                                     HttpServletRequest request, HttpServletResponse response) {
 		OutputStream fileOut = null;
 		BufferedImage bufferImg = null;
 //		String codedFileName = null;
@@ -850,7 +815,7 @@ public class WmImNoticeHController extends BaseController {
 					Calendar cal = Calendar.getInstance();//使用默认时区和语言环境获得一个日历。
 					cal.setTime(DateUtils.str2Date(wmInQmIEntity.getProData(), DateUtils.date_sdf));
 					cal.add(Calendar.DAY_OF_MONTH, Integer.parseInt(goods.getBzhiQi()));//取当前日期的后一天.
-					cell4.setCellValue("到期日期:"+DateUtils.date2Str(cal.getTime(), DateUtils.date_sdf));
+					cell4.setCellValue("到期日期:"+ DateUtils.date2Str(cal.getTime(), DateUtils.date_sdf));
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -895,7 +860,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "doPrint")
 	@ResponseBody
 	public void downReceiveExcel(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response) {
+                                 HttpServletRequest request, HttpServletResponse response) {
 		OutputStream fileOut = null;
 		BufferedImage bufferImg = null;
 //		String codedFileName = null;
@@ -1121,7 +1086,7 @@ public class WmImNoticeHController extends BaseController {
 			}
 			Row rowColumnInfo = sheet.createRow((short) 2 + cellsNum); // 列名
 			rowColumnInfo.createCell(0).setCellValue(
-					"注:烦请按时送到"+ResourceUtil.getConfigByName("comaddr")+" 谢谢！");
+					"注:烦请按时送到"+ ResourceUtil.getConfigByName("comaddr")+" 谢谢！");
 			CellRangeAddress c15 = new CellRangeAddress(10 + cellsNum,
 					10 + cellsNum, 0, 15);
 			sheet.addMergedRegion(c15);
@@ -1140,13 +1105,10 @@ public class WmImNoticeHController extends BaseController {
 		}
 	}
 
-
-
-
 	@RequestMapping(params = "doPrintysd")
 	@ResponseBody
 	public void downReceiveExcelysd(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response) {
+                                    HttpServletRequest request, HttpServletResponse response) {
 		OutputStream fileOut = null;
 		BufferedImage bufferImg = null;
 //		String codedFileName = null;
@@ -1166,11 +1128,482 @@ public class WmImNoticeHController extends BaseController {
 			// 进行转码，使其支持中文文件名
 //			codedFileName = java.net.URLEncoder.encode("中文", "UTF-8");
 			response.setHeader("content-disposition", "attachment;filename="
-					+ wmImNoticeH.getNoticeId() + ".xls");
+					+ wmImNoticeH.getNoticeId() + "验收单.xls");
 			ImageIO.write(bufferImg, "jpg", byteArrayOut);
 
 			HSSFWorkbook wb = new HSSFWorkbook();
-			HSSFSheet sheet = wb.createSheet("验收单");
+			HSSFSheet sheet = wb.createSheet(wmImNoticeH.getNoticeId());
+			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）
+			sheet.setMargin(HSSFSheet.BottomMargin,0.1);// 页边距（下）
+			sheet.setMargin(HSSFSheet.LeftMargin,0.3);// 页边距（左）
+			sheet.setMargin(HSSFSheet.RightMargin,0.0);// 页边距（右
+//			sheet.setDisplayGridlines(true);
+			//set print grid lines or not
+//			sheet.setPrintGridlines(true);
+			sheet.setColumnWidth(0, 5 * 256);
+			sheet.setColumnWidth(1, 15 * 256);
+			sheet.setColumnWidth(2, 25 * 256);
+			sheet.setColumnWidth(3, 11 * 256);
+			sheet.setColumnWidth(4, 5 * 256);
+			sheet.setColumnWidth(5, 5 * 256);
+			sheet.setColumnWidth(6, 7 * 256);
+			sheet.setColumnWidth(7, 7 * 256);
+			sheet.setColumnWidth(8, 9 * 256);
+			sheet.setColumnWidth(9, 7 * 256);
+			sheet.setColumnWidth(10, 3 * 256);
+			// sheet.setColumnWidth(6, 8 * 256);
+			// sheet.setColumnWidth(7, 8 * 256);
+			// sheet.setColumnWidth(8, 8 * 256);
+
+			// 创建两种单元格格式
+			CellStyle cs = wb.createCellStyle();
+			CellStyle cs1 = wb.createCellStyle();
+			CellStyle cs2 = wb.createCellStyle();
+			CellStyle cs3 = wb.createCellStyle();
+			CellStyle cs4 = wb.createCellStyle();
+			CellStyle cs5 = wb.createCellStyle();
+			CellStyle cs5r = wb.createCellStyle();
+
+			CellStyle cs51 = wb.createCellStyle();
+			CellStyle cs52 = wb.createCellStyle();
+			// 创建两种字体
+			Font f = wb.createFont();
+			Font f2 = wb.createFont();
+			Font f5 = wb.createFont();
+			// 创建第一种字体样式（用于列名）
+			f.setFontHeightInPoints((short) 16);
+			f.setColor(IndexedColors.BLACK.getIndex());
+			f.setBoldweight(Font.BOLDWEIGHT_BOLD);
+
+			// 创建第二种字体样式（用于值）
+			f2.setFontHeightInPoints((short) 10);
+			f2.setColor(IndexedColors.BLACK.getIndex());
+
+
+			f5.setFontHeightInPoints((short) 8);
+			f5.setColor(IndexedColors.BLACK.getIndex());
+
+			// 设置第一种单元格的样式（用于列名）
+			cs.setFont(f);
+			cs.setBorderLeft(CellStyle.BORDER_NONE);
+			cs.setBorderRight(CellStyle.BORDER_NONE);
+			cs.setBorderTop(CellStyle.BORDER_NONE);
+			cs.setBorderBottom(CellStyle.BORDER_NONE);
+			cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+			cs1.setFont(f2);
+			cs1.setBorderLeft(CellStyle.BORDER_NONE);
+			cs1.setBorderRight(CellStyle.BORDER_NONE);
+			cs1.setBorderTop(CellStyle.BORDER_NONE);
+			cs1.setBorderBottom(CellStyle.BORDER_NONE);
+			cs1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+			cs1.setWrapText(true);
+			// 设置第二种单元格的样式（用于值）
+			cs2.setFont(f2);
+			cs2.setBorderLeft(CellStyle.BORDER_NONE);
+			cs2.setBorderRight(CellStyle.BORDER_NONE);
+			cs2.setBorderTop(CellStyle.BORDER_NONE);
+			cs2.setBorderBottom(CellStyle.BORDER_NONE);
+			cs2.setWrapText(true);
+
+			// cs2.setAlignment(CellStyle.BORDER_NONE);
+
+			cs3.setFont(f2);
+			cs3.setBorderLeft(CellStyle.BORDER_MEDIUM);
+			cs3.setBorderRight(CellStyle.BORDER_MEDIUM);
+			cs3.setBorderTop(CellStyle.BORDER_MEDIUM);
+			cs3.setBorderBottom(CellStyle.BORDER_MEDIUM);
+			// cs3.setAlignment(CellStyle.BORDER_HAIR);
+			cs4.setFont(f2);
+			cs4.setBorderTop(CellStyle.BORDER_MEDIUM);
+			cs4.setBorderBottom(CellStyle.BORDER_MEDIUM);
+
+			cs5.setFont(f2);
+			cs5.setBorderLeft(CellStyle.BORDER_THIN);
+			cs5.setBorderRight(CellStyle.BORDER_THIN);
+			cs5.setBorderTop(CellStyle.BORDER_THIN);
+			cs5.setBorderBottom(CellStyle.BORDER_THIN);
+			cs5.setWrapText(true);
+
+
+			cs5r.setFont(f2);
+			cs5r.setBorderLeft(CellStyle.BORDER_THIN);
+			cs5r.setBorderRight(CellStyle.BORDER_THIN);
+			cs5r.setBorderTop(CellStyle.BORDER_THIN);
+			cs5r.setBorderBottom(CellStyle.BORDER_THIN);
+			cs5r.setWrapText(true);
+			cs5r.setAlignment(CellStyle.ALIGN_RIGHT);
+
+
+
+			cs51.setFont(f2);
+			cs51.setBorderLeft(CellStyle.BORDER_THIN);
+			cs51.setBorderRight(CellStyle.BORDER_THIN);
+			cs51.setBorderTop(CellStyle.BORDER_THIN);
+			cs51.setBorderBottom(CellStyle.BORDER_THIN);
+			cs51.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+			cs51.setWrapText(true);
+
+			cs52.setFont(f5);
+			cs52.setBorderLeft(CellStyle.BORDER_NONE);
+			cs52.setBorderRight(CellStyle.BORDER_NONE);
+			cs52.setBorderTop(CellStyle.BORDER_NONE);
+			cs52.setBorderBottom(CellStyle.BORDER_NONE);
+			cs52.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+			cs52.setWrapText(true);
+			cs52.setRotation((short)255);
+
+			int page = 0;
+			int cerconNo = 1;
+			String tsql = "SELECT wq.pro_data,wq.goods_unit,wq.rec_deg, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,"
+					+ "cast(sum(wq.qm_ok_quat) as signed) as goods_count,truncate(sum(wq.tin_tj),2) tin_tj ,truncate(sum(wq.tin_zhl),2) as tin_zhl,count(*) as tuopan   "
+					+ "FROM wm_in_qm_i wq,mv_goods mg where wq.im_notice_id = ? and  wq.goods_id = mg.goods_code group by wq.im_notice_id, mg.goods_code,wq.pro_data";
+			List<Map<String, Object>> result = systemService
+					.findForJdbc(tsql, wmImNoticeH.getNoticeId());
+
+
+			int size = result.size();
+			int pagesize = 10;
+			int pagecount = size%pagesize==0?size/pagesize:size/pagesize+1;
+			double sum = 0;
+			double sumzl = 0;
+			do {
+
+				// 画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）
+				HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
+				// anchor主要用于设置图片的属性
+				HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 0, 0,
+						(short) 8, page*20+1, (short) 10, page*20+5);
+				anchor.setAnchorType(2);
+				// 插入图片
+				patriarch
+						.createPicture(anchor, wb.addPicture(
+								byteArrayOut.toByteArray(),
+								HSSFWorkbook.PICTURE_TYPE_JPEG));
+
+				// 创建第一行
+				Row row = sheet.createRow((short) page*20+0); // 第一行空白
+
+
+				Row row1 = sheet.createRow((short) page*20+1); // 第二行标题
+				row1.setHeight((short) 700);
+				Cell cellTitle = row1.createCell(0);
+				if(wmImNoticeH.getOrderTypeCode().equals("03")){
+					cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"退货验收单");
+				}else if(wmImNoticeH.getOrderTypeCode().equals("01")){
+					cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货验收单");
+				}else if(wmImNoticeH.getOrderTypeCode().equals("04")){
+					cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"越库单");
+				}else if(wmImNoticeH.getOrderTypeCode().equals("09")){
+					cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货验收单");
+				}
+
+
+				cellTitle.setCellStyle(cs);
+
+				Row rowHead1 = sheet.createRow((short) page*20+2); // 头部第一行
+				Cell cellHead1 = rowHead1.createCell(0);
+				cellHead1.setCellValue("公司地址："+ ResourceUtil.getConfigByName("comaddr") );
+				cellHead1.setCellStyle(cs1);
+
+				Row rowHead2 = sheet.createRow((short) page*20+3); // 头部第二行
+				Cell cellHead2 = rowHead2.createCell(0);
+				cellHead2.setCellValue("电话："+ ResourceUtil.getConfigByName("comtel") );
+				cellHead2.setCellStyle(cs1);
+
+
+				Row rowHead4 = sheet.createRow((short) page*20+4); // 头部第二行
+				Cell cellHead4 = rowHead4.createCell(0);
+				cellHead4.setCellValue("到货日期： " + DateUtils.date2Str(wmImNoticeH.getImData(), DateUtils.date_sdf) );
+				cellHead4.setCellStyle(cs2);
+
+				Cell cellHead42 = rowHead4.createCell(3);
+				cellHead42.setCellValue("预约单号： " +wmImNoticeH.getNoticeId());
+				cellHead42.setCellStyle(cs2);
+
+				Row rowHead5 = sheet.createRow((short) page*20+5); // 头部第二行
+				Cell cellHead5 = rowHead5.createCell(0);
+				cellHead5.setCellValue("客户采购单号： "+wmImNoticeH.getImCusCode() );
+				cellHead5.setCellStyle(cs2);
+
+				Cell cellHead52 = rowHead5.createCell(3);
+				cellHead52.setCellValue("月台： " +wmImNoticeH.getPlatformCode());
+				cellHead52.setCellStyle(cs2);
+
+				Row rowHead6 = sheet.createRow((short) page*20+6); // 头部第二行
+				Cell cellHead6 = rowHead6.createCell(0);
+				MdCusEntity md = systemService.findUniqueByProperty(MdCusEntity.class, "keHuBianMa", wmImNoticeH.getCusCode());
+
+				cellHead6.setCellValue("客户名称： " +wmImNoticeH.getCusCode()+md.getZhongWenQch());
+				cellHead6.setCellStyle(cs2);
+
+				Cell cellHead62 = rowHead6.createCell(3);
+				cellHead62.setCellValue("供应商/车号： "+wmImNoticeH.getImCarNo() );
+				cellHead62.setCellStyle(cs2);
+
+				Row rowHead7 = sheet.createRow((short) page*20+7); // 头部第二行
+				Cell cellHead7 = rowHead7.createCell(0);
+				cellHead7.setCellValue("客户电话： " +md.getDianHua());
+				cellHead7.setCellStyle(cs2);
+
+				Cell cellHead72 = rowHead7.createCell(3);
+				cellHead72.setCellValue("打印时间： "+ DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat) +"                        第"+(page+1)+"页");
+				cellHead72.setCellStyle(cs2);
+
+
+				// 合并单元格
+				CellRangeAddress c = new CellRangeAddress(page*20+0, page*20+0, 0, 9); // 第一行空白
+				CellRangeAddress c1 = new CellRangeAddress(page*20+1, page*20+1, 0, 8);// 第二行标题
+				CellRangeAddress c2 = new CellRangeAddress(page*20+2, page*20+2, 0, 9);// 第三行地址
+				CellRangeAddress c3 = new CellRangeAddress(page*20+3, page*20+3, 0, 9);// 第四行电话
+
+				CellRangeAddress c4 = new CellRangeAddress(page*20+4, page*20+4, 0, 2);// 第5行 到货日期
+				CellRangeAddress c42 = new CellRangeAddress(page*20+4, page*20+4, 3, 9);// 第5行预约单号
+				CellRangeAddress c5 = new CellRangeAddress(page*20+5, page*20+5, 0, 2);// 第6行客户采购单号
+				CellRangeAddress c52 = new CellRangeAddress(page*20+5, page*20+5, 3, 9);// 第6行月台
+				CellRangeAddress c6 = new CellRangeAddress(page*20+6, page*20+6, 0, 2);// 第7行客户名称
+				CellRangeAddress c62 = new CellRangeAddress(page*20+6, page*20+6, 3, 9);// 第7行车号
+				CellRangeAddress c7 = new CellRangeAddress(page*20+7, page*20+7, 0, 2);//第7行客户电话
+				CellRangeAddress c72 = new CellRangeAddress(page*20+7, page*20+7, 3, 9);//第7行打印时间
+				sheet.addMergedRegion(c);
+				sheet.addMergedRegion(c1);
+				sheet.addMergedRegion(c2);
+				sheet.addMergedRegion(c3);
+				sheet.addMergedRegion(c4);
+				sheet.addMergedRegion(c5);
+				sheet.addMergedRegion(c6);
+				sheet.addMergedRegion(c7);
+				sheet.addMergedRegion(c42);
+				sheet.addMergedRegion(c52);
+				sheet.addMergedRegion(c62);
+				sheet.addMergedRegion(c72);
+
+				Cell cell73 = row.createCell(10);
+				cell73.setCellValue("① 财务联 ② 客户联 ③司机联 ④回单联   ");
+				cell73.setCellStyle(cs52);
+
+
+				CellRangeAddress c73 = new CellRangeAddress(page*20+0, page*20+19, 10, 10);//第7行打印时间
+				sheet.addMergedRegion(c73);
+
+				Row rowColumnName = sheet.createRow((short) page*20+8); // 列名
+				String[] columnNames = { "序号", "商品编码", "商品名称", "生产日期", "货温","单位", "数量", "毛重KG","体积cm³","备注" };
+				if(ResourceUtil.getConfigByName("systuopan").equals("yes")){
+					String[]   columnNamest = { "序号", "商品编码", "商品名称", "生产日期", "货温","单位", "数量", "毛重KG","托盘数","备注" };
+					columnNames = columnNamest;
+				}
+				try{
+					if("hr".equals(ResourceUtil.getConfigByName("wm.ckd"))){
+						String[] columnNames1 = { "序号", "商品编码", "商品名称", "生产日期", "货温","单位", "数量", "毛重KG","体积cm³","备注" };
+						if(ResourceUtil.getConfigByName("systuopan").equals("yes")){
+							String[]   columnNamest1 = { "序号", "商品编码", "商品名称", "生产日期", "货温","单位", "数量", "毛重KG","托盘数","备注" };
+							columnNames1 = columnNamest1;
+						}
+						columnNames = columnNames1;
+					}
+				}catch ( Exception e){
+				}
+				for (int i = 0; i < columnNames.length; i++) {
+					Cell cell = rowColumnName.createCell(i);
+					cell.setCellValue(columnNames[i]);
+					cell.setCellStyle(cs3);
+				}
+
+
+				int cellsNum = page*20+8;
+				int oversize = 0;
+				if(size==pagesize&&page==pagecount-1){
+					oversize = 1;
+				}
+				for (int i = page*pagesize; i < (page+1)*pagesize + oversize; i++) {
+					if(i< size){
+
+						cellsNum++;
+						Row rowColumnValue = sheet.createRow((short) cellsNum); // 列名
+						rowColumnValue.setHeight((short) 250);
+
+						Cell cell1 = rowColumnValue.createCell(0);
+						cell1.setCellValue(cerconNo);
+						cell1.setCellStyle(cs51);
+						Cell cell2 = rowColumnValue.createCell(1);
+						cell2.setCellValue(result.get(i).get("goods_id")
+								.toString());
+						cell2.setCellStyle(cs5);
+
+						Cell cell3 = rowColumnValue.createCell(2);
+						cell3.setCellValue(result.get(i).get("shp_ming_cheng")
+								.toString());
+						cell3.setCellStyle(cs5);
+						try {
+							Cell cell4 = rowColumnValue.createCell(3);// 生产日期
+
+							cell4.setCellStyle(cs5r);
+							cell4.setCellValue(result.get(i).get("pro_data")
+									.toString());
+
+						} catch (Exception e) {
+							// TODO: handle exception
+
+						}
+
+						try {
+							Cell cell5 = rowColumnValue.createCell(4);// 温度
+
+							cell5.setCellStyle(cs5);
+							cell5.setCellValue(result.get(i)
+									.get("rec_deg").toString());
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+
+						try {
+							Cell cell6 = rowColumnValue.createCell(5);// 单位
+
+							cell6.setCellStyle(cs5);
+							cell6.setCellValue(result.get(i).get("goods_unit")
+									.toString());
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+
+						try {
+							sum = sum + Double.parseDouble(result.get(i).get("goods_count")
+									.toString());
+							Cell cell7 = rowColumnValue.createCell(6);// 数量
+
+							cell7.setCellStyle(cs5);
+							cell7.setCellValue(result.get(i).get("goods_count")
+									.toString());
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+
+						try {
+							Cell cell8 = rowColumnValue.createCell(7);// 毛重
+							sumzl = sumzl + Double.parseDouble(result.get(i).get("tin_zhl")
+									.toString());
+							cell8.setCellStyle(cs5);
+							cell8.setCellValue(result.get(i).get("tin_zhl")
+									.toString());
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+						try {
+
+							Cell cell9 = rowColumnValue.createCell(8);// 体积
+
+							cell9.setCellStyle(cs5);
+							if(ResourceUtil.getConfigByName("systuopan").equals("yes")){
+								cell9.setCellValue(result.get(i).get("tuopan")
+										.toString());
+							}else{
+								cell9.setCellValue(result.get(i).get("tin_tj")
+										.toString());
+							}
+
+
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+
+
+						Cell cell10 = rowColumnValue.createCell(9);// 备注
+						try{
+							if("hr".equals(ResourceUtil.getConfigByName("wm.rkd"))) {
+								try{
+//									 cell10.setCellValue(wmUtil.getstock(result.get(i).get("goods_id").toString()));
+								}catch (Exception e){
+
+								}
+							}
+						}catch (Exception e){
+
+						}
+						cell10.setCellStyle(cs5);
+
+						cerconNo++;
+					}
+					if(i== size){
+
+						cellsNum++;
+						Row rowColumnValue = sheet.createRow((short) cellsNum); // 列名
+						rowColumnValue.setHeight((short) 250);
+						Cell cell6 = rowColumnValue.createCell(6);// 备注
+						cell6.setCellValue(Double.toString(sum));
+						Cell cell7 = rowColumnValue.createCell(7);// 重量
+						cell7.setCellValue(Double.toString(sumzl));
+//				cell6.setCellStyle(cs5);
+						Cell cell0 = rowColumnValue.createCell(0);// 合计
+						cell0.setCellValue("合计：");
+//				cell0.setCellStyle(cs5);
+						CellRangeAddress c15 = new CellRangeAddress( cellsNum,
+								cellsNum, 0, 5);
+						sheet.addMergedRegion(c15);
+						cerconNo++;
+
+					}
+
+
+				}
+				Row rowColumnInfo = sheet.createRow((short) 1 + cellsNum); // 列名
+				rowColumnInfo.setHeight((short) 250);
+				rowColumnInfo.createCell(0).setCellValue(
+						"验收人员：                               送货人员：                                客户/委托人：");
+				CellRangeAddress c15 = new CellRangeAddress(1 + cellsNum,
+						1 + cellsNum, 0, 9);
+				sheet.addMergedRegion(c15);
+				page++;
+			} while (page<pagecount);
+			fileOut = response.getOutputStream();
+			HSSFPrintSetup printSetup = sheet.getPrintSetup();
+			printSetup.setPaperSize(HSSFPrintSetup.QUARTO_PAPERSIZE);
+			wb.write(fileOut);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (fileOut != null) {
+				try {
+					fileOut.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+
+
+	@RequestMapping(params = "doPrintrkd")
+	@ResponseBody
+	public void downReceiveExcelrkd(WmImNoticeHEntity wmImNoticeH,
+                                    HttpServletRequest request, HttpServletResponse response) {
+		OutputStream fileOut = null;
+		BufferedImage bufferImg = null;
+//		String codedFileName = null;
+		wmImNoticeH = systemService.getEntity(WmImNoticeHEntity.class,
+				wmImNoticeH.getId());// 获取抬头
+
+		// 先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray
+		try {
+//			StringBuffer sber = new StringBuffer();
+
+			ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+//			bufferImg = ImageIO.read(BarcodeUtil.generateToStream(wmImNoticeH
+//					.getNoticeId()));
+			bufferImg = QRcodeUtil.createImage(wmImNoticeH
+					.getNoticeId());
+
+			// 进行转码，使其支持中文文件名
+//			codedFileName = java.net.URLEncoder.encode("中文", "UTF-8");
+			response.setHeader("content-disposition", "attachment;filename="
+					+ wmImNoticeH.getNoticeId() + "入库单.xls");
+			ImageIO.write(bufferImg, "jpg", byteArrayOut);
+
+			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFSheet sheet = wb.createSheet(wmImNoticeH.getNoticeId());
 			sheet.setMargin(HSSFSheet.TopMargin,0.1);// 页边距（上）
 			sheet.setMargin(HSSFSheet.BottomMargin,0.1);// 页边距（下）
 			sheet.setMargin(HSSFSheet.LeftMargin,0.3);// 页边距（左）
@@ -1296,9 +1729,9 @@ public class WmImNoticeHController extends BaseController {
 
 			int page = 0;
 			int cerconNo = 1;
-			String tsql = "SELECT wq.pro_data,wq.goods_unit,wq.rec_deg, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,"
-					+ "cast(sum(wq.qm_ok_quat) as signed) as goods_count,truncate(sum(wq.tin_tj),2) tin_tj ,truncate(sum(wq.tin_zhl),2) as tin_zhl,count(*) as tuopan   "
-					+ "FROM wm_in_qm_i wq,mv_goods mg where wq.im_notice_id = ? and  wq.goods_id = mg.goods_code group by wq.im_notice_id, mg.goods_code,wq.pro_data";
+			String tsql = "SELECT wq.goods_pro_data as pro_data,wq.goods_unit, (select wmi.rec_deg from wm_in_qm_i wmi where wmi.im_notice_id = wq.order_id and wmi.goods_id =  wq.goods_id limit 1) as rec_deg, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,"
+					+ " cast(sum(wq.goods_qua) as signed) as goods_count,truncate(sum(wq.goods_qua*mg.ti_ji_cm),2) tin_tj ,truncate(sum(wq.goods_qua*mg.zhl_kg),2) as tin_zhl,count(*) as tuopan     "
+					+ "FROM wm_to_up_goods wq,mv_goods mg where wq.order_id = ? and  wq.goods_id = mg.goods_code group by wq.order_id, mg.goods_code,wq.goods_pro_data";
 			List<Map<String, Object>> result = systemService
 					.findForJdbc(tsql, wmImNoticeH.getNoticeId());
 
@@ -1330,13 +1763,13 @@ public class WmImNoticeHController extends BaseController {
 			row1.setHeight((short) 700);
 			Cell cellTitle = row1.createCell(0);
 			if(wmImNoticeH.getOrderTypeCode().equals("03")){
-				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"退货验收单");
+				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"退货入库单");
 			}else if(wmImNoticeH.getOrderTypeCode().equals("01")){
-				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货验收单");
+				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货入库单");
 			}else if(wmImNoticeH.getOrderTypeCode().equals("04")){
 				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"越库单");
 			}else if(wmImNoticeH.getOrderTypeCode().equals("09")){
-				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货验收单");
+				cellTitle.setCellValue(ResourceUtil.getConfigByName("comname")+"收货入库单");
 			}
 
 
@@ -1344,18 +1777,18 @@ public class WmImNoticeHController extends BaseController {
 
 			Row rowHead1 = sheet.createRow((short) page*20+2); // 头部第一行
 			Cell cellHead1 = rowHead1.createCell(0);
-			cellHead1.setCellValue("公司地址："+ResourceUtil.getConfigByName("comaddr") );
+			cellHead1.setCellValue("公司地址："+ ResourceUtil.getConfigByName("comaddr") );
 			cellHead1.setCellStyle(cs1);
 
 			Row rowHead2 = sheet.createRow((short) page*20+3); // 头部第二行
 			Cell cellHead2 = rowHead2.createCell(0);
-			cellHead2.setCellValue("电话："+ResourceUtil.getConfigByName("comtel") );
+			cellHead2.setCellValue("电话："+ ResourceUtil.getConfigByName("comtel") );
 			cellHead2.setCellStyle(cs1);
 
 
 			Row rowHead4 = sheet.createRow((short) page*20+4); // 头部第二行
 			Cell cellHead4 = rowHead4.createCell(0);
-			cellHead4.setCellValue("到货日期： " +DateUtils.date2Str(wmImNoticeH.getImData(), DateUtils.date_sdf) );
+			cellHead4.setCellValue("到货日期： " + DateUtils.date2Str(wmImNoticeH.getImData(), DateUtils.date_sdf) );
 			cellHead4.setCellStyle(cs2);
 
 			Cell cellHead42 = rowHead4.createCell(3);
@@ -1388,7 +1821,7 @@ public class WmImNoticeHController extends BaseController {
 			cellHead7.setCellStyle(cs2);
 
 			Cell cellHead72 = rowHead7.createCell(3);
-			cellHead72.setCellValue("打印时间： "+DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat) +"                        第"+(page+1)+"页");
+			cellHead72.setCellValue("打印时间： "+ DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat) +"                        第"+(page+1)+"页");
 			cellHead72.setCellStyle(cs2);
 
 
@@ -1657,7 +2090,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
 	public AjaxJson doAdd(WmImNoticeHEntity wmImNoticeH,
-			WmImNoticeHPage wmImNoticeHPage, HttpServletRequest request) {
+                          WmImNoticeHPage wmImNoticeHPage, HttpServletRequest request) {
 		List<WmImNoticeIEntity> wmImNoticeIList = wmImNoticeHPage
 				.getWmImNoticeIList();
 		AjaxJson j = new AjaxJson();
@@ -1755,10 +2188,7 @@ public class WmImNoticeHController extends BaseController {
 			if(StringUtil.isEmpty(formDate)){
 				formDate = "2011-01-01";
 			}
-			yyUtil.getPord(formDate);//采购入库
-			yyUtil.getqtrd(formDate);//其他入库
-			yyUtil.getcprd(formDate);//成品入库
-
+			yyUtil.getPord(formDate);
 
 		}
 		if ("UAS".equals(ResourceUtil.getConfigByName("interfacetype"))){
@@ -1841,7 +2271,7 @@ public class WmImNoticeHController extends BaseController {
 
 	@RequestMapping(params = "doPost")
 	@ResponseBody
-	public AjaxJson dopost(String id,HttpServletRequest request) {
+	public AjaxJson dopost(String id, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "读取成功";
@@ -1926,7 +2356,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
 	public AjaxJson doUpdate(WmImNoticeHEntity wmImNoticeH,
-			WmImNoticeHPage wmImNoticeHPage, HttpServletRequest request) {
+                             WmImNoticeHPage wmImNoticeHPage, HttpServletRequest request) {
 		List<WmImNoticeIEntity> wmImNoticeIList = wmImNoticeHPage
 				.getWmImNoticeIList();
 		AjaxJson j = new AjaxJson();
@@ -1987,8 +2417,8 @@ public class WmImNoticeHController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(ModelMap modelMap,WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest req) {
+	public ModelAndView goAdd(ModelMap modelMap, WmImNoticeHEntity wmImNoticeH,
+                              HttpServletRequest req) {
 		if (StringUtil.isNotEmpty(wmImNoticeH.getId())) {
 			wmImNoticeH = wmImNoticeHService.getEntity(WmImNoticeHEntity.class,
 					wmImNoticeH.getId());
@@ -2040,7 +2470,7 @@ public class WmImNoticeHController extends BaseController {
 	 */
 	@RequestMapping(params = "goUpdate")
 	public ModelAndView goUpdate(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest req) {
+                                 HttpServletRequest req) {
 		if (StringUtil.isNotEmpty(wmImNoticeH.getId())) {
 			wmImNoticeH = wmImNoticeHService.getEntity(WmImNoticeHEntity.class,
 					wmImNoticeH.getId());
@@ -2079,7 +2509,7 @@ public class WmImNoticeHController extends BaseController {
 	 */
 	@RequestMapping(params = "wmImNoticeIList")
 	public ModelAndView wmImNoticeIList(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest req) {
+                                        HttpServletRequest req) {
 
 		// ===================================================================================
 		// 获取参数
@@ -2107,8 +2537,8 @@ public class WmImNoticeHController extends BaseController {
 	 */
 	@RequestMapping(params = "exportXls")
 	public String exportXls(WmImNoticeHEntity wmImNoticeH,
-			HttpServletRequest request, HttpServletResponse response,
-			DataGrid dataGrid, ModelMap map) {
+                            HttpServletRequest request, HttpServletResponse response,
+                            DataGrid dataGrid, ModelMap map) {
 		CriteriaQuery cq = new CriteriaQuery(WmImNoticeHEntity.class, dataGrid);
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
@@ -2171,7 +2601,7 @@ public class WmImNoticeHController extends BaseController {
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request,
-			HttpServletResponse response) {
+                                HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -2218,7 +2648,7 @@ public class WmImNoticeHController extends BaseController {
                     List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
                 for (WmNoticeImpPage page : list) {
                 	if(pageheader.getImCusCode().equals(page.getImCusCode())){
-						WmImNoticeIEntity  wmi = new WmImNoticeIEntity();
+						WmImNoticeIEntity wmi = new WmImNoticeIEntity();
 						wmi.setGoodsCode(page.getGoodsId());
 						MvGoodsEntity mvgoods = systemService.findUniqueByProperty(
 								MvGoodsEntity.class, "goodsCode", wmi.getGoodsCode());
@@ -2319,7 +2749,7 @@ public class WmImNoticeHController extends BaseController {
 	public ResponseEntity<?> create(
 			@RequestBody WmImNoticeHPage wmImNoticeHPage) {
 		// 调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		ResultDO D0 = new  ResultDO();
+		ResultDO D0 = new ResultDO();
 
 
 		// 保存
