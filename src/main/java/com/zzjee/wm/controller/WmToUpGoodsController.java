@@ -468,20 +468,20 @@ public class WmToUpGoodsController extends BaseController {
 		try{
 			D0.setOK(true);
 			WmInQmIEntity wmInQmIEntity = systemService.get(WmInQmIEntity.class,wmToUpGoods.getOrderIdI());
-			if(wmInQmIEntity!=null){
-				if("Y".equals(wmInQmIEntity.getBinSta())){
-					D0.setOK(false);
-					D0.setErrorMsg("已经上架，不能重复上架");
-					return new ResponseEntity(D0, HttpStatus.OK);
-				}
-				wmInQmIEntity.setBinSta("Y");
-				systemService.updateEntitie(wmInQmIEntity);
-			}else{
-				D0.setOK(false);
-				D0.setErrorMsg("验收任务已经删除，不能上架");
-
-				return new ResponseEntity(D0, HttpStatus.OK);
-			}
+//			if(wmInQmIEntity!=null){
+//				if("Y".equals(wmInQmIEntity.getBinSta())){
+//					D0.setOK(false);
+//					D0.setErrorMsg("已经上架，不能重复上架");
+//					return new ResponseEntity(D0, HttpStatus.OK);
+//				}
+//				wmInQmIEntity.setBinSta("Y");
+//				systemService.updateEntitie(wmInQmIEntity);
+//			}else{
+//				D0.setOK(false);
+//				D0.setErrorMsg("验收任务已经删除，不能上架");
+//
+//				return new ResponseEntity(D0, HttpStatus.OK);
+//			}
 			if(StringUtil.isNotEmpty(wmToUpGoods.getOrderIdI())){
 				List<WmToUpGoodsEntity> wmToUpGoodsEntity = systemService.findByProperty(WmToUpGoodsEntity.class,"orderIdI",wmToUpGoods.getOrderIdI());
 				if(wmToUpGoodsEntity!=null&&wmToUpGoodsEntity.size()>0){
