@@ -1015,15 +1015,21 @@ for (WmInQmIEntity wmInQmIEntity : wmInQmIso) {
 								systemService.updateEntitie(mdGoodsEntity);
 							}
 						}
-
-
 					}
 				}catch (Exception e){
-
+				}
+				if(StringUtil.isNotEmpty(wmInQmI.getProData())){//8位日期转yyyy-mm-dd
+					try{
+						if(StringUtil.getStringLen(wmInQmI.getProData())==8){
+							String prodate = wmInQmI.getProData().substring(0,4)+"-"+
+									wmInQmI.getProData().substring(4,6)+"-"+
+									wmInQmI.getProData().substring(6,8);
+							wmInQmI.setProData(prodate);
+						}
+					}catch (Exception e){
+					}
 				}
 				String id = wmInQmIService.save(wmInQmI).toString();
-
-
 				if("on".equals(ResourceUtil.getConfigByName("onestepup"))&&StringUtil.isNotEmpty(wmInQmI.getBinId())){
 					toup(id);
 				}
