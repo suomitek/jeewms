@@ -2458,6 +2458,7 @@ public class WmOmNoticeHController extends BaseController {
 			try{
 				MdGoodsEntity md =systemService.findUniqueByProperty(MdGoodsEntity.class,"shpBianMa",t.getGoodsId());
 				t.setCusCode(md.getSuoShuKeHu());
+				wmOmNoticeH.setOmSta("未送货");
 				wmOmNoticeH.setCusCode(md.getSuoShuKeHu());
 			}catch ( Exception e){
 
@@ -2517,14 +2518,14 @@ public class WmOmNoticeHController extends BaseController {
 		String hql="from WmOmNoticeHEntity  ";
 
 		List<WmOmNoticeHEntity> listWaveToDowns =new ArrayList<>();
-//		if(StringUtil.isNotEmpty(searchstr)){
-//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
-//		}else{
-//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
-//
-//		}
+		if(StringUtil.isNotEmpty(searchstr)){
+			hql="from WmOmNoticeHEntity where  omSta <> ? and  reMember = ? and  omNoticeId = ?";
+			listWaveToDowns = wmOmNoticeHService.findHql(hql,"复核完成",username,searchstr);
+		}else{
+			hql="from WmOmNoticeHEntity where omSta <> ? and   reMember = ? ";
+			listWaveToDowns = wmOmNoticeHService.findHql(hql,"复核完成",username);
+
+		}
 		listWaveToDowns = wmOmNoticeHService.findHql(hql);
 		D0.setObj(listWaveToDowns);
 		return new ResponseEntity(D0, HttpStatus.OK);
@@ -2539,10 +2540,10 @@ public class WmOmNoticeHController extends BaseController {
 		List<WmOmNoticeIEntity> listWaveToDowns =new ArrayList<>();
 //			hql="from WmImNoticeIEntity where  noticeiSta <> ? and  omNoticeId = ?";
 //			listWaveToDowns = wmOmNoticeHService.findHql(hql,"已核货",searchstr);
-			hql="from WmOmNoticeIEntity ";
-//			hql="from WmOmNoticeIEntity where omSta = ? and  omNoticeId = ?";
-			listWaveToDowns = wmOmNoticeHService.findHql(hql);
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,"Y", omnoticeid);
+//			hql="from WmOmNoticeIEntity ";
+			hql="from WmOmNoticeIEntity where   omNoticeId = ?";
+//			listWaveToDowns = wmOmNoticeHService.findHql(hql);
+			listWaveToDowns = wmOmNoticeHService.findHql(hql, omnoticeid);
 		D0.setObj(listWaveToDowns);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
@@ -2554,12 +2555,34 @@ public class WmOmNoticeHController extends BaseController {
 		D0.setOK(true);
 		String hql="from WmImNoticeIEntity where id = ? ";
 		List<WmOmNoticeIEntity> listWaveToDowns =new ArrayList<>();
-		hql="from WmOmNoticeIEntity where   id = ?";
+		hql=" from WmOmNoticeIEntity where   id = ?";
 		listWaveToDowns = wmOmNoticeHService.findHql(hql,id);
-		for(WmOmNoticeIEntity t: listWaveToDowns){
-			t.setOmSta("YH");
-			wmOmNoticeHService.updateEntitie(t);
+		if(listWaveToDowns!=null&&listWaveToDowns.size()>0){
+			String noticeid = listWaveToDowns.get(0).getOmNoticeId();
+			String hqlh=" from WmOmNoticeHEntity where omNoticeId = ? ";
+			List<WmOmNoticeHEntity> listWaveToDowns11 = wmOmNoticeHService.findHql(hqlh,noticeid);
+
+			for(WmOmNoticeHEntity t: listWaveToDowns11){
+				t.setOmSta("复核完成");
+				wmOmNoticeHService.updateEntitie(t);
+			}
+		}else{
+			String hql1=" from WmOmNoticeHEntity where omNoticeId = ? ";
+			List<WmOmNoticeHEntity> listWaveToDowns11 = wmOmNoticeHService.findHql(hql1,id);
+			for(WmOmNoticeHEntity t: listWaveToDowns11){
+				t.setOmSta("复核完成");
+				wmOmNoticeHService.updateEntitie(t);
+			}
+
+			String hql2=" from WmOmNoticeHEntity where id = ? ";
+			List<WmOmNoticeHEntity> listWaveToDowns12 = wmOmNoticeHService.findHql(hql2,id);
+			for(WmOmNoticeHEntity t: listWaveToDowns12){
+				t.setOmSta("复核完成");
+				wmOmNoticeHService.updateEntitie(t);
+			}
+
 		}
+
 		D0.setObj(listWaveToDowns);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}

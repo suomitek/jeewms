@@ -522,18 +522,15 @@ public class TmsYwDingdanController extends BaseController {
 		ResultDO D0 = new  ResultDO();
 		D0.setOK(true);
 		String hql="from WmTmsNoticeHEntity  ";
-//		String hql="from WmTmsNoticeHEntity where  omSta = ";
 		List<WmTmsNoticeHEntity> listWaveToDowns =new ArrayList<>();
-//		if(StringUtil.isNotEmpty(searchstr)){
-//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
-//		}else{
-//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
-//
-//		}
-		listWaveToDowns = wmOmNoticeHService.findHql(hql);
-//		listWaveToDowns = wmOmNoticeHService.findHql(hql,"已装车");
+		if(StringUtil.isNotEmpty(searchstr)){
+			hql="from WmTmsNoticeHEntity where  omSta <> ? and  reMember = ? and  omNoticeId = ?";
+			listWaveToDowns = wmOmNoticeHService.findHql(hql,"已送货",username,searchstr);
+		}else{
+			hql="from WmTmsNoticeHEntity where omSta <> ? and reMember = ? ";
+			listWaveToDowns = wmOmNoticeHService.findHql(hql,"已送货",username);
+
+		}
 		D0.setObj(listWaveToDowns);
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
@@ -546,14 +543,6 @@ public class TmsYwDingdanController extends BaseController {
         D0.setOK(true);
         String hql="from WmTmsNoticeIEntity  where omNoticeId = ?";
         List<WmTmsNoticeIEntity> listWaveToDowns =new ArrayList<>();
-//		if(StringUtil.isNotEmpty(searchstr)){
-//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
-//		}else{
-//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
-//
-//		}
         listWaveToDowns = wmOmNoticeHService.findHql(hql,omnoticeid);
         D0.setObj(listWaveToDowns);
         return new ResponseEntity(D0, HttpStatus.OK);
@@ -574,14 +563,6 @@ public class TmsYwDingdanController extends BaseController {
             t.setOmSta("已送货");
             wmOmNoticeHService.updateEntitie(t);
         }
-//		if(StringUtil.isNotEmpty(searchstr)){
-//			hql="from WmOmNoticeHEntity where  omSta = ? and  reMember = ? and  omNoticeId = ?";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username,searchstr);
-//		}else{
-//			hql="from WmOmNoticeHEntity where omSta = ? and   reMember = ? ";
-//			listWaveToDowns = wmOmNoticeHService.findHql(hql,searchstr2,username);
-//
-//		}
         D0.setObj(listWaveToDowns);
         return new ResponseEntity(D0, HttpStatus.OK);
     }
