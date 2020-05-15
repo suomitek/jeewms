@@ -22,6 +22,7 @@ import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
+import org.jeecgframework.web.system.sms.util.task.CostTask;
 import org.jeecgframework.web.system.sms.util.task.SmsSendTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -70,6 +71,8 @@ public class wmBaseController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private SmsSendTask smsSendTask;
+	@Autowired
+	private CostTask costTask;
 //	@Autowired
 //	private Validator validator;
 	/**
@@ -264,6 +267,21 @@ public class wmBaseController extends BaseController {
 		smsSendTask.run();
 		return new ResponseEntity(D0, HttpStatus.OK);
 	}
+	//结转库存
+	@RequestMapping(value="runtaskone",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?>  runtaskone( @RequestParam(value="username", required=false) String username,
+									   @RequestParam(value="all", required=false)String all,
+
+									   @RequestParam(value="searchstr", required=false)String searchstr,
+									   @RequestParam(value="searchstr2", required=false)String searchstr2,
+									   @RequestParam(value="searchstrin1", required=false)String searchstrin1,
+									   @RequestParam(value="searchstrin2", required=false)String searchstrin2,
+									   @RequestParam(value="searchstrin3", required=false)String searchstrin3) {
 
 
+		ResultDO D0 = new  ResultDO();
+		costTask.run();
+		return new ResponseEntity(D0, HttpStatus.OK);
+	}
 }
