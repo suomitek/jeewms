@@ -89,6 +89,8 @@ import com.zzjee.wmutil.yyUtil;
 
 import net.sf.json.JSONArray;
 
+import static com.xiaoleilu.hutool.date.DateTime.now;
+
 /**
  * @Title: Controller
  * @Description: 出货通知
@@ -2459,12 +2461,19 @@ public class WmOmNoticeHController extends BaseController {
 				MdGoodsEntity md =systemService.findUniqueByProperty(MdGoodsEntity.class,"shpBianMa",t.getGoodsId());
 				t.setCusCode(md.getSuoShuKeHu());
 				wmOmNoticeH.setOmSta("未送货");
+				wmOmNoticeH.setCreateDate(now());
 				wmOmNoticeH.setCusCode(md.getSuoShuKeHu());
 			}catch ( Exception e){
 
 			}
 
 			wmOmNoticeIListnew.add(t);
+		}
+		try{
+			Thread.sleep(1000);
+
+		}catch (Exception e){
+
 		}
 		wmOmNoticeHService.addMaintms(wmOmNoticeH, wmOmNoticeIListnew);
 
