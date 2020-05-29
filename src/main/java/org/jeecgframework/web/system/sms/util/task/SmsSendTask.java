@@ -342,7 +342,8 @@ public class SmsSendTask {
 	}
 	public  void rundowntask() {
 		try {// 生成下架任务
-			List<WmOmNoticeIEntity> WmOmNoticeIlist = new ArrayList<WmOmNoticeIEntity>();
+
+ 			List<WmOmNoticeIEntity> WmOmNoticeIlist = new ArrayList<WmOmNoticeIEntity>();
 			String			hql = "from WmOmNoticeIEntity t where  t.planSta = 'N' order by goodsId ,omNoticeId";
 			WmOmNoticeIlist = systemService.findByQueryString(hql);
 			String  usetuopan  = ResourceUtil.getConfigByName("usetuopan");
@@ -385,7 +386,14 @@ public class SmsSendTask {
 						}
 
 					}
-					omcount = Double.parseDouble(wmOmNoticeIEntity.getBaseGoodscount());// 总出货数量
+					try{
+						omcount = Double.parseDouble(wmOmNoticeIEntity.getBaseGoodscount());// 总出货数量
+
+					}catch (Exception e){
+						omcount = Double.parseDouble(wmOmNoticeIEntity.getGoodsQua());// 不存在总出货数量
+
+					}
+
 					omcountwq = omcount - omcountok;// 未清基本数量
 					if (omcountwq > 0) {// 如果数量大于0
 						WmOmQmIEntity wmOmQmIEntity = new WmOmQmIEntity();
@@ -428,6 +436,7 @@ public class SmsSendTask {
 							wmOmQmIEntity
 									.setGoodsUnit(mvgoods.getBaseunit());
 						} catch (Exception e) {
+							System.out.println(e.getMessage());
 
 						}
 
@@ -742,7 +751,7 @@ public class SmsSendTask {
 							.saveOrUpdate(wmOmNoticeIEntity);
 				}
 				catch (Exception e){
-
+					System.out.println(e.getMessage());
 				}
 			}
 

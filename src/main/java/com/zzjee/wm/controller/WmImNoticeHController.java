@@ -2189,7 +2189,8 @@ public class WmImNoticeHController extends BaseController {
 				formDate = "2011-01-01";
 			}
 			yyUtil.getPord(formDate);
-
+			yyUtil.getcprd(formDate);
+			yyUtil.getqtrd(formDate);
 		}
 		if ("UAS".equals(ResourceUtil.getConfigByName("interfacetype"))){
 			String masterbill[] = {"XKN_TEST","XKN_TEST"};
