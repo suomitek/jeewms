@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.zzjee.rfid.entity.RfidBuseEntity;
 import com.zzjee.wave.entity.WaveToDownEntity;
 import com.zzjee.wave.entity.WaveToFjEntity;
 import org.apache.log4j.Logger;
@@ -44,9 +45,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 /**
- * 获取和删除token的请求地址， 
+ * 获取和删除token的请求地址，
  * 在Restful设计中其实就对应着登录和退出登录的资源映射
- * 
+ *
  * @author scott
  * @date 2015/7/30.
  */
@@ -171,7 +172,7 @@ public class wmomController {
 			page.setWmOmNoticeIList(WmOmNoticeIEntityList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 		return Result.success(page);
 	}
@@ -340,5 +341,35 @@ public class wmomController {
 																@RequestParam String ids, @RequestParam String savestr1,
 															HttpServletRequest request) {
 		return Result.success("波次分拣保存成功");
+	}
+	@RequestMapping(value = "/rfidsave/{username}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ApiOperation(value = "RFID保存", produces = "application/json", httpMethod = "POST")
+	public ResponseMessage<?> rfid_save(@PathVariable("username") String username,
+										@RequestBody wmientity wmientityin,
+											 HttpServletRequest request) {
+		List<wmi1entity> wmi1entityList = wmientityin.getWmi1List();
+		String rfidType  = wmientityin.getWmX1();
+		String rfidbuseno  = wmientityin.getWmX2();
+		String rfidbusecon  = wmientityin.getWmX3();
+		List<RfidBuseEntity>  rflist = new ArrayList<>();
+		for(wmi1entity t: wmi1entityList){
+			RfidBuseEntity rf = new RfidBuseEntity();
+			rf.setCreateBy(username);
+			rf.setRfidType(rfidType);
+			rf.setRfidBuseno(rfidbuseno);
+			rf.setRfidBusecont(rfidbusecon);
+			rf.setRfidId1(t.getWmX1());
+			rf.setRfidId2(t.getWmX2());
+			rf.setRfidId3(t.getWmX3());
+			rflist.add(rf);
+
+		}
+		try{
+			systemService.batchSave(rflist);
+		}catch (Exception e){
+			Result.error("RFID保存失败");
+		}
+		return Result.success("RFID保存成功");
 	}
 }
