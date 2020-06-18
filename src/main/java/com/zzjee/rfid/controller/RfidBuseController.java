@@ -1,6 +1,6 @@
 package com.zzjee.rfid.controller;
-import com.zzjee.RFID.entity.RfidBuseEntity;
-import com.zzjee.RFID.service.RfidBuseServiceI;
+import com.zzjee.rfid.entity.RfidBuseEntity;
+import com.zzjee.rfid.service.RfidBuseServiceI;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -65,12 +65,12 @@ import java.net.URI;
 import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
-/**
- * @Title: Controller
+/**   
+ * @Title: Controller  
  * @Description: RFID表
  * @author onlineGenerator
- * @date 2020-06-19 06:45:01
- * @version V1.0
+ * @date 2020-06-19 06:54:21
+ * @version V1.0   
  *
  */
 @Controller
@@ -87,22 +87,22 @@ public class RfidBuseController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-
+	
 
 
 	/**
 	 * RFID表列表 页面跳转
-	 *
+	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/zzjee/RFID/rfidBuseList");
+		return new ModelAndView("com/zzjee/rfid/rfidBuseList");
 	}
 
 	/**
 	 * easyui AJAX请求数据
-	 *
+	 * 
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -131,10 +131,10 @@ public class RfidBuseController extends BaseController {
 		this.rfidBuseService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-
+	
 	/**
 	 * 删除RFID表
-	 *
+	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -155,10 +155,10 @@ public class RfidBuseController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-
+	
 	/**
 	 * 批量删除RFID表
-	 *
+	 * 
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -169,7 +169,7 @@ public class RfidBuseController extends BaseController {
 		message = "RFID表删除成功";
 		try{
 			for(String id:ids.split(",")){
-				RfidBuseEntity rfidBuse = systemService.getEntity(RfidBuseEntity.class,
+				RfidBuseEntity rfidBuse = systemService.getEntity(RfidBuseEntity.class, 
 				id
 				);
 				rfidBuseService.delete(rfidBuse);
@@ -187,7 +187,7 @@ public class RfidBuseController extends BaseController {
 
 	/**
 	 * 添加RFID表
-	 *
+	 * 
 	 * @param ids
 	 * @return
 	 */
@@ -208,10 +208,10 @@ public class RfidBuseController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-
+	
 	/**
 	 * 更新RFID表
-	 *
+	 * 
 	 * @param ids
 	 * @return
 	 */
@@ -234,11 +234,11 @@ public class RfidBuseController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-
+	
 
 	/**
 	 * RFID表新增页面跳转
-	 *
+	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -247,11 +247,11 @@ public class RfidBuseController extends BaseController {
 			rfidBuse = rfidBuseService.getEntity(RfidBuseEntity.class, rfidBuse.getId());
 			req.setAttribute("rfidBusePage", rfidBuse);
 		}
-		return new ModelAndView("com/zzjee/RFID/rfidBuse-add");
+		return new ModelAndView("com/zzjee/rfid/rfidBuse-add");
 	}
 	/**
 	 * RFID表编辑页面跳转
-	 *
+	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -260,12 +260,12 @@ public class RfidBuseController extends BaseController {
 			rfidBuse = rfidBuseService.getEntity(RfidBuseEntity.class, rfidBuse.getId());
 			req.setAttribute("rfidBusePage", rfidBuse);
 		}
-		return new ModelAndView("com/zzjee/RFID/rfidBuse-update");
+		return new ModelAndView("com/zzjee/rfid/rfidBuse-update");
 	}
-
+	
 	/**
 	 * 导入功能跳转
-	 *
+	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -273,10 +273,10 @@ public class RfidBuseController extends BaseController {
 		req.setAttribute("controller_name","rfidBuseController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-
+	
 	/**
 	 * 导出excel
-	 *
+	 * 
 	 * @param request
 	 * @param response
 	 */
@@ -295,7 +295,7 @@ public class RfidBuseController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 *
+	 * 
 	 * @param request
 	 * @param response
 	 */
@@ -309,13 +309,13 @@ public class RfidBuseController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-
+		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -343,14 +343,14 @@ public class RfidBuseController extends BaseController {
 		}
 		return j;
 	}
-
+	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<RfidBuseEntity> list() {
 		List<RfidBuseEntity> listRfidBuses=rfidBuseService.getList(RfidBuseEntity.class);
 		return listRfidBuses;
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {

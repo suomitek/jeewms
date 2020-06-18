@@ -1,7 +1,7 @@
 package com.zzjee.rfid.service.impl;
-import com.zzjee.RFID.service.RfidBuseServiceI;
+import com.zzjee.rfid.service.RfidBuseServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.zzjee.RFID.entity.RfidBuseEntity;
+import com.zzjee.rfid.entity.RfidBuseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
@@ -17,26 +17,26 @@ import org.jeecgframework.web.cgform.enhance.CgformEnhanceJavaInter;
 @Transactional
 public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseServiceI {
 
-
+	
  	public void delete(RfidBuseEntity entity) throws Exception{
  		super.delete(entity);
  		//执行删除操作增强业务
 		this.doDelBus(entity);
  	}
-
+ 	
  	public Serializable save(RfidBuseEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		//执行新增操作增强业务
  		this.doAddBus(entity);
  		return t;
  	}
-
+ 	
  	public void saveOrUpdate(RfidBuseEntity entity) throws Exception{
  		super.saveOrUpdate(entity);
  		//执行更新操作增强业务
  		this.doUpdateBus(entity);
  	}
-
+ 	
  	/**
 	 * 新增操作增强业务
 	 * @param t
@@ -45,7 +45,7 @@ public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseSe
 	private void doAddBus(RfidBuseEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
-
+	 	
 	 	//-----------------java增强 start---------------------------
 	 	//-----------------java增强 end-----------------------------
  	}
@@ -57,7 +57,7 @@ public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseSe
 	private void doUpdateBus(RfidBuseEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
-
+	 	
 	 	//-----------------java增强 start---------------------------
 	 	//-----------------java增强 end-----------------------------
  	}
@@ -69,11 +69,11 @@ public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseSe
 	private void doDelBus(RfidBuseEntity t) throws Exception{
 	    //-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
-
+	 	
 	 	//-----------------java增强 start---------------------------
 	 	//-----------------java增强 end-----------------------------
  	}
-
+ 	
  	private Map<String,Object> populationMap(RfidBuseEntity t){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", t.getId());
@@ -94,7 +94,7 @@ public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseSe
 		map.put("rfid_id3", t.getRfidId3());
 		return map;
 	}
-
+ 	
  	/**
 	 * 替换sql中的变量
 	 * @param sql
@@ -121,7 +121,7 @@ public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseSe
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
-
+ 	
  	/**
 	 * 执行JAVA增强
 	 */
@@ -142,7 +142,7 @@ public class RfidBuseServiceImpl extends CommonServiceImpl implements RfidBuseSe
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new Exception("执行JAVA增强出现异常！");
-			}
+			} 
 		}
  	}
 }

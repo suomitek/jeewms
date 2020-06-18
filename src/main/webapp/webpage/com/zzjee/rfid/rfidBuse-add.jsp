@@ -143,4 +143,4 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/zzjee/RFID/rfidBuse.js"></script>		
+  <script src = "webpage/com/zzjee/rfid/rfidBuse.js"></script>		

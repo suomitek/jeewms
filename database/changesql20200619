@@ -1,0 +1,19 @@
+CREATE TABLE `rfid_buse` (
+  `id` varchar(36) NOT NULL,
+  `create_name` varchar(50) DEFAULT NULL COMMENT '创建人名称',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人登录名称',
+  `create_date` datetime DEFAULT NULL COMMENT '创建日期',
+  `update_name` varchar(50) DEFAULT NULL COMMENT '更新人名称',
+  `update_by` varchar(50) DEFAULT NULL COMMENT '更新人登录名称',
+  `update_date` datetime DEFAULT NULL COMMENT '更新日期',
+  `sys_org_code` varchar(50) DEFAULT NULL COMMENT '所属部门',
+  `sys_company_code` varchar(50) DEFAULT NULL COMMENT '所属公司',
+  `bpm_status` varchar(32) DEFAULT '1' COMMENT '流程状态',
+  `rfid_type` varchar(128) DEFAULT NULL COMMENT '类型',
+  `rfid_buseno` varchar(128) DEFAULT NULL COMMENT '业务编号',
+  `rfid_busecont` varchar(128) DEFAULT NULL COMMENT '业务内容',
+  `rfid_id1` varchar(128) DEFAULT NULL COMMENT 'RFID1',
+  `rfid_id2` varchar(128) DEFAULT NULL COMMENT 'RFID2',
+  `rfid_id3` varchar(128) DEFAULT NULL COMMENT 'RFID3',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

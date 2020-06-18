@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: RFID表
  * @author onlineGenerator
- * @date 2020-06-19 06:45:01
+ * @date 2020-06-19 06:54:21
  * @version V1.0
  *
  */

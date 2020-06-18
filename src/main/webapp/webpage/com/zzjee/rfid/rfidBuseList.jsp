@@ -32,7 +32,7 @@
   </t:datagrid>
   </div>
  </div>
- <script src = "webpage/com/zzjee/RFID/rfidBuseList.js"></script>		
+ <script src = "webpage/com/zzjee/rfid/rfidBuseList.js"></script>		
  <script type="text/javascript">
  $(document).ready(function(){
  });
