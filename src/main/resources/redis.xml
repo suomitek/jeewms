@@ -14,7 +14,7 @@
      http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
      http://www.springframework.org/schema/redis
      http://www.springframework.org/schema/redis/spring-redis-1.0.xsd">
-    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
+<!--    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>-->
 
     <!-- jedis 配置 -->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
