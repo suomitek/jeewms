@@ -7,8 +7,8 @@
        http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
          http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
-		http://cxf.apache.org/jaxws 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://cxf.apache.org/jaxws
    		http://cxf.apache.org/schemas/jaxws.xsd">
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
@@ -160,5 +160,6 @@
 	<import resource="classpath*:org/jeecgframework/web/cgform/common/spring-mvc-cgform.xml" />
 	<!-- jeecg plugin dev -->
 	<import resource="classpath:config/spring-config-p3.xml" />
+<!--	<import resource="classpath:redis.xml" />-->
 
 </beans>

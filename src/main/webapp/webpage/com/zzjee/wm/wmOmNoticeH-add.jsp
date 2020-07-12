@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="online/template/ledefault/css/bootstrap-theme.css">
   <link rel="stylesheet" href="online/template/ledefault/css/bootstrap.css">
   <link rel="stylesheet" href="online/template/ledefault/css/app.css">
-  
+
   <link rel="stylesheet" href="plug-in/Validform/css/metrole/style.css" type="text/css"/>
   <link rel="stylesheet" href="plug-in/Validform/css/metrole/tablefrom.css" type="text/css"/>
   <script type="text/javascript" src="plug-in/jquery/jquery-1.8.3.js"></script>
@@ -41,19 +41,19 @@
  <script type="text/javascript">
  $(document).ready(function(){
 	 init();
-	 $("#jform_tab .con-wrapper").hide(); //Hide all tab content  
-	 $("#jform_tab li:first").addClass("active").show(); //Activate first tab  
+	 $("#jform_tab .con-wrapper").hide(); //Hide all tab content
+	 $("#jform_tab li:first").addClass("active").show(); //Activate first tab
 	 $("#jform_tab .con-wrapper:first").show(); //Show first tab content
-	 
-	 
-	 //On Click Event  
-    $("#jform_tab li").click(function() {  
-        $("#jform_tab li").removeClass("active"); //Remove any "active" class  
-        $(this).addClass("active"); //Add "active" class to selected tab  
-        $("#jform_tab .con-wrapper").hide(); //Hide all tab content  
-        var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content  
+
+
+	 //On Click Event
+    $("#jform_tab li").click(function() {
+        $("#jform_tab li").removeClass("active"); //Remove any "active" class
+        $(this).addClass("active"); //Add "active" class to selected tab
+        $("#jform_tab .con-wrapper").hide(); //Hide all tab content
+        var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
         $(activeTab).fadeIn(); //Fade in the active content
-        //$(""+activeTab).show(); 
+        //$(""+activeTab).show();
         if( $(activeTab).html()!="") {
         	return false;
         }else{
@@ -62,11 +62,11 @@
         	$.post(url, {}, function(data) {
         		 //$(this).attr("tab-ajax-cached", true);
         		$(activeTab).html(data);
-        		
+
             });
-        }  
-        return false;  
-    });  
+        }
+        return false;
+    });
   });
   //初始化下标
 	function resetTrNum(tableId) {
@@ -88,10 +88,10 @@
 			$(this).find('div[name=\'xh\']').html(i+1);
 		});
 	}
-	
+
 	function init(){
     	var tabHead =$("#jform_tab li:first");
-    	var tabBox = $("#jform_tab .con-wrapper:first"); 
+    	var tabBox = $("#jform_tab .con-wrapper:first");
     	var url = tabHead.attr("tab-ajax-url");
     	tabBox.html('正在加载内容，请稍后...');
     	$.post(url, {}, function(data) {
@@ -130,10 +130,10 @@
  </script>
  <body>
   <form id="formobj" action="wmOmNoticeHController.do?doAdd" name="formobj" method="post"><input type="hidden" id="btn_sub" class="btn_sub"/>
-				
+
 			<input type="hidden" id="btn_sub" class="btn_sub"/>
-			
-			
+
+
 			<div class="tab-wrapper">
 			    <!-- tab -->
 			    <ul class="nav nav-tabs">
@@ -148,12 +148,12 @@
 			          </div>
 			          <div class="col-xs-2">
 								<t:dictSelect  field="cusCode" type="list" extendJson="{class:'form-control',datatype:'*',style:'width:230px'}"
-									defaultVal="${wmOmNoticeHPage.cusCode}" 	 	readonly="${wmOmNoticeHPage.readonly}" 	  dictTable="mv_cus" dictField="cus_code" dictText="cus_name"  hasLabel="false"  title="客户编码"></t:dictSelect>     
+									defaultVal="${wmOmNoticeHPage.cusCode}" 	 	readonly="${wmOmNoticeHPage.readonly}" 	  dictTable="mv_cus" dictField="cus_code" dictText="cus_name"  hasLabel="false"  title="客户编码"></t:dictSelect>
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">客户编码</label>
 			          </div>
-			          
-			        
+
+
 			          <div class="col-xs-1 text-center">
 			          	<b>要求交货时间：</b>
 			          </div>
@@ -164,26 +164,25 @@
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">要求交货时间</label>
 			          </div>
-			          
+
 			                   <div class="col-xs-1 text-center">
 			          	<b>订单类型：</b>
 			          </div>
 			          <div class="col-xs-2">
-								<t:dictSelect field="orderTypeCode" type="list" extendJson="{class:'form-control',style:'width:150px'}"  
-								dictTable="ba_order_type" dictField="order_type_code" dictText="order_type_name"  defaultVal="${wmOmNoticeHPage.orderTypeCode}" hasLabel="false"  title="订单类型"></t:dictSelect>     
+								<t:dictSelect field="orderTypeCode" type="list" extendJson="{class:'form-control',style:'width:150px'}"
+								dictTable="ba_order_type" dictField="order_type_code" dictText="order_type_name"  defaultVal="${wmOmNoticeHPage.orderTypeCode}" hasLabel="false"  title="订单类型"></t:dictSelect>
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">订单类型</label>
 			          </div>
 								<div class="col-xs-1 text-center">
-									<b>客户订单号：</b>
+									<b>客户订单号*：</b>
 								</div>
 								<div class="col-xs-2">
 									<input id="imCusCode" name="imCusCode" type="text" class="form-control"
-										   ignore="ignore"
+										   ignore="ignore"  validType="wm_om_notice_h,im_cus_code,id"
 										    />
-									<span class="Validform_checktip" style="float:left;height:0px;"></span>
-									<label class="Validform_label" style="display: none">客户订单号</label>
-								</div>
+									<span class="Validform_checktip"> 不能重复</span>
+ 								</div>
 
 							</div>
 					  <div class="row show-grid">
@@ -232,8 +231,8 @@
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">收货人</label>
 			          </div>
-			          
-			        
+
+
 			          <div class="col-xs-1 text-center">
 			          	<b>收货人电话：</b>
 			          </div>
@@ -244,8 +243,8 @@
 						<label class="Validform_label" style="display: none">收货人电话</label>
 			          </div>
 					  </div>
-			          
-			        
+
+
 							<div class="row show-grid">
 			          <div class="col-xs-1 text-center">
 			          	<b>收货人地址：</b>
@@ -256,8 +255,8 @@
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">收货人地址</label>
 			          </div>
-			          
-			        
+
+
 			          <div class="col-xs-1 text-center">
 			          	<b>运输人：</b>
 			          </div>
@@ -273,7 +272,7 @@
 						<label class="Validform_label" style="display: none">运输人</label>
 			          </div>
 
-			        
+
 			          <%--<div class="col-xs-1 text-center">--%>
 			          	<%--<b>承运人电话：</b>--%>
 			          <%--</div>--%>
@@ -283,8 +282,8 @@
 						<%--<span class="Validform_checktip" style="float:left;height:0px;"></span>--%>
 						<%--<label class="Validform_label" style="display: none">承运人电话</label>--%>
 			          <%--</div>--%>
-			          
-			        
+
+
 			          <div class="col-xs-1 text-center">
 			          	<b>发货运单号或车号：</b>
 			          </div>
@@ -292,14 +291,14 @@
 
 						  <t:autocomplete   entityName="TmsMdCheliangEntity" searchField="chepaihao" name="reCarno"></t:autocomplete>
 
-						  <input id="reCarno" name="reCarno" type="text" class="form-control"
-									/>
+<%--						  <input id="reCarno" name="reCarno" type="text" class="form-control"--%>
+<%--									/>--%>
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">发货运单号或车号</label>
 			          </div>
 							</div>
-			          
-			        
+
+
 							<div class="row show-grid">
 			          <%--<div class="col-xs-1 text-center">--%>
 			          	<%--<b>发货月台：</b>--%>
@@ -310,7 +309,7 @@
 						<%--<span class="Validform_checktip" style="float:left;height:0px;"></span>--%>
 						<%--<label class="Validform_label" style="display: none">月台</label>--%>
 			          <%--</div>		          --%>
-			        
+
 			          <div class="col-xs-1 text-center">
 			          	<b>备注 </b>
 			          </div>
@@ -321,35 +320,35 @@
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">备注</label>
 			          </div>
-			          
+
 			          			         		<div class="col-xs-1 text-center">
 			          	<b>附件 </b>
 			          </div>
 			          <div class="col-xs-2">
 			<t:webUploader auto="true"   name="fuJian" duplicate="true" fileNumLimit="3"></t:webUploader>
-				
+
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">附件</label>
 			          </div>
-			          
+
 							</div>
-			          
+
 
 			     </div>
 			   </div>
-			   
+
 			   <div class="con-wrapper" style="display: block;"></div>
 	</div>
-		
-			
-			
+
+
+
 <script type="text/javascript">
    $(function(){
     //查看模式情况下,删除和上传附件功能禁止使用
 	if(location.href.indexOf("load=detail")!=-1){
 		$(".jeecgDetail").hide();
 	}
-	
+
 	if(location.href.indexOf("mode=read")!=-1){
 		//查看模式控件禁用
 		$("#formobj").find(":input").attr("disabled","disabled");
@@ -362,7 +361,7 @@
 
   var neibuClickFlag = false;
   function neibuClick() {
-	  neibuClickFlag = true; 
+	  neibuClickFlag = true;
 	  $('#btn_sub').trigger('click');
   }
 </script>
@@ -372,12 +371,12 @@
     <ul class="nav nav-tabs">
 		    	<li role="presentation" tab-ajax-url="wmOmNoticeHController.do?wmOmNoticeIList&omNoticeId=${wmOmNoticeHPage.omNoticeId}"><a href="#con-wrapper0">出货商品明细</a></li>
     </ul>
-    
+
 	     <div class="con-wrapper" id="con-wrapper0" style="display: none;"></div>
 </div>
 
 
-			
+
 		<div align="center"  id = "sub_tr" style="display: none;" > <input type="button" value="提交" onclick="neibuClick();" class="ui_state_highlight"></div>
 		<script src="plug-in/layer/layer.js"></script>
 		<script type="text/javascript">
@@ -451,7 +450,7 @@
 			});
 		});
 		</script>
-		
+
 		</form>
 		<!-- 添加 产品明细 模版 -->
 		<table style="display:none">
@@ -462,9 +461,9 @@
 						  <td align="left">
 <%-- 							  		<t:dictSelect field="wmOmNoticeIList[#index#].goodsId" type="list" extendJson="{class:'form-control',datatype:'*',style:'width:350px'}"   --%>
 <%-- 											dictCondition="${wmOmNoticeHPage.wherecon}"				dictTable="mv_goods" dictField="goods_code" dictText="goods_name" defaultVal="" hasLabel="false"  title="商品编码"></t:dictSelect>      --%>
-							  		
-							  		
-							  			  	<input id="wmOmNoticeIList[#index#].goodsId"  name="wmOmNoticeIList[#index#].goodsId" maxlength="32" 
+
+
+							  			  	<input id="wmOmNoticeIList[#index#].goodsId"  name="wmOmNoticeIList[#index#].goodsId" maxlength="32"
 									ignore="ignore"
 							  		type="text" class="form-control searchbox-inputtext" onclick="popClickone('wmOmNoticeIList[#index#].goodsId','goodsName','mvGoodsController.do?list')"   style="width:420px;text-align: left" >
 
@@ -473,15 +472,15 @@
 	<label class="Validform_label" style="display: none;">出货商品</label>
 						  </td>
 						  <td align="left">
-							  	<input name="wmOmNoticeIList[#index#].goodsQua" maxlength="32" 
+							  	<input name="wmOmNoticeIList[#index#].goodsQua" maxlength="32"
 									ignore="ignore"
 							  		type="text" class="form-control"  style="width:120px;" >
 							  <label class="Validform_label" style="display: none;">出货数量</label>
 						  </td>
-						  
+
 						   <td>
-							<t:dictSelect field="wmOmNoticeIList[#index#].planSta" type="radio" extendJson="{class:'form-control',style:'width:150px'}"  
-										typeGroupCode="sf_yn"  hasLabel="false"  title="下架任务是否已生成"></t:dictSelect>     
+							<t:dictSelect field="wmOmNoticeIList[#index#].planSta" type="radio" extendJson="{class:'form-control',style:'width:150px'}"
+										typeGroupCode="sf_yn"  hasLabel="false"  title="下架任务是否已生成"></t:dictSelect>
 					  <label class="Validform_label" style="display: none;">下架任务是否已生成</label>
 					</td>
   						  <%--<td align="left">--%>
@@ -507,6 +506,6 @@
 					</tr>
 				 </tbody>
 		</table>
-	<script src = "webpage/com/zzjee/wm/wmOmNoticeH.js"></script>	
+	<script src = "webpage/com/zzjee/wm/wmOmNoticeH.js"></script>
  </body>
  </html>

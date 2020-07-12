@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="online/template/ledefault/css/bootstrap-theme.css">
   <link rel="stylesheet" href="online/template/ledefault/css/bootstrap.css">
   <link rel="stylesheet" href="online/template/ledefault/css/app.css">
-  
+
   <link rel="stylesheet" href="plug-in/Validform/css/metrole/style.css" type="text/css"/>
   <link rel="stylesheet" href="plug-in/Validform/css/metrole/tablefrom.css" type="text/css"/>
-  
+
   <script type="text/javascript" src="plug-in/jquery/jquery-1.8.3.js"></script>
   <script type="text/javascript" src="plug-in/tools/dataformat.js"></script>
   <script type="text/javascript" src="plug-in/easyui/jquery.easyui.min.1.3.2.js"></script>
@@ -33,14 +33,14 @@
   <script type="text/javascript" src="plug-in/uploadify/jquery.uploadify-3.1.js"></script>
   <script type="text/javascript"  charset="utf-8" src="plug-in/ueditor/ueditor.config.js"></script>
   <script type="text/javascript"  charset="utf-8" src="plug-in/ueditor/ueditor.all.min.js"></script>
-  
+
 </head>
 
 
  <script type="text/javascript">
- 
+
  function sumin(){
-	 
+
 // 	 console.log($("#wmImNoticeI_table").children("tr"));
 	 trList = $("#add_wmImNoticeI_table").children("tr");
 	 alert(trList.length);
@@ -48,34 +48,34 @@
 	 var dh = 0;
 	 for (var i=0;i<trList.length;i++) {
 	        var tdArr = trList.eq(i).find("td");
-	 
+
 	        var history_income_remark = tdArr.eq(2).find('input').val();//    合计
 	        dh = history_income_remark;
              heji = heji*1 + dh*1;
 	    }
 	 alert(heji);
  }
- 
+
  function setcond(){
 	 var  cuscode = $("#cusCodeid").find("option:selected").val();
 	 $('#cuscodeh').val(cuscode);
-// 	 var controls=document.getElementsByName("wmImNoticeIList[0].goodsCode");	
+// 	 var controls=document.getElementsByName("wmImNoticeIList[0].goodsCode");
  }
  $(document).ready(function(){
 	 init();
-	 $("#jform_tab .con-wrapper").hide(); //Hide all tab content  
-	 $("#jform_tab li:first").addClass("active").show(); //Activate first tab  
+	 $("#jform_tab .con-wrapper").hide(); //Hide all tab content
+	 $("#jform_tab li:first").addClass("active").show(); //Activate first tab
 	 $("#jform_tab .con-wrapper:first").show(); //Show first tab content
-	 
-	 
-	 //On Click Event  
-    $("#jform_tab li").click(function() {  
-        $("#jform_tab li").removeClass("active"); //Remove any "active" class  
-        $(this).addClass("active"); //Add "active" class to selected tab  
-        $("#jform_tab .con-wrapper").hide(); //Hide all tab content  
-        var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content  
+
+
+	 //On Click Event
+    $("#jform_tab li").click(function() {
+        $("#jform_tab li").removeClass("active"); //Remove any "active" class
+        $(this).addClass("active"); //Add "active" class to selected tab
+        $("#jform_tab .con-wrapper").hide(); //Hide all tab content
+        var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
         $(activeTab).fadeIn(); //Fade in the active content
-        //$(""+activeTab).show(); 
+        //$(""+activeTab).show();
         if( $(activeTab).html()!="") {
         	return false;
         }else{
@@ -84,11 +84,11 @@
         	$.post(url, {}, function(data) {
         		 //$(this).attr("tab-ajax-cached", true);
         		$(activeTab).html(data);
-        		
+
             });
-        }  
-        return false;  
-    });  
+        }
+        return false;
+    });
   });
   //初始化下标
 	function resetTrNum(tableId) {
@@ -113,10 +113,10 @@
 			$(this).find('div[name=\'xh\']').html(i+1);
 		});
 	}
-	
+
 	function init(){
     	var tabHead =$("#jform_tab li:first");
-    	var tabBox = $("#jform_tab .con-wrapper:first"); 
+    	var tabBox = $("#jform_tab .con-wrapper:first");
     	var url = tabHead.attr("tab-ajax-url");
     	tabBox.html('正在加载内容，请稍后...');
     	$.post(url, {}, function(data) {
@@ -158,10 +158,10 @@
  </script>
  <body>
   <form id="formobj"   action="wmImNoticeHController.do?doAdd" name="formobj" method="post"><input type="hidden" id="btn_sub" class="btn_sub"/>
-				
+
 			<input type="hidden" id="btn_sub" class="btn_sub"/>
 				<input type="hidden" id="cuscodeh" name="cuscodeh"/>
-			
+
 			<div class="tab-wrapper">
 			    <!-- tab -->
 			    <ul class="nav nav-tabs">
@@ -171,45 +171,44 @@
 			    <div class="con-wrapper" style="display: block;">
 			      <div class="row form-wrapper">
 							<div class="row show-grid">
-							
+
 			          <div class="col-xs-1 text-center">
 			          	<b>客户编码：</b>
 			          </div>
 			          <div class="col-xs-2">
 								<t:dictSelect  readonly="${wmImNoticeHPage.readonly}"   field="cusCode" type="list"   extendJson="  {class:'form-control',datatype:'*',style:'width:230px'}"
-								 								  defaultVal="${wmImNoticeHPage.cusCode}" dictTable="mv_cus" dictField="cus_code" dictText="cus_name"   hasLabel="false"  title="客户编码"></t:dictSelect>      
+								 								  defaultVal="${wmImNoticeHPage.cusCode}" dictTable="mv_cus" dictField="cus_code" dictText="cus_name"   hasLabel="false"  title="客户编码"></t:dictSelect>
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">客户编码</label>
 <%-- 						<t:autocomplete    searchField="cusName"   name="cusCode" entityName="MvCusEntity" ></t:autocomplete> --%>
 			          </div>
-			          
-			  			          
 
-			          
-			        
+
+
+
+
 			          <div class="col-xs-1 text-center">
 			          	<b>预计到货时间：</b>
 			          </div>
 			          <div class="col-xs-2">
-								<input id="imData" name="imData" type="text" 
-									ignore="ignore"  onchange="setcond()" 
+								<input id="imData" name="imData" type="text"
+									ignore="ignore"  onchange="setcond()"
 								style="background: url('plug-in/ace/images/datetime.png') no-repeat scroll right center transparent;" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"   type="date" pattern="yyyy-MM-dd hh:mm:ss" />
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">预计到货时间</label>
 			          </div>
 
 			          <div class="col-xs-1 text-center">
-			          	<b>客户订单号：</b>
+			          	<b>客户订单号*：</b>
 			          </div>
 			          <div class="col-xs-2">
 								<input id="imCusCode" name="imCusCode" type="text" class="form-control"
-									ignore="ignore" 
-								   />
-						<span class="Validform_checktip" style="float:left;height:0px;"></span>
-						<label class="Validform_label" style="display: none">客户订单号</label>
-			          </div>
-			          
-			        
+									ignore="ignore"     validType="wm_im_notice_h,im_cus_code,id"
+								/>
+						  <span class="Validform_checktip"> 不能重复</span>
+ 			          </div>
+
+
 			          <div class="col-xs-1 text-center">
 			          	<b>运输号码：</b>
 			          </div>
@@ -221,8 +220,8 @@
 						<label class="Validform_label" style="display: none">运输号码</label>
 			          </div>
 							</div>
-			          
-			        
+
+
 							<div class="row show-grid">
 			          <div class="col-xs-1 text-center">
 			          	<b>运输公司：</b>
@@ -260,13 +259,13 @@
 			          	<b>订单类型：</b>
 			          </div>
 			          <div class="col-xs-2">
-								<t:dictSelect field="orderTypeCode" type="list" extendJson="{class:'form-control',style:'width:150px'}"  
-								dictTable="ba_order_type" dictField="order_type_code" dictText="order_type_name"  defaultVal="${wmImNoticeHPage.orderTypeCode}" hasLabel="false"  title="订单类型"></t:dictSelect>     
+								<t:dictSelect field="orderTypeCode" type="list" extendJson="{class:'form-control',style:'width:150px'}"
+								dictTable="ba_order_type" dictField="order_type_code" dictText="order_type_name"  defaultVal="${wmImNoticeHPage.orderTypeCode}" hasLabel="false"  title="订单类型"></t:dictSelect>
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">订单类型</label>
 			          </div>
-			          
-			        
+
+
 			          <%--<div class="col-xs-1 text-center">--%>
 			          	<%--<b>月台：</b>--%>
 			          <%--</div>--%>
@@ -277,8 +276,8 @@
 						<%--<label class="Validform_label" style="display: none">月台</label>--%>
 			          <%--</div>--%>
 							</div>
-			          
-			        
+
+
 							<div class="row show-grid">
 			          <div class="col-xs-1 text-center">
 			          	<b>备注：</b>
@@ -296,7 +295,7 @@
 			          </div>
 			          <div class="col-xs-5">
 			<t:webUploader auto="true"   name="fuJian" duplicate="true" fileNumLimit="3"></t:webUploader>
-				
+
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">附件</label>
 			          </div>
@@ -304,19 +303,19 @@
 							</div>
 			     </div>
 			   </div>
-			   
+
 			   <div class="con-wrapper" style="display: block;"></div>
 	</div>
-		
-			
-			
+
+
+
 <script type="text/javascript">
    $(function(){
     //查看模式情况下,删除和上传附件功能禁止使用
 	if(location.href.indexOf("load=detail")!=-1){
 		$(".jeecgDetail").hide();
 	}
-	
+
 	if(location.href.indexOf("mode=read")!=-1){
 		//查看模式控件禁用
 		$("#formobj").find(":input").attr("disabled","disabled");
@@ -329,7 +328,7 @@
 
   var neibuClickFlag = false;
   function neibuClick() {
-	  neibuClickFlag = true; 
+	  neibuClickFlag = true;
 	  $('#btn_sub').trigger('click');
   }
 </script>
@@ -339,12 +338,12 @@
     <ul class="nav nav-tabs">
 		    	<li role="presentation" tab-ajax-url="wmImNoticeHController.do?wmImNoticeIList&noticeId=${wmImNoticeHPage.noticeId}"><a href="#con-wrapper0">进货通知明细</a></li>
     </ul>
-    
+
 	     <div class="con-wrapper" id="con-wrapper0" style="display: none;"></div>
 </div>
 
 
-			
+
 		<div align="center"  id = "sub_tr" style="display: none;" > <input type="button" value="提交" onclick="neibuClick();" class="ui_state_highlight"></div>
 		<script src="plug-in/layer/layer.js"></script>
 		<script type="text/javascript">
@@ -418,7 +417,7 @@
 			});
 		});
 		</script>
-		
+
 		</form>
 		<!-- 添加 产品明细 模版 -->
 		<table style="display:none">
@@ -443,26 +442,26 @@
 							  	<%----%>
 <%-- 							  	<t:choose hiddenName="wmImNoticeIList[#index#].goodsCode" hiddenid="id" url="mdGoodsController.do?list" name="mdGoodsList" --%>
 <%-- 								  icon="icon-search" title="common.role.list" textname="wmImNoticeIList[#index#].goodsCode" isclear="true" isInit="true"></t:choose> --%>
-							  
-							  
+
+
 							  <label class="Validform_label" style="display: none;">商品编码</label>
 						  </td>
 						  <td align="left">
-							  	<input name="wmImNoticeIList[#index#].goodsCount" maxlength="32" 
-									ignore="ignore" datatype="*" 
+							  	<input name="wmImNoticeIList[#index#].goodsCount" maxlength="32"
+									ignore="ignore" datatype="*"
 							  		type="text" class="form-control"  style="width:120px;text-align: right" >
 							  <label class="Validform_label" style="display: none;">数量</label>
 						  </td>
-						  
+
 <!-- 						  <td align="left"> -->
-						  		
+
 <%-- 							  		<t:dictSelect field="wmImNoticeIList[#index#].goodsUnit" type="list" extendJson="{class:'form-control'}" --%>
 <%-- 								dictTable="ba_unit" dictField="unit_code" dictText="unit_zh_name" hasLabel="false"  title="单位"></t:dictSelect>      --%>
-				
-							  		
+
+
 <!-- 							  <label class="Validform_label" style="display: none;">单位</label> -->
 <!-- 						  </td> -->
-						  
+
 <!-- 						  <td align="left"> -->
 <!-- 									<input name="wmImNoticeIList[#index#].goodsPrdData" maxlength="32"  -->
 <!-- 							  		type="text" class="form-control" onClick="WdatePicker()"  style="background: url('plug-in/ace/images/datetime.png') no-repeat scroll right center transparent;width:160px;" -->
@@ -471,14 +470,14 @@
 <!-- 							  <label class="Validform_label" style="display: none;">生产日期</label> -->
 <!-- 						  </td> -->
 						  <td align="left">
-									<t:dictSelect field="wmImNoticeIList[#index#].binPre" type="radio" extendJson="{class:'form-control',style:'width:150px'}"  
-													typeGroupCode="sf_yn" defaultVal="N" hasLabel="false"  title="收货完成"></t:dictSelect>     
+									<t:dictSelect field="wmImNoticeIList[#index#].binPre" type="radio" extendJson="{class:'form-control',style:'width:150px'}"
+													typeGroupCode="sf_yn" defaultVal="N" hasLabel="false"  title="收货完成"></t:dictSelect>
 							  <label class="Validform_label" style="display: none;">收货完成</label>
 						  </td>
 
 					</tr>
 				 </tbody>
 		</table>
-	<script src = "webpage/com/zzjee/wm/wmImNoticeH.js"></script>	
+	<script src = "webpage/com/zzjee/wm/wmImNoticeH.js"></script>
  </body>
  </html>

@@ -111,6 +111,7 @@ public class WmOmNoticeHServiceImpl extends CommonServiceImpl implements WmOmNot
 				tmsYwDingdanEntity.setYwddbz(wmOmNoticeH.getOmBeizhu());
 				tmsYwDingdanEntity.setYwkhdh(wmOmNoticeH.getOmNoticeId());
 				tmsYwDingdanEntity.setZhuangtai("已下单");
+				tmsYwDingdanEntity.setFadh(wmOmNoticeH.getOmNoticeId());
 				this.save(tmsYwDingdanEntity);
 			}catch (Exception e){
 
