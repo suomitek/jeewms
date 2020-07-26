@@ -234,26 +234,30 @@
 						<label class="Validform_label" style="display: none">运输公司</label>
 			          </div>
 
-								<div class="col-xs-1 text-center">
-									<b>供应商编码：</b>
-								</div>
-								<div class="col-xs-2">
-									<input id="supCode" name="supCode" type="text" class="form-control"
-										   ignore="ignore"
-									/>
-									<span class="Validform_checktip" style="float:left;height:0px;"></span>
-									<label class="Validform_label" style="display: none">供应商编码</label>
-								</div>
-			          <div class="col-xs-1 text-center">
-			          	<b>供应商名称：</b>
-			          </div>
-			          <div class="col-xs-2">
-								<input id="supName" name="supName" type="text" class="form-control"
-									ignore="ignore"
-								   />
-						<span class="Validform_checktip" style="float:left;height:0px;"></span>
-						<label class="Validform_label" style="display: none">司机电话</label>
-			          </div>
+								<t:dictSelect     field="supCode" type="list"   extendJson="  {class:'form-control',datatype:'*',style:'width:230px'}"
+											     dictTable="md_sup" dictField="GYS_BIAN_MA" dictText="ZHONG_WEN_QCH"   hasLabel="false"  title="供应商"></t:dictSelect>
+
+
+							<%--								<div class="col-xs-1 text-center">--%>
+<%--									<b>供应商编码：</b>--%>
+<%--								</div>--%>
+<%--								<div class="col-xs-2">--%>
+<%--									<input id="supCode" name="supCode" type="text" class="form-control"--%>
+<%--										   ignore="ignore"--%>
+<%--									/>--%>
+<%--									<span class="Validform_checktip" style="float:left;height:0px;"></span>--%>
+<%--									<label class="Validform_label" style="display: none">供应商编码</label>--%>
+<%--								</div>--%>
+<%--			          <div class="col-xs-1 text-center">--%>
+<%--			          	<b>供应商名称：</b>--%>
+<%--			          </div>--%>
+<%--			          <div class="col-xs-2">--%>
+<%--								<input id="supName" name="supName" type="text" class="form-control"--%>
+<%--									ignore="ignore"--%>
+<%--								   />--%>
+<%--						<span class="Validform_checktip" style="float:left;height:0px;"></span>--%>
+<%--						<label class="Validform_label" style="display: none">司机电话</label>--%>
+<%--			          </div>--%>
 
 			          <div class="col-xs-1 text-center">
 			          	<b>订单类型：</b>

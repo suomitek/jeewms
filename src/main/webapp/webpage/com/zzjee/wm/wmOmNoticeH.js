@@ -1,4 +1,73 @@
+function doAddcheck(name) {
+	// tWzCkHeadController.do?doAddcheck;
+	var flag = true;
+	var msghe = '';
+	$("#wmOmNoticeI_table tr").each(function(){
+		fieldname = $(this).find("td:eq(2)>input").val();
+		fieldnamevalue = $(this).find("td:eq(3)>input").val();
+		// fieldnamelo = $(this).find("td:eq(6)>input").val();
+		if (fieldname !== null &&  (typeof fieldname != 'undefined') && fieldname !== '') {
+			// var url = "wmOmNoticeHController.do?doAddcheck&mat_code="+fieldname+"&mat_qty="+fieldnamevalue;
+			// $.ajax({
+			// 	async : false,
+			// 	cache : false,
+			// 	type : 'POST',
+			// 	url : url,// 请求的action路径
+			// 	error : function() {// 请求失败处理函数
+			// 	},
+			// 	success : function(data) {
+			// 		var d = $.parseJSON(data);
+			// 		if (d.success) {
+			//
+			// 		}else{
+			// 			flag = false;
+			// 			msghe = msghe +"/" + d.msg;
+			// 		}
+			// 	}
+			// });
+			var strs= new Array(); //定义一数组
+			var goods_code;
+			try{
+				strs= fieldname.split('-');//    合计
+				goods_code = strs[0];
+			}catch(err){
+				goods_code = fieldname;
+			}
 
+			var url = "wmOmNoticeHController.do?docheck&goodscode="+goods_code+"&goodsqua="+fieldnamevalue;
+			$.ajax({
+				async : false,
+				cache : false,
+				type : 'POST',
+				url : url,// 请求的action路径
+				error : function() {// 请求失败处理函数
+				},
+				success : function(data) {
+					var d = $.parseJSON(data);
+					if (d.success) {
+
+					}else{
+						msghe = msghe +"/" + d.msg;
+					}
+				}
+			});
+
+			// tWzCkHeadController.do?doAddcheck;
+		}
+
+		// fieldnamevalue = $(this).find("td:eq(4)>input").val();
+		// if (fieldnamevalue !== null || (typeof(fieldnamevalue != 'undefined') || fieldnamevalue !== '') {
+		//     alert(fieldnamevalue);
+		// }
+
+	})
+	if(!flag){
+		tip(msghe);
+		return false;
+
+
+	}
+}
 
 //初始化下标
 function resetTrNum(tableId) {
@@ -54,7 +123,7 @@ function commonUpload(callback,inputId){
        },
        cancelVal: '关闭',
        cancel: function(){
-       } 
+       }
    });
 }
 //通用弹出式文件上传-回调

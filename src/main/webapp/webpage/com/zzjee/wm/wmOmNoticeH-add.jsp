@@ -129,7 +129,7 @@
 
  </script>
  <body>
-  <form id="formobj" action="wmOmNoticeHController.do?doAdd" name="formobj" method="post"><input type="hidden" id="btn_sub" class="btn_sub"/>
+  <form id="formobj"  beforeSubmit="doAddcheck()"  action="wmOmNoticeHController.do?doAdd" name="formobj" method="post"><input type="hidden" id="btn_sub" class="btn_sub"/>
 
 			<input type="hidden" id="btn_sub" class="btn_sub"/>
 

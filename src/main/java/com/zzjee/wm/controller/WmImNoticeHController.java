@@ -2137,29 +2137,30 @@ public class WmImNoticeHController extends BaseController {
 						wmImNoticeH.setCusCode(user.getUserName());
 			}
 			}
-
+			//获取供应商
+			if(StringUtil.isNotEmpty(wmImNoticeH.getSupCode())){
+				try{
+					MdSupEntity mdSupEntity = systemService.findUniqueByProperty(MdSupEntity.class,"gysBianMa",wmImNoticeH.getSupCode());
+					wmImNoticeH.setSupName(mdSupEntity.getZhongWenQch());
+				}catch (Exception e){
+				}
+			}
+			//
 			List<WmImNoticeIEntity> wmImNoticeIListnew = new ArrayList<WmImNoticeIEntity>();
 			for (WmImNoticeIEntity wmImNoticeIEntity : wmImNoticeIList) {
 				if(!StringUtil.isEmpty(wmImNoticeIEntity.getGoodsCode())){
-
 				try {
-
 				    MvGoodsEntity mvgoods = systemService.findUniqueByProperty(MvGoodsEntity.class,"goodsName",wmImNoticeIEntity.getGoodsCode());
-
 //					String date[]=wmImNoticeIEntity.getGoodsCode().split("-");
 					wmImNoticeIEntity.setGoodsCode(mvgoods.getGoodsCode());
 					wmImNoticeIEntity.setGoodsName(mvgoods.getShpMingCheng());
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-
 				wmImNoticeIListnew.add(wmImNoticeIEntity);
-
 				}
 			}
-
 			wmImNoticeHService.addMain(wmImNoticeH, wmImNoticeIListnew);
-
 			try {
 				TuiSongMsgUtil.sendMessage("收货通知", Constants.SMS_SEND_TYPE_3,
 						"RKYYTZ", map, "admin", ResourceUtil.getSessionUserName()
