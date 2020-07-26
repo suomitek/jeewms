@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import com.zzjee.wmutil.wmUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -51,12 +52,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.zzjee.md.entity.MdCusEntity;
 import com.zzjee.md.service.MdCusServiceI;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 客户
  * @author erzhongxmu
  * @date 2017-08-15 23:17:09
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -73,12 +74,12 @@ public class MdCusController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * 客户列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -93,7 +94,7 @@ public class MdCusController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -110,17 +111,17 @@ public class MdCusController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("zhuJiMa", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("zhuJiMa", "desc");
+		cq.setOrder(map1);
 		cq.add();
 		this.mdCusService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除客户
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -131,6 +132,12 @@ public class MdCusController extends BaseController {
 		mdCus = systemService.getEntity(MdCusEntity.class, mdCus.getId());
 		message = "客户删除成功";
 		try{
+			if(wmUtil.checkishavestock("cus",mdCus.getKeHuBianMa())){
+				message = "货主存在库存";
+				j.setSuccess(false);
+				j.setMsg(message);
+				return j;
+			}
 			mdCusService.delete(mdCus);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
@@ -141,10 +148,10 @@ public class MdCusController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除客户
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -155,9 +162,15 @@ public class MdCusController extends BaseController {
 		message = "客户删除成功";
 		try{
 			for(String id:ids.split(",")){
-				MdCusEntity mdCus = systemService.getEntity(MdCusEntity.class, 
+				MdCusEntity mdCus = systemService.getEntity(MdCusEntity.class,
 				id
 				);
+				if(wmUtil.checkishavestock("cus",mdCus.getKeHuBianMa())){
+					message = "货主存在库存";
+					j.setSuccess(false);
+					j.setMsg(message);
+					return j;
+				}
 				mdCusService.delete(mdCus);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
@@ -173,7 +186,7 @@ public class MdCusController extends BaseController {
 
 	/**
 	 * 添加客户
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -201,10 +214,10 @@ public class MdCusController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新客户
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -227,11 +240,11 @@ public class MdCusController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 客户新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -244,7 +257,7 @@ public class MdCusController extends BaseController {
 	}
 	/**
 	 * 客户编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -255,10 +268,10 @@ public class MdCusController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/md/mdCus-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -266,10 +279,10 @@ public class MdCusController extends BaseController {
 		req.setAttribute("controller_name","mdCusController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -288,7 +301,7 @@ public class MdCusController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -302,13 +315,13 @@ public class MdCusController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -342,14 +355,14 @@ public class MdCusController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<MdCusEntity> list() {
 		List<MdCusEntity> listMdCuss=mdCusService.getList(MdCusEntity.class);
 		return listMdCuss;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {

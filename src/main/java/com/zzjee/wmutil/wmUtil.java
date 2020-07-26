@@ -4,6 +4,7 @@ import com.zzjee.conf.entity.FxjOtherLoginEntity;
 import com.zzjee.md.entity.MdBinEntity;
 import com.zzjee.md.entity.MdGoodsEntity;
 import com.zzjee.sys.entity.SysParaEntity;
+import com.zzjee.wm.entity.WvStockEntity;
 import org.antlr.stringtemplate.language.Cat;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.util.DateUtils;
@@ -371,6 +372,33 @@ public class wmUtil {
 
        return flag;
     }
+
+
+    public static boolean checkishavestock(String checktype,String checkvalue){
+    	boolean ishavestock = false;
+    	String hql = "from WvStockEntity where ";
+    	if("bin".equals(checktype)){
+           hql = hql + " kuWeiBianMa = ?";
+		}
+		if("cus".equals(checktype)){
+			hql = hql + " cusCode = ?";
+
+		}
+		if("goods".equals(checktype)){
+			hql = hql + " goodsId = ?";
+
+		}
+		SystemService systemService =ApplicationContextUtil.getContext().getBean(SystemService.class);
+
+		List<WvStockEntity> list = systemService.findHql(hql,checkvalue);
+        if(list!=null&&list.size()>0){
+			ishavestock = true;
+		}
+    	return  ishavestock;
+
+	}
+
+
 
 	public static String getstock(String goodsid) {
 		String  goodsqua = "0";

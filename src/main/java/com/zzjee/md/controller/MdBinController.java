@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import com.zzjee.wmutil.wmUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -54,12 +55,12 @@ import com.zzjee.md.service.MdBinServiceI;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 仓位定义
  * @author erzhongxmu
  * @date 2017-08-15 23:17:02
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -76,12 +77,12 @@ public class MdBinController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * 仓位定义列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -94,7 +95,7 @@ public class MdBinController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -114,10 +115,10 @@ public class MdBinController extends BaseController {
 		this.mdBinService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除仓位定义
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -130,6 +131,12 @@ public class MdBinController extends BaseController {
 		try{
 //			mdBin.setTingYong("Y");
 //			mdBinService.saveOrUpdate(mdBin);
+			if(wmUtil.checkishavestock("bin",mdBin.getKuWeiBianMa())){
+				message = "仓位存在库存";
+				j.setSuccess(false);
+				j.setMsg(message);
+				return j;
+			}
 			mdBinService.delete(mdBin);
 
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
@@ -141,9 +148,9 @@ public class MdBinController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
-	
+
+
+
 	@RequestMapping(params = "getbinall")
 	@ResponseBody
 	public AjaxJson getNoticeList(HttpServletRequest req) {
@@ -174,11 +181,11 @@ public class MdBinController extends BaseController {
 		    			jsonParts.put("binid", resultt.get(i).get("binid"));
 		    			jsonParts.put("des", resultt.get(i).get("des"));
 		    			jsonParts.put("tincount", resultt.get(i).get("tincount"));
-			    		result.add(jsonParts);	
+			    		result.add(jsonParts);
 		    		}
 		        	j.setObj(resultt.size());
-				
-				
+
+
 				Map<String,Object> attrs = new HashMap<String, Object>();
 				attrs.put("messageList", result);
 //				String tip = MutiLangUtil.getMutiLangInstance().getLang("message.tip");
@@ -192,11 +199,11 @@ public class MdBinController extends BaseController {
 		}
 		return j;
 	}
-	
-	
+
+
 	/**
 	 * 批量删除仓位定义
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -207,10 +214,16 @@ public class MdBinController extends BaseController {
 		message = "仓位停用成功";
 		try{
 			for(String id:ids.split(",")){
-				MdBinEntity mdBin = systemService.getEntity(MdBinEntity.class, 
+				MdBinEntity mdBin = systemService.getEntity(MdBinEntity.class,
 				id
 				);
 //				mdBin.setTingYong("Y");
+				if(wmUtil.checkishavestock("bin",mdBin.getKuWeiBianMa())){
+					message = "仓位存在库存";
+					j.setSuccess(false);
+					j.setMsg(message);
+					return j;
+				}
 				mdBinService.delete(mdBin);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
@@ -226,7 +239,7 @@ public class MdBinController extends BaseController {
 
 	/**
 	 * 添加仓位定义
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -261,10 +274,10 @@ public class MdBinController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新仓位定义
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -286,11 +299,11 @@ public class MdBinController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 仓位定义新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -303,7 +316,7 @@ public class MdBinController extends BaseController {
 	}
 	/**
 	 * 仓位定义编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -314,10 +327,10 @@ public class MdBinController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/md/mdBin-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -325,10 +338,10 @@ public class MdBinController extends BaseController {
 		req.setAttribute("controller_name","mdBinController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -347,7 +360,7 @@ public class MdBinController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -361,13 +374,13 @@ public class MdBinController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -408,14 +421,14 @@ public class MdBinController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<MdBinEntity> list() {
 		List<MdBinEntity> listMdBins=mdBinService.getList(MdBinEntity.class);
 		return listMdBins;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {

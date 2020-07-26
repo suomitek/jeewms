@@ -139,6 +139,12 @@ public class MdGoodsController extends BaseController {
 		message = "商品删除成功";
 		try {
 //			mdGoods.setZhuangTai("Y");
+			if(wmUtil.checkishavestock("goods",mdGoods.getShpBianMa())){
+				message = "商品存在库存";
+				j.setSuccess(false);
+				j.setMsg(message);
+				return j;
+			}
 			mdGoodsService.delete(mdGoods);;
 			systemService.addLog(message, Globals.Log_Type_DEL,
 					Globals.Log_Leavel_INFO);
@@ -176,6 +182,12 @@ public class MdGoodsController extends BaseController {
 			for (String id : ids.split(",")) {
 				MdGoodsEntity mdGoods = systemService.getEntity(
 						MdGoodsEntity.class, id);
+				if(wmUtil.checkishavestock("goods",mdGoods.getShpBianMa())){
+					message = "商品存在库存";
+					j.setSuccess(false);
+					j.setMsg(message);
+					return j;
+				}
 				mdGoodsService.delete(mdGoods);
 				systemService.addLog(message, Globals.Log_Type_DEL,
 						Globals.Log_Leavel_INFO);
