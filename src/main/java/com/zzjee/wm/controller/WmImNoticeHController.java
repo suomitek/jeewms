@@ -2046,6 +2046,121 @@ public class WmImNoticeHController extends BaseController {
 	}
 //打印的接口改造开始 在线打印非EXCEL
 
+	@RequestMapping(params = "doPrintpagerkd")
+	public ModelAndView doPrintpagerkd(String id,HttpServletRequest request) {
+		PrintHeader printHeader  = new PrintHeader();
+		WmImNoticeHEntity wmImNoticeH = systemService.getEntity(WmImNoticeHEntity.class,
+				id);// 获取抬头
+		if(wmImNoticeH.getOrderTypeCode().equals("03")){
+			printHeader.setHeader01(ResourceUtil.getConfigByName("comname")+"退货入库单");
+		}else if(wmImNoticeH.getOrderTypeCode().equals("01")){
+			printHeader.setHeader01(ResourceUtil.getConfigByName("comname")+"收货入库单");
+		}else if(wmImNoticeH.getOrderTypeCode().equals("04")){
+			printHeader.setHeader01(ResourceUtil.getConfigByName("comname")+"越库单");
+		}else if(wmImNoticeH.getOrderTypeCode().equals("09")){
+			printHeader.setHeader01(ResourceUtil.getConfigByName("comname")+"收货入库单");
+		}
+
+
+
+		printHeader.setHeader02("公司地址："+ ResourceUtil.getConfigByName("comaddr") );
+
+		printHeader.setHeader03("电话："+ ResourceUtil.getConfigByName("comtel") );
+
+		printHeader.setHeader04("到货日期： " + DateUtils.date2Str(wmImNoticeH.getImData(), DateUtils.date_sdf) );
+
+		printHeader.setHeader05("预约单号： " +wmImNoticeH.getNoticeId());
+
+		printHeader.setHeader06("客户采购单号： "+wmImNoticeH.getImCusCode() );
+
+		printHeader.setHeader07("月台： " +wmImNoticeH.getPlatformCode());
+
+		MdCusEntity md = systemService.findUniqueByProperty(MdCusEntity.class, "keHuBianMa", wmImNoticeH.getCusCode());
+
+		printHeader.setHeader08("客户名称： " +wmImNoticeH.getCusCode()+md.getZhongWenQch());
+
+		printHeader.setHeader09("供应商： "+wmImNoticeH.getSupCode()+ wmImNoticeH.getSupName());
+
+		printHeader.setHeader10("客户电话： " +md.getDianHua());
+
+		printHeader.setHeader11("打印时间： "+ DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat)  );
+
+ 		request.setAttribute("printHeader", printHeader);
+ 		List<PrintItem> listitem = new ArrayList<>();
+
+	 	request.setAttribute("listitem", listitem);
+		String tsql = "SELECT wq.goods_pro_data as pro_data,wq.goods_unit, (select wmi.rec_deg from wm_in_qm_i wmi where wmi.im_notice_id = wq.order_id and wmi.goods_id =  wq.goods_id limit 1) as rec_deg, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,"
+				+ " cast(sum(wq.goods_qua) as signed) as goods_count,truncate(sum(wq.goods_qua*mg.ti_ji_cm),2) tin_tj ,truncate(sum(wq.goods_qua*mg.zhl_kg),2) as tin_zhl,count(*) as tuopan     "
+				+ "FROM wm_to_up_goods wq,mv_goods mg where wq.order_id = ? and  wq.goods_id = mg.goods_code group by wq.order_id, mg.goods_code,wq.goods_pro_data";
+		List<Map<String, Object>> result = systemService
+				.findForJdbc(tsql, wmImNoticeH.getNoticeId());
+
+Double sum =0.00;
+		Double	sumzl = 0.00;
+		for (int i = 0; i < result.size(); i++) {
+			PrintItem printItem = new PrintItem();
+			printItem.setItem01(result.get(i).get("goods_id")
+						.toString());
+ 			printItem.setItem02(result.get(i).get("shp_ming_cheng")
+						.toString());
+ 				try {
+					printItem.setItem03(result.get(i).get("pro_data")
+							.toString());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+					printItem.setItem04(result.get(i)
+							.get("rec_deg").toString());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+
+					printItem.setItem05(result.get(i).get("goods_unit")
+							.toString());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+					sum = sum + Double.parseDouble(result.get(i).get("goods_count")
+							.toString());
+
+					printItem.setItem06(result.get(i).get("goods_count")
+							.toString());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+ 					sumzl = sumzl + Double.parseDouble(result.get(i).get("tin_zhl")
+							.toString());
+					printItem.setItem07(result.get(i).get("tin_zhl")
+							.toString());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+					if(ResourceUtil.getConfigByName("systuopan").equals("yes")){
+						printItem.setItem08(result.get(i).get("tuopan")
+								.toString());
+					}else{
+						printItem.setItem08(result.get(i).get("tin_tj")
+								.toString());
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+
+			listitem.add(printItem);
+			}
+
+		printHeader.setHeader12(sum.toString());
+		printHeader.setHeader13(sumzl.toString());
+
+		return new ModelAndView("com/zzjee/wm/print/imnoticerkd-print");
+	}
+
+
 //打印的接口改造结束在线打印非EXCEL
 	/**
 	 * 批量删除进货通知抬头

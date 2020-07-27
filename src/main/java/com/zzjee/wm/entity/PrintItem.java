@@ -4,7 +4,7 @@ public class PrintItem {
     private String item01;
     private String item02;
     private String item03;
-    private String hitem04;
+    private String item04;
     private String item05;
     private String item06;
     private String item07;
@@ -46,12 +46,12 @@ public class PrintItem {
         this.item03 = item03;
     }
 
-    public String getHitem04() {
-        return hitem04;
+    public String getItem04() {
+        return item04;
     }
 
-    public void setHitem04(String hitem04) {
-        this.hitem04 = hitem04;
+    public void setItem04(String item04) {
+        this.item04 = item04;
     }
 
     public String getItem05() {

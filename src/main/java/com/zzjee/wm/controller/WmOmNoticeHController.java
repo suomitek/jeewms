@@ -1853,7 +1853,140 @@ public class WmOmNoticeHController extends BaseController {
 		}
 	}
 
+
 //打印的接口改造开始 在线打印非EXCEL
+
+	@RequestMapping(params = "doPrintpageckd")
+	public ModelAndView doPrintpageckd(String id,HttpServletRequest request) {
+		PrintHeader printHeader  = new PrintHeader();
+		WmOmNoticeHEntity wmOmNoticeH = systemService.getEntity(WmOmNoticeHEntity.class,
+				id);//获取抬头
+
+
+		printHeader.setHeader01(ResourceUtil.getConfigByName("comname")+"出库单");
+
+		printHeader.setHeader02("公司地址："+ResourceUtil.getConfigByName("comaddr") );
+
+		printHeader.setHeader03("电话："+ ResourceUtil.getConfigByName("comtel"));
+
+		printHeader.setHeader04("出库日期： " +DateUtils.date2Str(wmOmNoticeH.getDelvData(), DateUtils.date_sdf) );
+
+
+		printHeader.setHeader05("出库单号： " +wmOmNoticeH.getOmNoticeId());
+
+		printHeader.setHeader06("客户单号： " +wmOmNoticeH.getImCusCode());
+
+
+		printHeader.setHeader07("车号： " +wmOmNoticeH.getReCarno());
+
+		MdCusEntity md = systemService.findUniqueByProperty(MdCusEntity.class, "keHuBianMa", wmOmNoticeH.getCusCode());
+
+		printHeader.setHeader08("客户名称： " +wmOmNoticeH.getCusCode()+md.getZhongWenQch());
+
+		printHeader.setHeader09("收货人： "+wmOmNoticeH.getDelvMember()+"   电话:"+wmOmNoticeH.getDelvMobile() );
+
+		printHeader.setHeader10("收货地址： " +wmOmNoticeH.getDelvAddr());
+
+		printHeader.setHeader11("打印时间： "+DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat)  );
+
+		request.setAttribute("printHeader", printHeader);
+		List<PrintItem> listitem = new ArrayList<>();
+
+		request.setAttribute("listitem", listitem);
+		String tsql = "SELECT wq.goods_pro_data as pro_data,wq.base_unit, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,cast(sum(wq.base_goodscount) as signed) as goods_count,mg.chl_shl,cast(mg.ti_ji_cm/mg.chl_shl as signed) tin_tj ,(mg.zhl_kg/mg.chl_shl ) as tin_zhl  "
+				+" FROM wm_to_down_goods wq,mv_goods mg where wq.order_id =  ? "
+				+" and  wq.goods_id = mg.goods_code group by wq.order_id, mg.goods_code,wq.goods_pro_data";
+
+		List<Map<String, Object>> result = systemService
+				.findForJdbc(tsql, wmOmNoticeH.getOmNoticeId());
+
+
+		int size = result.size();
+		if(size<1){
+			tsql = "SELECT wq.pro_data,wq.base_unit, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,cast(sum(wq.base_goodscount) as signed) as goods_count,mg.chl_shl,cast(mg.ti_ji_cm/mg.chl_shl as signed) tin_tj , (mg.zhl_kg/mg.chl_shl)  as   tin_zhl "
+					+" FROM wm_om_qm_i wq,mv_goods mg where wq.om_notice_id = ? "
+					+" and  wq.goods_id = mg.goods_code group by wq.om_notice_id, mg.goods_code,wq.pro_data";
+			result = systemService
+					.findForJdbc(tsql, wmOmNoticeH.getOmNoticeId());
+			size = result.size();
+		}
+       long sumxs=0;
+		Double sum =0.00;
+		Double	sumzl = 0.00;
+		for (int i = 0; i < result.size(); i++) {
+			PrintItem printItem = new PrintItem();
+			printItem.setItem01(result.get(i).get("goods_id")
+					.toString());
+			printItem.setItem02(result.get(i).get("shp_ming_cheng")
+					.toString());
+ 			try {
+				printItem.setItem03(result.get(i).get("pro_data")
+						.toString());
+ 			} catch (Exception e) {
+				// TODO: handle exception
+				logger.error(ExceptionUtil.getExceptionMessage(e));
+			}
+
+
+
+			try {
+
+				long  xs = (long) Math.floor(Double.parseDouble(result.get(i).get("goods_count")
+						.toString()) / Double.parseDouble(result.get(i).get("chl_shl")
+						.toString()));
+				sumxs = sumxs  + xs;
+ 				printItem.setItem05(Long.toString(xs));
+ 			} catch (Exception e) {
+				// TODO: handle exception
+				logger.error(ExceptionUtil.getExceptionMessage(e));
+			}
+
+			try {
+				double bs =						  Double.parseDouble(result.get(i).get("goods_count")
+						.toString()) % Double.parseDouble(result.get(i).get("chl_shl")
+						.toString());
+				sum = sum + bs;
+				printItem.setItem06(Double.toString(bs));
+ 			} catch (Exception e) {
+				// TODO: handle exception
+				logger.error(ExceptionUtil.getExceptionMessage(e));
+			}
+ 			try {
+
+				double zhl = Double.parseDouble(result.get(i).get("tin_zhl")
+						.toString()) * Double.parseDouble(result.get(i).get("goods_count").toString());
+				sumzl = sumzl + zhl;
+				printItem.setItem07(Double.toString(zhl));
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				logger.error(ExceptionUtil.getExceptionMessage(e));
+			}
+  						try {
+							double tij = Double.parseDouble(result.get(i).get("tin_tj")
+									.toString()) * Double.parseDouble(result.get(i).get("goods_count").toString());
+							printItem.setItem08(Double.toString(tij));
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+			try{
+				if("hr".equals(ResourceUtil.getConfigByName("wm.ckd"))) {
+					printItem.setItem09(wmUtil.getstock(result.get(i).get("goods_id").toString()));
+				}
+			}catch (Exception e){
+				logger.error(ExceptionUtil.getExceptionMessage(e));
+			}
+
+
+			listitem.add(printItem);
+		}
+
+		printHeader.setHeader12(sum.toString());
+		printHeader.setHeader13(sumzl.toString());
+
+		return new ModelAndView("com/zzjee/wm/print/imnoticeckd-print");
+	}
+
 
 //打印的接口改造结束在线打印非EXCEL
 
