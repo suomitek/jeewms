@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>入库单打印</title>
+<title>出库单打印</title>
 <t:base type="jquery,easyui,tools"></t:base>
 <script type="text/javascript" charset="utf-8" src="webpage/com/zzjee/wmjs/jquery.jqprint.js"></script>
 <script language="javascript">

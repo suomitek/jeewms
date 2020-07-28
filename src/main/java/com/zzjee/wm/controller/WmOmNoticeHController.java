@@ -1912,8 +1912,12 @@ public class WmOmNoticeHController extends BaseController {
        long sumxs=0;
 		Double sum =0.00;
 		Double	sumzl = 0.00;
+		int cerconNo=0;
 		for (int i = 0; i < result.size(); i++) {
 			PrintItem printItem = new PrintItem();
+
+			cerconNo++;
+			printItem.setItem20(Integer.toString(cerconNo));
 			printItem.setItem01(result.get(i).get("goods_id")
 					.toString());
 			printItem.setItem02(result.get(i).get("shp_ming_cheng")
