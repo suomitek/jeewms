@@ -36,7 +36,8 @@
    <t:dgFunOpt title="通知单" funname="doprint(id)"  urlclass="ace_button"   exp="imSta#ne#已删除"   />
 
    <t:dgFunOpt title="验收单" funname="printysd(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
-   <t:dgFunOpt title="入库单" funname="printrkd(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
+   <t:dgFunOpt title="导出入库" funname="printrkd(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
+   <t:dgFunOpt title="打印入库" funname="printrkdpage(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
    <t:dgFunOpt title="货品ID" funname="printhpid(id)"  urlclass="ace_button"  urlfont="	fa-print" exp="imSta#ne#已删除"/>
    <t:dgFunOpt title="完成" funname="closeor(id)"  urlclass="ace_button"     exp="imSta#ne#已完成"/>
    <t:dgFunOpt title="审核" funname="appor(id)"  urlclass="ace_button"     exp="imSta#eq#初始化"/>
@@ -121,6 +122,11 @@ function printysd(id){
 }
  function printrkd(id){
   var url = "wmImNoticeHController.do?doPrintrkd&id="+id;
+
+  window.open(url);
+ }
+ function printrkdpage(id){
+  var url = "wmImNoticeHController.do?doPrintpagerkd&id="+id;
 
   window.open(url);
  }

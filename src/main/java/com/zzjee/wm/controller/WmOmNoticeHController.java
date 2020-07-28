@@ -1888,11 +1888,10 @@ public class WmOmNoticeHController extends BaseController {
 		printHeader.setHeader10("收货地址： " +wmOmNoticeH.getDelvAddr());
 
 		printHeader.setHeader11("打印时间： "+DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat)  );
+		printHeader.setHeader14("备注： " +wmOmNoticeH.getOmBeizhu());
 
-		request.setAttribute("printHeader", printHeader);
 		List<PrintItem> listitem = new ArrayList<>();
 
-		request.setAttribute("listitem", listitem);
 		String tsql = "SELECT wq.goods_pro_data as pro_data,wq.base_unit, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,cast(sum(wq.base_goodscount) as signed) as goods_count,mg.chl_shl,cast(mg.ti_ji_cm/mg.chl_shl as signed) tin_tj ,(mg.zhl_kg/mg.chl_shl ) as tin_zhl  "
 				+" FROM wm_to_down_goods wq,mv_goods mg where wq.order_id =  ? "
 				+" and  wq.goods_id = mg.goods_code group by wq.order_id, mg.goods_code,wq.goods_pro_data";
@@ -1983,6 +1982,8 @@ public class WmOmNoticeHController extends BaseController {
 
 		printHeader.setHeader12(sum.toString());
 		printHeader.setHeader13(sumzl.toString());
+		request.setAttribute("printHeader", printHeader);
+		request.setAttribute("listitem", listitem);
 
 		return new ModelAndView("com/zzjee/wm/print/imnoticeckd-print");
 	}

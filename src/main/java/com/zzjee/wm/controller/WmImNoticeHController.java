@@ -2084,11 +2084,10 @@ public class WmImNoticeHController extends BaseController {
 		printHeader.setHeader10("客户电话： " +md.getDianHua());
 
 		printHeader.setHeader11("打印时间： "+ DateUtils.date2Str(DateUtils.getDate(), DateUtils.datetimeFormat)  );
+		printHeader.setHeader14("备注： "+ wmImNoticeH.getImBeizhu()  );
 
- 		request.setAttribute("printHeader", printHeader);
  		List<PrintItem> listitem = new ArrayList<>();
 
-	 	request.setAttribute("listitem", listitem);
 		String tsql = "SELECT wq.goods_pro_data as pro_data,wq.goods_unit, (select wmi.rec_deg from wm_in_qm_i wmi where wmi.im_notice_id = wq.order_id and wmi.goods_id =  wq.goods_id limit 1) as rec_deg, mg.goods_code, mg.goods_id,mg.shp_ming_cheng,"
 				+ " cast(sum(wq.goods_qua) as signed) as goods_count,truncate(sum(wq.goods_qua*mg.ti_ji_cm),2) tin_tj ,truncate(sum(wq.goods_qua*mg.zhl_kg),2) as tin_zhl,count(*) as tuopan     "
 				+ "FROM wm_to_up_goods wq,mv_goods mg where wq.order_id = ? and  wq.goods_id = mg.goods_code group by wq.order_id, mg.goods_code,wq.goods_pro_data";
@@ -2156,6 +2155,9 @@ Double sum =0.00;
 
 		printHeader.setHeader12(sum.toString());
 		printHeader.setHeader13(sumzl.toString());
+		request.setAttribute("printHeader", printHeader);
+
+		request.setAttribute("listitem", listitem);
 
 		return new ModelAndView("com/zzjee/wm/print/imnoticerkd-print");
 	}
