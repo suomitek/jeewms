@@ -1945,11 +1945,10 @@ public class WmOmNoticeHController extends BaseController {
 			}
 
 			try {
-				double bs =						  Double.parseDouble(result.get(i).get("goods_count")
-						.toString()) % Double.parseDouble(result.get(i).get("chl_shl")
+				sum = sum + Double.parseDouble(result.get(i).get("goods_count")
 						.toString());
-				sum = sum + bs;
-				printItem.setItem06(Double.toString(bs));
+				printItem.setItem06(result.get(i).get("goods_count")
+						.toString());
  			} catch (Exception e) {
 				// TODO: handle exception
 				logger.error(ExceptionUtil.getExceptionMessage(e));
