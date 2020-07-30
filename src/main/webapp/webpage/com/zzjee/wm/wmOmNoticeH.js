@@ -47,6 +47,7 @@ function doAddcheck(name) {
 					if (d.success) {
 
 					}else{
+						flag=false;
 						msghe = msghe +"/" + d.msg;
 					}
 				}

@@ -192,13 +192,13 @@
 					  </div>
 					  <div class="col-xs-5">
 
-						  <t:autocomplete   entityName="MvCusOtherEntity" searchField="cusName" name="ocusCode"></t:autocomplete>
+<%--						  <t:autocomplete   entityName="MvCusOtherEntity" searchField="cusName" name="ocusCode"></t:autocomplete>--%>
 
 
-						  <%--<t:dictSelect id="ocusCodeid" field="ocusCode" type="list" extendJson="{class:'form-control',style:'width:230px'}"--%>
-										 	 	  <%--dictTable="mv_cus_other" dictField="cus_code" dictText="cus_name"  hasLabel="false"  title="三方客户编码"></t:dictSelect>--%>
-						  <%--<span class="Validform_checktip" style="float:left;height:0px;"></span>--%>
-						  <%--<label class="Validform_label" style="display: none">三方客户</label>--%>
+						  <t:dictSelect id="ocusCodeid" field="ocusCode" type="list" extendJson="{class:'form-control',style:'width:230px'}"
+										 	 	  dictTable="mv_cus_other" dictField="cus_code" dictText="cus_name"  hasLabel="false"  title="三方客户编码"></t:dictSelect>
+						  <span class="Validform_checktip" style="float:left;height:0px;"></span>
+						  <label class="Validform_label" style="display: none">三方客户</label>
 					  </div>
 
 
@@ -408,6 +408,76 @@
 				beforeSubmit: function(curform) {
 					var tag = true;
 					//提交前处理
+
+					var msghe = '';
+					$("#wmOmNoticeI_table tr").each(function(){
+						fieldname = $(this).find("td:eq(2)>input").val();
+						fieldnamevalue = $(this).find("td:eq(3)>input").val();
+						// fieldnamelo = $(this).find("td:eq(6)>input").val();
+						if (fieldname !== null &&  (typeof fieldname != 'undefined') && fieldname !== '') {
+							// var url = "wmOmNoticeHController.do?doAddcheck&mat_code="+fieldname+"&mat_qty="+fieldnamevalue;
+							// $.ajax({
+							// 	async : false,
+							// 	cache : false,
+							// 	type : 'POST',
+							// 	url : url,// 请求的action路径
+							// 	error : function() {// 请求失败处理函数
+							// 	},
+							// 	success : function(data) {
+							// 		var d = $.parseJSON(data);
+							// 		if (d.success) {
+							//
+							// 		}else{
+							// 			flag = false;
+							// 			msghe = msghe +"/" + d.msg;
+							// 		}
+							// 	}
+							// });
+							var strs= new Array(); //定义一数组
+							var goods_code;
+							try{
+								strs= fieldname.split('-');//    合计
+								goods_code = strs[0];
+							}catch(err){
+								goods_code = fieldname;
+							}
+
+							var url = "wmOmNoticeHController.do?docheck&goodscode="+goods_code+"&goodsqua="+fieldnamevalue;
+							$.ajax({
+								async : false,
+								cache : false,
+								type : 'POST',
+								url : url,// 请求的action路径
+								error : function() {// 请求失败处理函数
+								},
+								success : function(data) {
+									var d = $.parseJSON(data);
+									if (d.success) {
+
+									}else{
+										tag=false;
+										msghe = msghe +"/" + d.msg;
+									}
+								}
+							});
+
+							// tWzCkHeadController.do?doAddcheck;
+						}
+
+						// fieldnamevalue = $(this).find("td:eq(4)>input").val();
+						// if (fieldnamevalue !== null || (typeof(fieldnamevalue != 'undefined') || fieldnamevalue !== '') {
+						//     alert(fieldnamevalue);
+						// }
+
+					})
+					if(!tag){
+						alert(msghe);
+
+
+					}
+
+
+
 					return tag;
 				},
 				usePlugin: {

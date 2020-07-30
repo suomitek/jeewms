@@ -934,10 +934,10 @@ public class WmOmNoticeHController extends BaseController {
 				}
 			}
 			if(StringUtil.isNotEmpty( wmOmNoticeH.getOcusCode())){
-				String datecuso[]= wmOmNoticeH.getOcusCode().split("-");
-				MdCusOtherEntity mdcusother = systemService.findUniqueByProperty(MdCusOtherEntity.class, "keHuBianMa", datecuso[0]);
+//				String datecuso[]= wmOmNoticeH.getOcusCode().split("-");
+				MdCusOtherEntity mdcusother = systemService.findUniqueByProperty(MdCusOtherEntity.class, "keHuBianMa",wmOmNoticeH.getOcusCode());
 				if (mdcusother != null) {
-					wmOmNoticeH.setOcusCode(datecuso[0]);
+					wmOmNoticeH.setOcusCode(wmOmNoticeH.getOcusCode());
 					wmOmNoticeH.setOcusName(mdcusother.getZhongWenQch());
 				}
 			}
