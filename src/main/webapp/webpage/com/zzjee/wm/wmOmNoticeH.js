@@ -3,8 +3,8 @@ function doAddcheck(name) {
 	var flag = true;
 	var msghe = '';
 	$("#wmOmNoticeI_table tr").each(function(){
-		fieldname = $(this).find("td:eq(2)>input").val();
-		fieldnamevalue = $(this).find("td:eq(3)>input").val();
+		fieldname = $(this).find("td:eq(1)>input").val();
+		fieldnamevalue = $(this).find("td:eq(2)>input").val();
 		// fieldnamelo = $(this).find("td:eq(6)>input").val();
 		if (fieldname !== null &&  (typeof fieldname != 'undefined') && fieldname !== '') {
 			// var url = "wmOmNoticeHController.do?doAddcheck&mat_code="+fieldname+"&mat_qty="+fieldnamevalue;

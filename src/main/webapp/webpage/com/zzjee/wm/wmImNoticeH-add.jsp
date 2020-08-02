@@ -233,8 +233,10 @@
 						<span class="Validform_checktip" style="float:left;height:0px;"></span>
 						<label class="Validform_label" style="display: none">运输公司</label>
 			          </div>
-
-								<t:dictSelect     field="supCode" type="list"   extendJson="  {class:'form-control',datatype:'*',style:'width:230px'}"
+																<div class="col-xs-1 text-center">
+																	<b>供应商编码：</b>
+																</div>
+								<t:dictSelect     field="supCode" type="list"   extendJson="  {class:'form-control',style:'width:230px'}"
 											     dictTable="md_sup" dictField="GYS_BIAN_MA" dictText="ZHONG_WEN_QCH"   hasLabel="false"  title="供应商"></t:dictSelect>
 
 

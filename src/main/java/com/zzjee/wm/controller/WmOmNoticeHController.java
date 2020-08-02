@@ -784,8 +784,8 @@ public class WmOmNoticeHController extends BaseController {
 				}
 
 			}
-			String sql = "select sum(base_goodscount) as qua from wv_stock t where  t.goods_id =  '"
-					+ goods + "'";
+			String sql = "select sum(base_goodscount) as qua from wv_stock t where  t.goods_id LIKE  '%"
+					+ goods + "%'";
 			Map<String, Object> binMap	 = systemService.findOneForJdbc(sql);
 			if(binMap!=null){
 				if(Double.parseDouble(binMap.get("qua").toString())< Double.parseDouble(request.getParameter("goodsqua").toString())){
