@@ -213,6 +213,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("id").toString();
                 String otherid =  prodbo.get("cCode").toString();
@@ -289,6 +295,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("id").toString();
                 String otherid =  prodbo.get("cCode").toString();
@@ -364,6 +376,12 @@ public class yyUtil {
             result = DynamicDBUtil.findList(dbKey, SqlUtil.jeecgCreatePageSql(dbKey, querySql, queryparams, 1, 1000000));
         }
         if (result!=null&&result.size()>0) {
+            try{
+                Thread.sleep(3000);
+
+            }catch (Exception e){
+
+            }
             for (int i = 0; i < result.size(); i++) {
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("id").toString();
@@ -440,6 +458,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String poid =  prodbo.get("poid").toString();
 
@@ -515,6 +539,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("DLID").toString();
                 if (StringUtil.isNotEmpty(imcuscode)) {
@@ -579,6 +609,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("id").toString();
                 String otherid =  prodbo.get("cCode").toString();
@@ -643,6 +679,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("id").toString();
                 String otherid =  prodbo.get("cCode").toString();
@@ -694,7 +736,7 @@ public class yyUtil {
 
     public static  void getclck(String indate) {
 //  /        PO_Pomain  其他出库单主表
-//        PO_Podetails  其他出库单主表子表
+////        PO_Podetails  其他出库单主表子表
         String dbKey=  ResourceUtil.getConfigByName("yydbkey");
         List<Map<String, Object>> result=null;
         List<Map<String, Object>> resultdetail=null;
@@ -707,6 +749,12 @@ public class yyUtil {
         }
         if (result!=null&&result.size()>0) {
             for (int i = 0; i < result.size(); i++) {
+                try{
+                    Thread.sleep(3000);
+
+                }catch (Exception e){
+
+                }
                 Map<String, Object> prodbo = result.get(i);
                 String imcuscode =  prodbo.get("id").toString();
                 String otherid =  prodbo.get("cCode").toString();
