@@ -55,12 +55,12 @@ import com.zzjee.wm.entity.WmToUpGoodsEntity;
 import com.zzjee.wm.service.WmSttInGoodsServiceI;
 import com.zzjee.wmutil.wmUtil;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 库存盘点
  * @author erzhongxmu
  * @date 2017-09-08 21:03:33
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -77,12 +77,12 @@ public class WmSttInGoodsController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+
 
 
 	/**
 	 * 库存盘点列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -99,7 +99,7 @@ public class WmSttInGoodsController extends BaseController {
 	}
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -131,16 +131,16 @@ public class WmSttInGoodsController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.notEq("sttSta", "已删除");
 		cq.add();
 		this.wmSttInGoodsService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
-	
+
+
 	@RequestMapping(params = "datagridcygz")
 	public void datagridcygz(WmSttInGoodsEntity wmSttInGoods,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmSttInGoodsEntity.class, dataGrid);
@@ -151,9 +151,9 @@ public class WmSttInGoodsController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.eq("sttSta", "已完成");
 		cq.add();
 		this.wmSttInGoodsService.getDataGridReturn(cq, true);
@@ -162,17 +162,17 @@ public class WmSttInGoodsController extends BaseController {
 		for (WmSttInGoodsEntity wmSttInGoodsold : resultold) {
 			if(!wmSttInGoodsold.getGoodsQua().equals(wmSttInGoodsold.getSttQua())){
 				resultnew.add(wmSttInGoodsold);
-			}		
+			}
 		}
 		dataGrid.setResults(resultnew);
 		dataGrid.setTotal(resultnew.size());
 		TagUtil.datagrid(response, dataGrid);
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	@RequestMapping(params = "datagridfp")
 	public void datagridfp(WmSttInGoodsEntity wmSttInGoods,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(WmSttInGoodsEntity.class, dataGrid);
@@ -183,9 +183,9 @@ public class WmSttInGoodsController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
-		Map<String,Object> map1 = new HashMap<String,Object>();  
-		map1.put("createDate", "desc");  
-		cq.setOrder(map1); 
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("createDate", "desc");
+		cq.setOrder(map1);
 		cq.eq("sttSta", "已完成");
 		cq.add();
 		this.wmSttInGoodsService.getDataGridReturn(cq, true);
@@ -194,17 +194,17 @@ public class WmSttInGoodsController extends BaseController {
 		for (WmSttInGoodsEntity wmSttInGoodsold : resultold) {
 			if(!wmSttInGoodsold.getGoodsQua().equals(wmSttInGoodsold.getSttQua())){
 				resultnew.add(wmSttInGoodsold);
-			}		
+			}
 		}
 		dataGrid.setResults(resultnew);
 		dataGrid.setTotal(resultnew.size());
 		TagUtil.datagrid(response, dataGrid);
-		
+
 	}
-	
+
 	/**
 	 * 删除库存盘点
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -226,9 +226,9 @@ public class WmSttInGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
-	
+
+
+
 	@RequestMapping(params = "dorun")
 	@ResponseBody
 	public AjaxJson dorun(WmSttInGoodsEntity wmSttInGoods, HttpServletRequest request) {
@@ -238,7 +238,7 @@ public class WmSttInGoodsController extends BaseController {
 				.getParameter("id").toString());
 		message = "库存盘点差异过账成功";
 		if(wmSttInGoods.getSttSta().equals("已完成")){
-			
+
 		if(!wmSttInGoods.getGoodsQua().equals(wmSttInGoods.getSttQua())){
 			try{
 //				wmSttInGoods.setSttQua("0");
@@ -246,7 +246,7 @@ public class WmSttInGoodsController extends BaseController {
 					//下架
 					String goodsqua = Double.toString((Double.parseDouble(wmSttInGoods.getGoodsQua()) - Double.parseDouble(wmSttInGoods.getSttQua())));
 					WmToDownGoodsEntity wmToDownGoods = new WmToDownGoodsEntity();
-					
+
 					wmToDownGoods.setOrderId("ZY");
 					wmToDownGoods.setBinIdTo("PK");
 					wmToDownGoods.setDownSta("已复核");
@@ -266,12 +266,12 @@ public class WmSttInGoodsController extends BaseController {
 					wmToDownGoods.setBaseGoodscount(wmToDownGoods
 								.getGoodsQuaok());
 					wmToDownGoods.setCusCode(wmSttInGoods.getCusCode());
-					
+
 					if(!wmUtil.checkstcok(wmToDownGoods.getKuWeiBianMa(),wmToDownGoods.getBinIdFrom(),wmToDownGoods.getGoodsId(),wmToDownGoods.getGoodsProData(),wmToDownGoods.getGoodsQua())){
 						message = "库存不足";
 						j.setMsg(message);
 						return j;
-			
+
 					};
 					systemService.save(wmToDownGoods);
 					wmSttInGoods.setSttSta("已过帐");
@@ -317,8 +317,8 @@ public class WmSttInGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
-	
+
+
 	@RequestMapping(params = "dostt")
 	@ResponseBody
 	public AjaxJson dostt(WmSttInGoodsEntity wmSttInGoods, HttpServletRequest request) {
@@ -340,10 +340,10 @@ public class WmSttInGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除库存盘点
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -354,7 +354,7 @@ public class WmSttInGoodsController extends BaseController {
 		message = "库存盘点删除成功";
 		try{
 			for(String id:ids.split(",")){
-				WmSttInGoodsEntity wmSttInGoods = systemService.getEntity(WmSttInGoodsEntity.class, 
+				WmSttInGoodsEntity wmSttInGoods = systemService.getEntity(WmSttInGoodsEntity.class,
 				id
 				);
 				wmSttInGoodsService.delete(wmSttInGoods);
@@ -372,7 +372,7 @@ public class WmSttInGoodsController extends BaseController {
 
 	/**
 	 * 添加库存盘点
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -393,10 +393,10 @@ public class WmSttInGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新库存盘点
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -418,11 +418,11 @@ public class WmSttInGoodsController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 库存盘点新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -435,7 +435,7 @@ public class WmSttInGoodsController extends BaseController {
 	}
 	/**
 	 * 库存盘点编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -446,10 +446,10 @@ public class WmSttInGoodsController extends BaseController {
 		}
 		return new ModelAndView("com/zzjee/wm/wmSttInGoods-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -457,10 +457,10 @@ public class WmSttInGoodsController extends BaseController {
 		req.setAttribute("controller_name","wmSttInGoodsController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -479,7 +479,7 @@ public class WmSttInGoodsController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -493,13 +493,13 @@ public class WmSttInGoodsController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -527,7 +527,7 @@ public class WmSttInGoodsController extends BaseController {
 		}
 		return j;
 	}
-	
+	//PDA接口
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?>  list( @RequestParam(value="username", required=false) String username, @RequestParam(value="searchstr", required=false)String searchstr, @RequestParam(value="searchstr2", required=false)String searchstr2) {
@@ -571,7 +571,7 @@ public class WmSttInGoodsController extends BaseController {
 		return new ResponseEntity(D0, HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {

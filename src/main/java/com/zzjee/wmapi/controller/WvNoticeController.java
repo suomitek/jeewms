@@ -323,7 +323,7 @@ public class WvNoticeController extends BaseController {
 		}
 		return j;
 	}
-
+   //PDA接口
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?>  list( @RequestParam(value="username", required=false) String username, @RequestParam(value="searchstr", required=false)String searchstr, @RequestParam(value="searchstr2", required=false)String searchstr2) {
@@ -334,7 +334,7 @@ public class WvNoticeController extends BaseController {
 		String hql = " from WvNoticeEntity where 1 = 1 ";
 		D0.setOK(true);
 		if(!StringUtil.isEmpty(searchstr)) {
-			hql=hql+"  and noticeId = '" + searchstr + "'";
+			hql=hql+"  and noticeId like '%" + searchstr + "%'" +"  or imCusCode like '%" + searchstr + "%'";
 		}
 		if(!StringUtil.isEmpty(searchstr2)) {
 			try{
@@ -347,7 +347,7 @@ public class WvNoticeController extends BaseController {
 			}
  			String[] ss = searchstr2.split(",");
 			if (ss.length == 1) {
-				hql = hql + "  and goodsCode = '" + searchstr2 + "'";
+				hql = hql + "  and goodsCode like '%" + searchstr2 + "%'";
 
 			} else {
 				String insearch = "";

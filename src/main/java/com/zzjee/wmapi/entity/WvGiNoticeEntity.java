@@ -18,12 +18,12 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
-/**   
+/**
  * @Title: Entity
  * @Description: wv_gi_notice
  * @author erzhongxmu
  * @date 2018-05-30 20:20:38
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Entity
@@ -45,10 +45,12 @@ public class WvGiNoticeEntity implements java.io.Serializable {
 	/**主键*/
 	private String id;
 	/**到货通知单*/
-	@Excel(name="到货通知单")
+	@Excel(name="出货通知单")
 	private String omNoticeId;
+	@Excel(name="客户订单号")
+	private java.lang.String imCusCode;
 	/**到货通知行项目*/
-	@Excel(name="到货通知行项目")
+	@Excel(name="出货通知行项目")
 	private String iomNoticeItem;
 	/**仓位*/
 	@Excel(name="仓位")
@@ -509,5 +511,14 @@ public class WvGiNoticeEntity implements java.io.Serializable {
 	 */
 	public void setShpGuiGe(java.lang.String shpGuiGe){
 		this.shpGuiGe = shpGuiGe;
+	}
+
+	@Column(name ="IM_CUS_CODE",nullable=true,length=32)
+	public String getImCusCode() {
+		return imCusCode;
+	}
+
+	public void setImCusCode(String imCusCode) {
+		this.imCusCode = imCusCode;
 	}
 }

@@ -819,7 +819,7 @@ public class WvStockController extends BaseController {
         }
         return j;
     }
-
+   //PDA接口
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> list(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "searchstr", required = false) String searchstr, @RequestParam(value = "searchstr2", required = false) String searchstr2) {
@@ -851,7 +851,7 @@ public class WvStockController extends BaseController {
                     if (StringUtil.isNotEmpty(insearch)) {
                         insearch = insearch + " or  goodsId like '%" + s + "%'";
                     } else {
-                        insearch = "goodsId like '%" + s + "%'";
+                        insearch = " goodsId like '%" + s + "%'";
                     }
 
                 }
